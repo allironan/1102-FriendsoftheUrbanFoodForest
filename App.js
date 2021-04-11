@@ -1,21 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation'
+import {createStackNavigator} from 'react-navigation-stack'
+import LoadingScreen from './screens/LoadingScreen'
+import LoginScreen from './screens/LoginScreen'
+import RegisterScreen from './screens/RegisterScreen'
+import HomeScreen from './screens/HomeScreen'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import * as firebase from 'firebase'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+var firebaseConfig = {
+  apiKey: "AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM",
+  authDomain: "friends-of-the-urban-ff.firebaseapp.com",
+  projectId: "friends-of-the-urban-ff",
+  storageBucket: "friends-of-the-urban-ff.appspot.com",
+  messagingSenderId: "1014426608257",
+  appId: "1:1014426608257:web:8ff56858313883ad05a380"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const AppStack = createStackNavigator({
+  Home: HomeScreen
+})
+
+const AuthStack = createStackNavigator({
+  Login: LoginScreen,
+  Register: RegisterScreen
+})
+
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      Loading: LoadingScreen,
+      App: AppStack,
+      Auth: AuthStack
+    },
+    {
+      initialRouteName: "Loading"
+    }
+  )
+)
