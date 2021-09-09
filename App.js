@@ -9,11 +9,10 @@ import { FIREBASE_APIKEY,
         FIREBASE_PROJECTID,
         FIREBASE_STORAGEBUCKET,
         FIREBASE_MESSAGINGSENDERID,
-        FIREBASE_APPID} from '@env'
-import * as firebase from 'firebase'
-
-
-firebaseConfig = 
+        FIREBASE_APPID} from 'react-native-dotenv'
+import firebase from 'firebase/app'
+console.log(FIREBASE_APIKEY)
+const firebaseConfig = 
 {
   apiKey: FIREBASE_APIKEY,
   authDomain: FIREBASE_AUTHDOMAIN,
@@ -22,17 +21,15 @@ firebaseConfig =
   messagingSenderId: FIREBASE_MESSAGINGSENDERID,
   appId: FIREBASE_APPID
 }
-firebase.initializeApp(firebaseConfig);
 
+firebase.initializeApp(firebaseConfig);
 const AppStack = createStackNavigator({
   Home: HomeScreen
 })
-
 const AuthStack = createStackNavigator({
   Login: LoginScreen,
   Register: RegisterScreen
 })
-
 export default createAppContainer(
   createSwitchNavigator(
     {

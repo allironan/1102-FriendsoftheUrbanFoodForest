@@ -1,9 +1,12 @@
 import React from 'react'
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import auth from "@react-native-firebase/auth"
+
 
 export default class LoadingScreen extends React.Component {
     componentDidMount() {
+    
         firebase.auth().onAuthStateChanged(user => {
             this.props.navigation.navigate(user ? "App" : "Auth");
         })
