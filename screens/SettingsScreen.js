@@ -3,33 +3,45 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
+import getUserData from '../firebaseData'
 
 export default class SettingsScreen extends React.Component {
     
     // const [displayName, setDisplayName] = useState("")
 
+
+
     state = {
-        displayName: "",
-        email: "",
-        paypalUsername: "",
-        textSize: "",
-        colorTheme: "",
+        Username: "",
+        Email: "",
+        Paypal: "",
+        TextSize: "",
+        ColorTheme: "",
 
         readOnly: true
     }
 
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser
+        const {Email, Username} = firebase.default.auth().currentUser
 
-        this.setState({email, displayName})
+        const userData = getUserData();
+        this.setState({Username: userData.Username})
+        this.state.Email = userData.Email;
+        this.state.Paypal = userData.Paypal;
+        this.state.TextSize = userData.TextSize;
+        this.state.ColorTheme = userData.ColorTheme;
+
+        console.log("I AM IN SETTINGS", userData);
+
+        this.setState({Email , Username})
     }
 
     currentView() {
         if (this.state.readOnly) {
             return <View style={styles.container}> 
-            <Text>Name: {this.state.displayName} </Text>
-            <Text>Email: {this.state.email} </Text>
-            <Text>paypalUsername: {this.state.paypalUsername} </Text>
+            <Text>Username: {this.state.Username} </Text>
+            <Text>Email: {this.state.Email} </Text>
+            <Text>Paypal: {this.state.Paypal} </Text>
 
             <TouchableOpacity onPress={() => {
                 this.setState({readOnly: false})
@@ -43,22 +55,22 @@ export default class SettingsScreen extends React.Component {
             <div>
                 <Text>Name: </Text>
                 <TextInput 
-                    placeholder={this.state.displayName}
-                    value={this.state.displayName}
-                    onChangeText={displayName => this.setState({displayName: displayName})}
+                    placeholder={this.state.Username}
+                    value={this.state.Username}
+                    onChangeText={Username => this.setState({Username: Username})}
                 />
             </div>
 
             <div>
                 <Text>Email: </Text>
                 <TextInput 
-                    placeholder={this.state.email}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({email: email})}
+                    placeholder={this.state.Email}
+                    value={this.state.Email}
+                    onChangeText={Email => this.setState({Email: Email})}
                 />
             </div>
 
-            <Text>paypalUsername: {this.state.paypalUsername} </Text>
+            <Text>Paypal: {this.state.Paypal} </Text>
 
             <TouchableOpacity onPress={() => {
                 this.setState({readOnly: true})

@@ -18,19 +18,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
-  apiKey: 'A',
-  authDomain: 'fr',
-  projectId:  'ff',
-  storageBucket: 'f',
-  messagingSenderId: '0',
-  appId: '8'
+  apiKey: "AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM",
+  authDomain: "friends-of-the-urban-ff.firebaseapp.com",
+  projectId:  "friends-of-the-urban-ff",
+  storageBucket: "friends-of-the-urban-ff.appspot.com",
+  messagingSenderId: "1014426608257",
+  appId: "1:1014426608257:web:8ff56858313883ad05a380"
 }
 
 firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
-
-export default db;
 
 const AppStack = createStackNavigator({
   Home: HomeScreen

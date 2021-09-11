@@ -1,23 +1,26 @@
-import db from './app.json';
-import React, { createContext, useEffect } from 'react'
-import firebaseConfig from './firebaseConfig';
-import app from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/database';
+import 'firebase/firestore';
 
-function getUserData() {
 
+export default async function getUserData() {
+
+    const db = firebase.firestore();
+    
     const currentUser = firebase.auth().currentUser;
-    const currentUID = currentUser.getUid();
+    const currentUID = currentUser.uid;
 
     const usersRef = db.collection('Users').doc(currentUID);
+    console.log(usersRef);
     const snapshot = await usersRef.get();
+
     if (!snapshot.exists) {
         console.log("User data not found in firebase");
 
         const data = {
             Username: "John Doe",
             Password: "abc123",
-            Email: currentUser.getEmail(),
+            Email: currentUser.email,
             UID: currentUID,
             Paypal: null,
             Permissions: "base",
@@ -27,8 +30,11 @@ function getUserData() {
 
         const res = await db.collection('Users').doc(currentUID).set(data);
 
+        return data;
+
     } else {
         console.log("User data found: ", snapshot.data());
+        return snapshot.data();
     }
 }
 
