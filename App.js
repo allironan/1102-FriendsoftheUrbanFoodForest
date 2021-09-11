@@ -5,6 +5,7 @@ import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen'
+import SettingsScreen from "./screens/SettingsScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -17,12 +18,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
-  apiKey: 'AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM',
-  authDomain: 'friends-of-the-urban-ff.firebaseapp.com',
-  projectId:  'friends-of-the-urban-ff',
-  storageBucket: 'friends-of-the-urban-ff.appspot.com',
-  messagingSenderId: '1014426608257',
-  appId: '1:1014426608257:web:8ff56858313883ad05a380'
+  apiKey: 'A',
+  authDomain: 'fr',
+  projectId:  'ff',
+  storageBucket: 'f',
+  messagingSenderId: '0',
+  appId: '8'
 }
 
 firebase.initializeApp(firebaseConfig);
@@ -38,6 +39,7 @@ const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>
 
