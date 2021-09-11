@@ -18,12 +18,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
-  apiKey: 'A',
-  authDomain: 'fr',
-  projectId:  'ff',
-  storageBucket: 'f',
-  messagingSenderId: '0',
-  appId: '8'
+  apiKey: 'M',
+  authDomain: 'm',
+  projectId:  'f',
+  storageBucket: 'm',
+  messagingSenderId: '7',
+  appId: '0'
 }
 
 firebase.initializeApp(firebaseConfig);

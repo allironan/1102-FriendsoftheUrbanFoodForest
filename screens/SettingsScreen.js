@@ -31,9 +31,7 @@ export default class SettingsScreen extends React.Component {
             <Text>Email: {this.state.email} </Text>
             <Text>paypalUsername: {this.state.paypalUsername} </Text>
 
-            <TouchableOpacity onPress={() => {
-                this.setState({readOnly: false})
-            }}>
+            <TouchableOpacity onPress={this.changeSettingsPressed}>
                 <Text>Change Settings</Text>
             </TouchableOpacity>
             </View> 
@@ -60,19 +58,34 @@ export default class SettingsScreen extends React.Component {
 
             <Text>paypalUsername: {this.state.paypalUsername} </Text>
 
-            <TouchableOpacity onPress={() => {
-                this.setState({readOnly: true})
-            }}>
+            <TouchableOpacity onPress={this.cancelPressed}>
                 <Text>Cancel</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {
-                this.setState({readOnly: true})
-            }}>
+            <TouchableOpacity onPress={this.savePressed}>
                 <Text>Save Settings</Text>
             </TouchableOpacity>
             </View>
         }
+    }
+
+    changeSettingsPressed = () => {
+        this.setState({readOnly: false})
+    }
+
+    cancelPressed = () => {
+        const {email, displayName} = firebase.default.auth().currentUser
+        this.setState({displayName: displayName})
+        this.setState({email: email})
+        this.setState({readOnly: true})
+    }
+
+    savePressed = () => {
+        firebase.default.auth().currentUser.updateProfile({
+            displayName: this.state.displayName,
+            email: this.state.email
+        })
+        this.setState({readOnly: true})
     }
 
     render() {
