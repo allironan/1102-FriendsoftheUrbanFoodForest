@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import firebase from 'firebase/app'
-import auth from "@react-native-firebase/auth"
+
 
 
 export default class LoadingScreen extends React.Component {
