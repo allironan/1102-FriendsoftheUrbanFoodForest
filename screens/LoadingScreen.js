@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import firebase from 'firebase/app'
 
 
+
 export default class LoadingScreen extends React.Component {
     componentDidMount() {
     
