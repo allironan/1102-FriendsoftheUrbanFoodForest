@@ -3,7 +3,8 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
-import getUserData from '../firebaseData'
+import getUserData from '../getUserData'
+import editUserData from '../editUserData'
 
 export default class SettingsScreen extends React.Component {
     
@@ -24,14 +25,15 @@ export default class SettingsScreen extends React.Component {
     componentDidMount() {
         const {Email, Username} = firebase.default.auth().currentUser
 
-        const userData = getUserData();
-        this.setState({Username: userData.Username})
-        this.state.Email = userData.Email;
-        this.state.Paypal = userData.Paypal;
-        this.state.TextSize = userData.TextSize;
-        this.state.ColorTheme = userData.ColorTheme;
-
-        console.log("I AM IN SETTINGS", userData);
+        getUserData().then((userData) => {
+            // this.state.Paypal = userData.Paypal;
+            // this.state.TextSize = userData.TextSize;
+            // this.state.ColorTheme = userData.ColorTheme;
+            console.log(userData)
+            this.setState({Username : userData.Username})
+            this.setState({Email : userData.Email})
+            this.setState({Paypal : userData.Permissions})
+        });
 
         this.setState({Email , Username})
     }
@@ -79,6 +81,7 @@ export default class SettingsScreen extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => {
+                editUserData(this.state)
                 this.setState({readOnly: true})
             }}>
                 <Text>Save Settings</Text>

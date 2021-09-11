@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../firebaseData'
+import getUserData from '../getUserData'
 
 export default class HomeScreen extends React.Component {
     state = {

@@ -11,15 +11,13 @@ export default async function getUserData() {
     const currentUID = currentUser.uid;
 
     const usersRef = db.collection('Users').doc(currentUID);
-    console.log(usersRef);
     const snapshot = await usersRef.get();
 
     if (!snapshot.exists) {
         console.log("User data not found in firebase");
 
         const data = {
-            Username: "John Doe",
-            Password: "abc123",
+            Username: currentUser.displayName,
             Email: currentUser.email,
             UID: currentUID,
             Paypal: null,
@@ -30,7 +28,8 @@ export default async function getUserData() {
 
         const res = await db.collection('Users').doc(currentUID).set(data);
 
-        return data;
+        const newData = await usersRef.get();
+        return newData;
 
     } else {
         console.log("User data found: ", snapshot.data());
