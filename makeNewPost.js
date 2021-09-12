@@ -3,7 +3,7 @@ import 'firebase/database';
 import 'firebase/firestore';
 
 
-export default async function makeNewPost(title, content) {
+export default async function makeNewPost(title, contents) {
 
     const db = firebase.firestore();
     
@@ -12,19 +12,19 @@ export default async function makeNewPost(title, content) {
 
     var curTime = Date();
 
-    var postID = getNextPost().this();
+    var postID = await getNextPost()//.this();
 
     console.log(postID);
 
     const data = {
         Author: currentUID,
         Title: title,
-        Contents: content,
+        Contents: contents,
         PostID: postID,
         Date: curTime
     };
 
-    const res = await db.collection('Posts').doc(postID).set(data);
+    const res = await db.collection('Posts').doc(postID.toString()).set(data);
 
     return data;
 
@@ -48,15 +48,20 @@ async function getNextPost() {
 
         const res = db.collection('Posts').doc('Post Count').set(data);
 
-        const count = await usersRef.get();
+        const count = await countRef.get();
         return count.data();
 
     } else {
         console.log("Post Count found: ", snapshot.data());
-        
-        countRef.update({NextPostID : FieldValue.increment(1)})
 
-        const count = await usersRef.get();
+        const value = snapshot.data().NextPostID + 1;
+        const data = {
+            NextPostID: value
+        }
+        const res = db.collection('Posts').doc('Post Count').set(data);
+
+        const count = await countRef.get();
+        
         return count.data();
     }
 }
