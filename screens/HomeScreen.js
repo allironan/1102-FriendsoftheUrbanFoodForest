@@ -10,6 +10,18 @@ export default class HomeScreen extends React.Component {
         displayName: ""
     }
 
+    currentView() {
+        return <View style={styles.container}> 
+            <Text> Friends of the Urban Food Forest </Text>
+            <div>
+                <TouchableOpacity onPress={this.createPostsPressed}>
+                    <Text> Add Posts </Text>
+                </TouchableOpacity>
+            </div>
+            
+        </View> 
+    } 
+
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser
         getUserData();
@@ -20,13 +32,7 @@ export default class HomeScreen extends React.Component {
         firebase.default.auth().signOut()
     }
     render() {
-        return <View style={styles.container}> 
-            <Text>Welcome {this.state.displayName} </Text>
-
-            <TouchableOpacity onPress={this.signOutUser}>
-                <Text>Logout</Text>
-            </TouchableOpacity>
-        </View> 
+        return this.currentView();
     }
 }
 
@@ -36,6 +42,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center" 
     }
-        
+    
     
 })
