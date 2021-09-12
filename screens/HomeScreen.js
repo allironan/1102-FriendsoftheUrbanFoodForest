@@ -7,16 +7,25 @@ import makeNewPost from '../makeNewPost'
 import getPosts from '../getPosts'
 import deletePost from '../deletePost'
 
+interface Post {
+    Author: currentUID,
+    Title: title,
+    Contents: contents,
+    PostID: postID.NextPostID,
+    Date: curTime
+}
+
 export default class HomeScreen extends React.Component {
     state = {
         email: "",
         displayName: "",
         title: "Hi ",
         contents: "Teest!",
-        postID: 26 //for testing deleting data
+        postID: 26 //for testing deleting
     }
 
     currentView() {
+        let posts = getPosts();
         return (
         <View style={styles.container}>
                 <View style={{ padding: 10, flex: 1}}>
@@ -33,8 +42,6 @@ export default class HomeScreen extends React.Component {
                     <Text style={styles.postDate}>August 12th, 4:25pm</Text>
                     <Text style={styles.postContent}>Test Content</Text>
                 </View>
-                <div id="postsArray">
-                </div>
         </View>
         );
     } 
@@ -43,7 +50,7 @@ export default class HomeScreen extends React.Component {
         const {email, displayName} = firebase.default.auth().currentUser
         getUserData();
         this.setState({email, displayName})
-        const postsArray = getPosts();
+        const postsArray = []//this was created for the div, don't think it does anything
     }
 
     signOutUser = () => {
@@ -55,14 +62,14 @@ export default class HomeScreen extends React.Component {
     }
 
     createPostsPressed = () => {
-        makeNewPost(this.state.title, this.state.contents);
-        //deletePost(this.state.postID);
-     }
+    makeNewPost(this.state.title, this.state.contents);
+    //code for get posts
+    getPosts().then((userData) => {
+        console.log(userData);
+        postsArray = getPosts();
+    });
+    }
 }
-
-/*class Post {
-    constructor(title, contents, postID)
-} */
 
 
 const styles = StyleSheet.create({

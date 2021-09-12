@@ -50,7 +50,7 @@ async function getNextPost() {
         return count.data();
 
     } else {
-        console.log("Post Count found: ", snapshot.data());
+        //console.log("Post Count found: ", snapshot.data());
 
         const value = snapshot.data().NextPostID + 1;
         const data = {
