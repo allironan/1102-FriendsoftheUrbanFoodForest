@@ -18,8 +18,12 @@ export default async function getPosts() {
 
     } else {
         console.log("Posts found: ", snapshot.data());
-
-        const res = db.collection('Posts')
-        return res;
+        const postArray = null;
+        for (let i = 0; i < countRef; i++) {
+            if (db.collection('Posts').doc(i) != null) {
+                postArray.add(db.collection('Posts').doc(i));
+            }
+        }
+        return postArray;
     }
 }

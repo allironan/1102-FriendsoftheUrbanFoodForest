@@ -12,7 +12,7 @@ export default async function makeNewPost(title, contents) {
 
     var curTime = Date();
 
-    var postID = await getNextPost()//.this();
+    var postID = await getNextPost()
 
     const data = {
         Author: currentUID,

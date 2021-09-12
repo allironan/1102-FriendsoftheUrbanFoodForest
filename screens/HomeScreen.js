@@ -13,7 +13,7 @@ export default class HomeScreen extends React.Component {
         displayName: "",
         title: "Hi ",
         contents: "Teest!",
-        postID: 25
+        postID: 26 //for testing deleting data
     }
 
     currentView() {
@@ -24,10 +24,9 @@ export default class HomeScreen extends React.Component {
                     <Text> Add Posts </Text>
                 </TouchableOpacity>
             </div>
-            <div>
+            <div id="postsArray">
             </div>
 
-            
         </View> 
     } 
 
@@ -35,11 +34,7 @@ export default class HomeScreen extends React.Component {
         const {email, displayName} = firebase.default.auth().currentUser
         getUserData();
         this.setState({email, displayName})
-        const data = getPosts();
-        // array.forEach(element => {
-        //    console.log(element.title)
-        //    console.log(element.content)
-        // });
+        const postsArray = getPosts();
     }
 
     signOutUser = () => {
@@ -50,8 +45,8 @@ export default class HomeScreen extends React.Component {
     }
 
     createPostsPressed = () => {
-       //makeNewPost(this.state.title, this.state.contents);
-       deletePost(this.state.postID);
+       makeNewPost(this.state.title, this.state.contents);
+       //deletePost(this.state.postID);
     }
 }
 
