@@ -26,13 +26,14 @@ export default class HomeScreen extends React.Component {
                     <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                 </View>
                 <TouchableOpacity 
+                    key = 'addPost'
                     onPress={this.createPostsPressed}
                     style={styles.addPostButton}
                 >
-                    <Text style={styles.addPostLabel}> Add Post </Text>
+                    <Text> Add Post </Text>
                 </TouchableOpacity>
                     <View>
-                    {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
+                        {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
                     </View>
             </ScrollView>
                
@@ -50,7 +51,6 @@ export default class HomeScreen extends React.Component {
             this.setState({posts})
         });
         console.log(this.state.posts)
-
     }
 
     signOutUser = () => {
@@ -58,11 +58,12 @@ export default class HomeScreen extends React.Component {
     }
 
     render() {
-        return this.currentView();
+        return this.currentView()
     }
 
     createPostsPressed = () => {
-    makeNewPost(this.state.title, this.state.contents);
+        makeNewPost(this.state.title, this.state.contents);
+        this.currentView;
     //code for get posts
     }
 }

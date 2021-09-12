@@ -41,9 +41,17 @@ export default class SettingsScreen extends React.Component {
     currentView() {
         if (this.state.readOnly) {
             return <View style={styles.container}> 
-            <Text>Username: {this.state.Username} </Text>
-            <Text>Email: {this.state.Email} </Text>
-            <Text>Paypal: {this.state.Paypal} </Text>
+            <View style={styles.settingFrame}>
+                <Text style={styles.settingFont}>Username: {this.state.Username} </Text>
+            </View>
+            <View style={styles.settingFrame}>
+                <Text style={styles.settingFont}>Email: {this.state.Email} </Text>
+            </View>
+            <View style={styles.settingFrame}>
+                <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
+            </View>
+            
+            
 
             <TouchableOpacity onPress={this.changeSettingsPressed}>
                 <Text>Change Settings</Text>
@@ -113,10 +121,23 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center" 
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: 'rgba(233,243,196,1)'
     },
     flexbox_container: {
         flexDirection: "row",
+    },
+    settingFrame: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 10,
+        width: 400,
+        paddingVertical: 20,
+        marginHorizontal: '2%',
+        marginVertical: 10,
+        textAlign: 'left'
+    },
+    settingFont: {
+        marginLeft: 10
     }
 })
