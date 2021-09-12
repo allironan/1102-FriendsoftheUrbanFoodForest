@@ -2,71 +2,28 @@ import React, { Children } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../getUserData'
-import makeNewPost from '../makeNewPost'
-import getPosts from '../getPosts'
-import PostsScreen from '../screens/PostsScreen'
-import { ScrollView } from 'react-native-gesture-handler'
+import deletePost from '../deletePost'
 
-export default class HomeScreen extends React.Component {
-    state = {
-        email: "",
-        displayName: "",
-        title: "Hi ",
-        contents: "Teest!",
-        postID: 26, //for testing deleting,
-        posts: [],
-    }
-
-    currentView() {
+export default function PostsScreen(postsData) {
         return (
-        <View style={styles.container}>
-            <ScrollView>
-            <View style={{ padding: 10, flex: 1}}>
-                    <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
-                </View>
+        <View style={styles.postFrame} key={postsData.PostID}>
+            <Text style={styles.postTitle}>{postsData.Title}</Text>
+            <Text style={styles.postDate}>{postsData.Date}</Text>
+            <Text style={styles.postContent}>{postsData.Contents}</Text>
                 <TouchableOpacity 
-                    onPress={this.createPostsPressed}
-                    style={styles.addPostButton}
-                >
-                    <Text style={styles.addPostLabel}> Add Post </Text>
-                </TouchableOpacity>
-                    <View>
-                    {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
-                    </View>
-            </ScrollView>
-               
+                        style={styles.addPostButton}
+                        onPress={() => deletePostLocal(postsData.PostID)}
+                    >
+                        <Text style={styles.addPostLabel}> Delete Post </Text>
+                    </TouchableOpacity>
         </View>
         );
-    } 
-
-    componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser
-        getUserData();
-        this.setState({email, displayName})
-        getPosts().then((userData) => {
-            console.log(userData);
-            const posts = userData;
-            this.setState({posts})
-        });
-        console.log(this.state.posts)
-
-    }
-
-    signOutUser = () => {
-        firebase.default.auth().signOut()
-    }
-
-    render() {
-        return this.currentView();
-    }
-
-    createPostsPressed = () => {
-    makeNewPost(this.state.title, this.state.contents);
-    //code for get posts
-    }
 }
 
+function deletePostLocal(postID){
+    //console.log(postID)
+    deletePost(postID);
+}
 
 const styles = StyleSheet.create({
     container: {

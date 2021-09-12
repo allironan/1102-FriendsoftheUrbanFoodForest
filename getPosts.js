@@ -14,7 +14,7 @@ export default async function getPosts() {
     } else {
         const postArray = [];
         const test = 1;
-        for (let i = 0; i < snapshot.data().NextPostID; i++) {
+        for (let i = 0; i <= snapshot.data().NextPostID; i++) {
             const usersRef = db.collection('Posts').doc(i.toString());
             const snapshot = await usersRef.get();
             if (snapshot.exists) {
