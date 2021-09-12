@@ -16,15 +16,16 @@ import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 console.log(FIREBASE_APIKEY)
-const firebaseConfig = 
+const firebaseConfig =
 {
-  apiKey: 'AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM',
-  authDomain: 'friends-of-the-urban-ff.firebaseapp.com',
-  projectId:  'friends-of-the-urban-ff',
-  storageBucket: 'friends-of-the-urban-ff.appspot.com',
-  messagingSenderId: '1014426608257',
-  appId: '1:1014426608257:web:8ff56858313883ad05a380'
+ apiKey: "1",
+ authDomain: "2",
+ projectId:  "3",
+ storageBucket: "4",
+ messagingSenderId: "5",
+ appId: "6"
 }
+
 
 firebase.initializeApp(firebaseConfig);
 

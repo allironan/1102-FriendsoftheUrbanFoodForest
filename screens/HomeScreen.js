@@ -4,6 +4,8 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../getUserData'
 import makeNewPost from '../makeNewPost'
+import getPosts from '../getPosts'
+import deletePost from '../deletePost'
 
 export default class HomeScreen extends React.Component {
     state = {
@@ -11,6 +13,7 @@ export default class HomeScreen extends React.Component {
         displayName: "",
         title: "Hi ",
         contents: "Teest!",
+        postID: 25
     }
 
     currentView() {
@@ -32,7 +35,7 @@ export default class HomeScreen extends React.Component {
         const {email, displayName} = firebase.default.auth().currentUser
         getUserData();
         this.setState({email, displayName})
-        //const data = getPosts();
+        const data = getPosts();
         // array.forEach(element => {
         //    console.log(element.title)
         //    console.log(element.content)
@@ -47,7 +50,8 @@ export default class HomeScreen extends React.Component {
     }
 
     createPostsPressed = () => {
-        makeNewPost(this.state.title, this.state.contents);
+       //makeNewPost(this.state.title, this.state.contents);
+       deletePost(this.state.postID);
     }
 }
 

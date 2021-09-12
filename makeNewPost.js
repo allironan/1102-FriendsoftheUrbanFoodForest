@@ -14,17 +14,15 @@ export default async function makeNewPost(title, contents) {
 
     var postID = await getNextPost()//.this();
 
-    console.log(postID);
-
     const data = {
         Author: currentUID,
         Title: title,
         Contents: contents,
-        PostID: postID,
+        PostID: postID.NextPostID,
         Date: curTime
     };
 
-    const res = await db.collection('Posts').doc(postID.toString()).set(data);
+    const res = await db.collection('Posts').doc(postID.NextPostID.toString()).set(data);
 
     return data;
 
