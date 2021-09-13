@@ -22,19 +22,24 @@ export default class HomeScreen extends React.Component {
         return (
         <View style={styles.container}>
             <ScrollView>
-            <View style={{ padding: 10, flex: 1}}>
+                <View style={{ padding: 10, flex: 1}}>
                     <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                 </View>
                 <TouchableOpacity 
-                    key = 'addPost'
                     onPress={this.createPostsPressed}
                     style={styles.addPostButton}
                 >
                     <Text> Add Post </Text>
                 </TouchableOpacity>
-                    <View>
-                        {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
-                    </View>
+                <View>
+                    {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
+                </View>
+                <TouchableOpacity 
+                    onPress={this.signOutUser}
+                    style={styles.addPostButton}
+                >
+                    <Text> Sign Out </Text>
+                </TouchableOpacity>
             </ScrollView>
                
         </View>

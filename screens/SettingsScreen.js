@@ -32,7 +32,7 @@ export default class SettingsScreen extends React.Component {
             console.log(userData)
             this.setState({Username : userData.Username})
             this.setState({Email : userData.Email})
-            this.setState({Paypal : userData.Permissions})
+            //this.setState({Paypal : userData.Permissions})
         });
 
         this.setState({Email , Username})
@@ -40,55 +40,63 @@ export default class SettingsScreen extends React.Component {
 
     currentView() {
         if (this.state.readOnly) {
-            return <View style={styles.container}> 
-            <View style={styles.settingFrame}>
-                <Text style={styles.settingFont}>Username: {this.state.Username} </Text>
+            return (
+            <View style={styles.container}> 
+                <View style={styles.settingFrame}>
+                    <Text style={styles.settingFont}>Username: {this.state.Username} </Text>
+                </View>
+                <View style={styles.settingFrame}>
+                    <Text style={styles.settingFont}>Email: {this.state.Email} </Text>
+                </View>
+                <View style={styles.settingFrame}>
+                    <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
+                </View>
+                
+                <View style={styles.choiceFrame}>
+                    <TouchableOpacity onPress={this.changeSettingsPressed}>
+                        <Text>Change Settings</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={styles.settingFrame}>
-                <Text style={styles.settingFont}>Email: {this.state.Email} </Text>
-            </View>
-            <View style={styles.settingFrame}>
-                <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
-            </View>
-            
-            
-
-            <TouchableOpacity onPress={this.changeSettingsPressed}>
-                <Text>Change Settings</Text>
-            </TouchableOpacity>
-            </View> 
+            )
         } else {
             return <View style={styles.container}> 
 
-            <div>
-                <Text>Name: </Text>
+            <View style={styles.settingFrame}>
+                <Text style={styles.settingFont}>Name: </Text>
                 <TextInput 
                     placeholder={this.state.Username}
                     value={this.state.Username}
                     onChangeText={Username => this.setState({Username: Username})}
+                    style={styles.settingFont}
                 />
-            </div>
+            </View>
 
-            <div>
-                <Text>Email: </Text>
+            <View style={styles.settingFrame}>
+                <Text style={styles.settingFont}>Email: </Text>
                 <TextInput 
                     placeholder={this.state.Email}
                     value={this.state.Email}
                     onChangeText={Email => this.setState({Email: Email})}
+                    style={styles.settingFont}
                 />
-            </div>
+            </View>
 
-            <Text>Paypal: {this.state.Paypal} </Text>
+            <View style={styles.settingFrame}>
+                <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
+            </View>
 
-            <TouchableOpacity onPress={this.cancelPressed}>
-                <Text>Cancel</Text>
-            </TouchableOpacity>
+            <View style={styles.choiceFrame}>
+                <TouchableOpacity onPress={this.cancelPressed}>
+                    <Text>Cancel</Text>
+                </TouchableOpacity>
+            </View>
 
-
-            <TouchableOpacity onPress={this.savePressed}>
-
-                <Text>Save Settings</Text>
-            </TouchableOpacity>
+            <View style={styles.choiceFrame}>
+                <TouchableOpacity onPress={this.savePressed}>
+                    <Text>Save Settings</Text>
+                </TouchableOpacity>
+            </View>
             </View>
         }
     }
@@ -137,7 +145,16 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         textAlign: 'left'
     },
+    choiceFrame: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 10,
+        width: 150,
+        paddingVertical: 20,
+        marginHorizontal: '2%',
+        marginVertical: 10,
+        textAlign: 'center'
+    },
     settingFont: {
         marginLeft: 10
-    }
+    },
 })
