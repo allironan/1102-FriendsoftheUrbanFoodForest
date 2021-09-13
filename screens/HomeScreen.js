@@ -36,7 +36,7 @@ export default class HomeScreen extends React.Component {
             </Modal> */}
             <WebViewExample/>
             <ScrollView>
-            <View style={{ padding: 10, flex: 1}}>
+                <View style={{ padding: 10, flex: 1}}>
                     <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                 </View>
                 <TouchableOpacity 
@@ -48,9 +48,15 @@ export default class HomeScreen extends React.Component {
                     style={styles.addPostLabel}/>
                     {/* <Text style={styles.addPostLabel}> Add Post </Text> */}
                 </TouchableOpacity>
-                    <View>
+                <View>
                     {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
-                    </View>
+                </View>
+                <TouchableOpacity 
+                    onPress={this.signOutUser}
+                    style={styles.addPostButton}
+                >
+                    <Text> Sign Out </Text>
+                </TouchableOpacity>
             </ScrollView>
         </View>
         );
@@ -66,6 +72,7 @@ export default class HomeScreen extends React.Component {
             this.setState({posts})
         });
         console.log(this.state.isModalVisible)
+        console.log(this.state.posts)
     }
     toggleModal = () => {
         this.setState({isModalVisible: !(this.state.isModalVisible)})
@@ -82,11 +89,12 @@ export default class HomeScreen extends React.Component {
     }
 
     render() {
-        return this.currentView();
+        return this.currentView()
     }
 
     createPostsPressed = () => {
-    makeNewPost(this.state.title, this.state.contents);
+        makeNewPost(this.state.title, this.state.contents);
+        this.currentView;
     //code for get posts
     }
 }
