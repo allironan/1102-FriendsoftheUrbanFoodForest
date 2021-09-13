@@ -1,12 +1,15 @@
 import React, { Children } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../getUserData'
 import makeNewPost from '../makeNewPost'
 import getPosts from '../getPosts'
 import PostsScreen from '../screens/PostsScreen'
+//import dialogScreen from '../screens/dialogScreen'
 import { ScrollView } from 'react-native-gesture-handler'
+import WebViewExample from '../screens/dialogScreen.js'
+
 
 export default class HomeScreen extends React.Component {
     state = {
@@ -16,26 +19,39 @@ export default class HomeScreen extends React.Component {
         contents: "Teest!",
         postID: 26, //for testing deleting,
         posts: [],
+        isModalVisible: false
     }
 
     currentView() {
         return (
         <View style={styles.container}>
+            {/* <Modal 
+            isVisible={this.state.isModalVisible}
+            transparent={false} >
+                <View>
+                <Text>Hello!</Text>
+        
+                <Button title="Hide modal" onPress={this.toggleModal} />
+                </View>
+            </Modal> */}
+            <WebViewExample/>
             <ScrollView>
             <View style={{ padding: 10, flex: 1}}>
                     <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                 </View>
                 <TouchableOpacity 
-                    onPress={this.createPostsPressed}
+                    //onPress={this.toggleModal}
+                    //onPress={this.createPostsPressed}
                     style={styles.addPostButton}
                 >
-                    <Text style={styles.addPostLabel}> Add Post </Text>
+                    <WebViewExample
+                    style={styles.addPostLabel}/>
+                    {/* <Text style={styles.addPostLabel}> Add Post </Text> */}
                 </TouchableOpacity>
                     <View>
                     {this.state.posts.map(r => <View>{PostsScreen(r)}</View>)}  
                     </View>
             </ScrollView>
-               
         </View>
         );
     } 
@@ -49,9 +65,17 @@ export default class HomeScreen extends React.Component {
             const posts = userData;
             this.setState({posts})
         });
-        console.log(this.state.posts)
-
+        console.log(this.state.isModalVisible)
     }
+    toggleModal = () => {
+        this.setState({isModalVisible: !(this.state.isModalVisible)})
+        console.log("Modal is now:" + this.state.isModalVisible)
+    }
+
+    // toggleModalOff = () => {
+    //     this.setState({isModalVisible: false})
+    //     console.log("Modal off:" + this.state.isModalVisible)
+    // }
 
     signOutUser = () => {
         firebase.default.auth().signOut()
