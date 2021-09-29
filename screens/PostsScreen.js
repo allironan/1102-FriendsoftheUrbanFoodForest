@@ -2,7 +2,7 @@ import React, { Children } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import deletePost from '../deletePost'
+import deletePost from '../PostFunctions/deletePost'
 
 export default function PostsScreen(postsData) {
         return (

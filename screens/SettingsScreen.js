@@ -3,8 +3,8 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
-import getUserData from '../getUserData'
-import editUserData from '../editUserData'
+import getUserData from '../UserData/getUserData'
+import editUserData from '../UserData/editUserData'
 
 export default class SettingsScreen extends React.Component {
     
