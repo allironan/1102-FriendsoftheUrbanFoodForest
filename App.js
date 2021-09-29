@@ -6,7 +6,7 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen'
 import SettingsScreen from "./screens/SettingsScreen"
-import EventsScreen from "./screens/EventsScreen"
+import EventsAndProgramsScreen from "./screens/EventsAndPrograms/EventsandProgramsScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -40,7 +40,7 @@ const Tab = createBottomTabNavigator();
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Events" component={EventsScreen} />
+      <Tab.Screen name="Events" component={EventsAndProgramsScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
