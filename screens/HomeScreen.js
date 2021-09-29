@@ -9,10 +9,9 @@ import { ScrollView } from 'react-native-gesture-handler'
 import WebViewExample from '../screens/dialogScreen.js'
 import styles from './HomeScreen.style.js'
 
-temporaryArray = [];
 
 export default class HomeScreen extends React.Component {
-    /*state = {
+    state = {
         email: "",
         displayName: "",
         title: "Hi ",
@@ -20,9 +19,10 @@ export default class HomeScreen extends React.Component {
         postID: 26, //for testing deleting,
         posts: [],
         isModalVisible: false
-    }*/
+    }
 
     currentView() {
+        console.log(this.state.posts);
         return (
             <View style={styles.container}>
                 {/* <Modal 
@@ -43,7 +43,7 @@ export default class HomeScreen extends React.Component {
                         <Text> Add Post </Text>
                     </TouchableOpacity>
                     <View>
-                        {temporaryArray.map(r => <DisplayPost key={r.PostID} PostID={r.PostID} Title={r.Title} Date={r.Date} Contents={r.Contents} />)}
+                        {this.state.posts.map(r => <DisplayPost key={r.PostID} PostID={r.PostID} Title={r.Title} Date={r.Date} Contents={r.Contents} />)}
                     </View>
                     <TouchableOpacity onPress={this.signOutUser} style={styles.addPostButton}>
                         <Text> Sign Out </Text>
@@ -59,13 +59,16 @@ export default class HomeScreen extends React.Component {
         this.setState({email, displayName})
         getPosts().then((userData) => {
             console.log(userData);
-            temporaryArray = userData;
+            const posts = userData;
+            this.setState({posts})
         });
+        console.log(this.state.isModalVisible)
+        console.log(this.state.posts)
     }
-    /*toggleModal = () => {
+    toggleModal = () => {
         this.setState({isModalVisible: !(this.state.isModalVisible)})
         console.log("Modal is now:" + this.state.isModalVisible)
-    }*/
+    }
 
     // toggleModalOff = () => {
     //     this.setState({isModalVisible: false})
