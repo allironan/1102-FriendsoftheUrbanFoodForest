@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableHighlight, View, StyleSheet, TextInput } from 'react-native';
-import makeNewPost from '../postComponents'
+import makeNewPost from '../Components/PostComponents'
  
 //import Modal from 'modal-react-native-web';
  

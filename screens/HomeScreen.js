@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'r
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../getUserData'
-import {makeNewPost, getPosts, deletePost} from '../postComponents'
+import {makeNewPost, getPosts, deletePost} from '../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import WebViewExample from '../screens/dialogScreen.js'
 import styles from './HomeScreen.style.js'
