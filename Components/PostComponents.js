@@ -92,11 +92,11 @@ export async function getPosts() {
 }
 
 //Function to edit posts
-export async function editPost(postToSet) {
+export async function editPost(postToSet, postID) {
 
     const db = firebase.firestore();
 
-    const res = await db.collection('Posts').doc('Post Count').set(postToSet);
+    const res = await db.collection('Posts').doc(postID.toString()).set(postToSet);
 
 }
 

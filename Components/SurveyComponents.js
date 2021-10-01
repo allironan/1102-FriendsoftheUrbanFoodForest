@@ -6,7 +6,9 @@ import 'firebase/firestore';
 export async function makeNewEvent(title, information, startTime, endTime, programID) {
 
     const db = firebase.firestore();
-
+    
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
     const newParticipants = new Map();
     
     var eventID = await getNextEvent()
@@ -106,11 +108,11 @@ export async function getEvents() {
 }
 
 //Function to edit events
-export async function editEvent(eventToSet, eventID) {
+export async function editEvent(eventToSet) {
 
     const db = firebase.firestore();
 
-    const res = await db.collection('Events').doc(eventID.toString()).set(eventToSet);
+    const res = await db.collection('Events').doc('Event Count').set(eventToSet);
 
 }
 
