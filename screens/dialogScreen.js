@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableHighlight, View, StyleSheet, TextInput } from 'react-native';
-import makeNewPost from '../makeNewPost'
+import makeNewPost from '../Components/PostComponents'
  
-import Modal from 'modal-react-native-web';
+//import Modal from 'modal-react-native-web';
  
 export default class Example extends Component {
   state = {
@@ -18,14 +18,6 @@ export default class Example extends Component {
   render() {
     return (
       <View style={{marginTop: 22}}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-        //   onDismiss={() => {
-        //     alert('Modal has been closed.');
-        //   }}
-          >
           <View style={{marginTop: 22}}>
             <View>
               <Text>Enter your new post</Text>
@@ -54,8 +46,6 @@ export default class Example extends Component {
               </TouchableHighlight>
             </View>
           </View>
-        </Modal>
- 
         <TouchableHighlight
           onPress={() => {
             this.setModalVisible(true);
