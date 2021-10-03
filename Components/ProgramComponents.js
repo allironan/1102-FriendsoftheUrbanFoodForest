@@ -29,7 +29,7 @@ async function getNextProgram() {
     
     const currentUser = firebase.auth().currentUser;
 
-    const countRef = db.collection('Programs').doc('Program Count');
+    const countRef = db.collection('Counters').doc('Program Count');
     const snapshot = await countRef.get();
 
     if (!snapshot.exists) {
@@ -39,7 +39,7 @@ async function getNextProgram() {
             NextProgramID: 1,
         };
 
-        const res = db.collection('Programs').doc('Program Count').set(data);
+        const res = db.collection('Counters').doc('Program Count').set(data);
 
         const count = await countRef.get();
         return count.data();
@@ -50,14 +50,21 @@ async function getNextProgram() {
         // Will: If this is done by incrementing by one on our end, it will occur atomically.
         // Multiple programs, Programs, etc. may end up having the same ID. Firebase has an API increment
         // call that works atomically for this purpose.
-        const value = snapshot.data().NextProgramID + 1;
-        const data = {
-            NextProgramID: value
-        }
-        const res = db.collection('Programs').doc('Program Count').set(data);
 
-        const count = await countRef.get();
+        // const value = snapshot.data().NextProgramID + 1;
+        // const data = {
+        //     NextProgramID: value
+        // }
+        // const res = db.collection('Counters').doc('Program Count').set(data);
+
+        // const count = await countRef.get();
         
+        // return count.data();
+
+        const res = db.collection('Counters').doc('Program Count');
+        const increment = firebase.firestore.FieldValue.increment(1);
+        await res.update({NextProgramID: increment})
+        const count = await countRef.get();
         return count.data();
     }
 }
@@ -68,7 +75,7 @@ export async function getPrograms() {
     // individually, we would query all from desired doc/collection at once.
     const db = firebase.firestore();
 
-    const countRef = db.collection('Programs').doc('Program Count');
+    const countRef = db.collection('Counters').doc('Program Count');
     const snapshot = await countRef.get();
     if (!snapshot.exists) {
         console.log("No events in firebase");

@@ -32,10 +32,10 @@ export async function makeNewPost(title, contents) {
 async function getNextPost() {
 
     const db = firebase.firestore();
-    
+
     const currentUser = firebase.auth().currentUser;
 
-    const countRef = db.collection('Posts').doc('Post Count');
+    const countRef = db.collection('Counters').doc('Post Count');
     const snapshot = await countRef.get();
 
     if (!snapshot.exists) {
@@ -45,7 +45,7 @@ async function getNextPost() {
             NextPostID: 1,
         };
 
-        const res = db.collection('Posts').doc('Post Count').set(data);
+        const res = db.collection('Counters').doc('Post Count').set(data);
 
         const count = await countRef.get();
         return count.data();
@@ -53,14 +53,21 @@ async function getNextPost() {
     } else {
         //console.log("Post Count found: ", snapshot.data());
 
-        const value = snapshot.data().NextPostID + 1;
-        const data = {
-            NextPostID: value
-        }
-        const res = db.collection('Posts').doc('Post Count').set(data);
+        // const value = snapshot.data().NextPostID + 1;
+        // const data = {
+        //     NextPostID: value
+        // }
+        // const res = db.collection('Posts').doc('Post Count').set(data);
 
-        const count = await countRef.get();
+        // const count = await countRef.get();
         
+        // return count.data();
+
+        const res = db.collection('Counters').doc('Post Count');
+        const increment = firebase.firestore.FieldValue.increment(1);
+        //const count = res.update("NextPostID", admin.firestore.FieldValue.increment(1));
+        await res.update({NextPostID: increment})
+        const count = await countRef.get();
         return count.data();
     }
 }
@@ -69,7 +76,7 @@ async function getNextPost() {
 export async function getPosts() {
     const db = firebase.firestore();
 
-    const countRef = db.collection('Posts').doc('Post Count');
+    const countRef = db.collection('Counters').doc('Post Count');
     const snapshot = await countRef.get();
     if (!snapshot.exists) {
         console.log("No posts in firebase");
