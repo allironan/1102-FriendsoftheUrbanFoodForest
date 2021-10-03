@@ -8,12 +8,12 @@ export async function makeNewProgram(title, information) {
     const db = firebase.firestore();
 
     const linkedEvents = {};//new Map();
-    var programID = await getNextProgram()
+    var programID = await getNextProgram();
     const data = {
         Title: title,
         Information: information,
         LinkedEvents: linkedEvents,
-        ProgramID: programID,
+        ProgramID: programID.NextProgramID,
     };
 
     const res = await db.collection('Programs').doc(programID.NextProgramID.toString()).set(data);

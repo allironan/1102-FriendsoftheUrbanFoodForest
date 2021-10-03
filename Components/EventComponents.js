@@ -18,7 +18,7 @@ export async function makeNewEvent(title, information, startTime, endTime, progr
         StartTime: startTime,
         EndTime: endTime,
         ProgramID: programID,
-        EventID: eventID
+        EventID: eventID.NextEventID
     };
 
     const res = await db.collection('Events').doc(eventID.NextEventID.toString()).set(data);
