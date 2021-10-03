@@ -74,7 +74,7 @@ export async function getPrograms() {
     } else {
         // Attempt 1
         const programArray = [];
-        for (let i = 0; i <= snapshot.data().NextEventID; i++) {
+        for (let i = 0; i <= snapshot.data().ProgramID; i++) {
             const usersRef = db.collection('Programs').doc(i.toString());
             const snapshot = await usersRef.get();
             if (snapshot.exists) {
@@ -83,7 +83,7 @@ export async function getPrograms() {
             }
         }
         // console.log("The array of programs is below: ");
-        // console.log(programArray);
+        console.log(programArray);
 
         // // Attempt 2
         // const usersRef = await db.collection('Programs').get();
