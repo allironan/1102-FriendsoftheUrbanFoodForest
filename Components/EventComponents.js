@@ -79,27 +79,33 @@ export async function getEvents() {
 
         return null;
     } else {
-        // const eventArray = [];
-        // const test = 1;
-        // for (let i = 0; i <= snapshot.data().NextEventID; i++) {
-        //     const usersRef = db.collection('Event').get;
-        //     const snapshot = await usersRef.get();
-        //     if (snapshot.exists) {
-        //         //console.log("Item data found: ", snapshot.data());
-        //         eventArray.push(snapshot.data());
-        //     }
-        // }
-        console.log("I am here part 2");
-        const usersRef = await db.collection('Events').get();
+        // Attempt 1
         const eventArray = [];
-        if (usersRef.exists) {
-            //console.log("Item data found: ", snapshot.data());
-            usersRef.forEach((event) => {
-                eventArray.push(event);
-            })
+        for (let i = 0; i <= snapshot.data().NextEventID; i++) {
+            const usersRef = db.collection('Events').doc(i.toString());
+            const snapshot = await usersRef.get();
+            if (snapshot.exists) {
+                //console.log("Item data found: ", snapshot.data());
+                eventArray.push(snapshot.data());
+            }
         }
-        
+        console.log("The array of events is below: ");
         console.log(eventArray);
+
+        // // Attempt 2
+        // console.log("There are events in firebase");
+        // const usersRef = await db.collection('Events').get();
+        // const eventArray = [];
+        // if (usersRef.exists) {
+        //     //console.log("Item data found: ", snapshot.data());
+        //     usersRef.forEach((event) => {
+        //         eventArray.push(event);
+        //     })
+        // }
+        // console.log("The array of events is below: ");
+        // console.log(eventArray);
+
+
         return eventArray;
     }
 }
