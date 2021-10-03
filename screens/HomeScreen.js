@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../getUserData'
+import getUserData from '../UserData/getUserData'
 import {makeNewPost, getPosts, deletePost} from '../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import WebViewExample from '../screens/dialogScreen.js'
@@ -25,12 +25,12 @@ export default class HomeScreen extends React.Component {
         console.log(this.state.posts);
         return (
             <View style={styles.container}>
-                {/* <Modal 
+                {/* <Modal
                 isVisible={this.state.isModalVisible}
                 transparent={false} >
                     <View>
                     <Text>Hello!</Text>
-            
+
                     <Button title="Hide modal" onPress={this.toggleModal} />
                     </View>
                 </Modal> */}
@@ -50,7 +50,7 @@ export default class HomeScreen extends React.Component {
                 </ScrollView>
             </View>
         );
-    } 
+    }
 
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser
@@ -78,7 +78,7 @@ export default class HomeScreen extends React.Component {
         firebase.default.auth().signOut()
     }
 
-    render() { 
+    render() {
         return this.currentView()
     }
 

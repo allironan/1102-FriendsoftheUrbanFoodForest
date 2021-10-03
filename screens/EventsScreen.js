@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../getUserData'
+import getUserData from '../UserData/getUserData'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from './EventsScreen.style.js'
@@ -46,7 +46,7 @@ export default class EventsScreen extends React.Component {
         });
     }
 
-    render() { 
+    render() {
         return this.currentView()
     }
 
