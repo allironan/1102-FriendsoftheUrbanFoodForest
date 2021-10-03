@@ -70,8 +70,6 @@ export async function getEvents() {
     // individually, we would query all from desired doc/collection at once.
     const db = firebase.firestore();
 
-    console.log("I am here in getEvents");
-
     const countRef = db.collection('Counters').doc('Event Count');
     const snapshot = await countRef.get();
     if (!snapshot.exists) {
@@ -89,8 +87,8 @@ export async function getEvents() {
                 eventArray.push(snapshot.data());
             }
         }
-        console.log("The array of events is below: ");
-        console.log(eventArray);
+        // console.log("The array of events is below: ");
+        // console.log(eventArray);
 
         // // Attempt 2
         // console.log("There are events in firebase");

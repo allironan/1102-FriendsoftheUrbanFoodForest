@@ -17,7 +17,7 @@ export default class EventsScreen extends React.Component {
     }
 
     currentView() {
-        console.log(this.state.events);
+        // console.log(this.state.events);
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -40,7 +40,7 @@ export default class EventsScreen extends React.Component {
         getUserData();
         this.setState({email, displayName})
         getEvents().then((userData) => {
-            console.log(userData);
+            // console.log(userData);
             const events = userData;
             this.setState({events})
         });

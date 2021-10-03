@@ -32,7 +32,7 @@ export default async function getUserData() {
         return newData;
 
     } else {
-        console.log("User data found: ", snapshot.data());
+        // console.log("User data found: ", snapshot.data());
         return snapshot.data();
     }
 }

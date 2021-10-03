@@ -22,7 +22,7 @@ export default class HomeScreen extends React.Component {
     }
 
     currentView() {
-        console.log(this.state.posts);
+        // console.log(this.state.posts);
         return (
             <View style={styles.container}>
                 {/* <Modal 
@@ -57,12 +57,12 @@ export default class HomeScreen extends React.Component {
         getUserData();
         this.setState({email, displayName})
         getPosts().then((userData) => {
-            console.log(userData);
+            // console.log(userData);
             const posts = userData;
             this.setState({posts})
         });
-        console.log(this.state.isModalVisible)
-        console.log(this.state.posts)
+        // console.log(this.state.isModalVisible)
+        // console.log(this.state.posts)
     }
     toggleModal = () => {
         this.setState({isModalVisible: !(this.state.isModalVisible)})

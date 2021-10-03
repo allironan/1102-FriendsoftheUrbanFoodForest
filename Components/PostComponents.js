@@ -91,8 +91,8 @@ export async function getPosts() {
                 postArray.push(snapshot.data());
             }
         }
-        console.log("The array of posts is below: ");
-        console.log(postArray);
+        // console.log("The array of posts is below: ");
+        // console.log(postArray);
 
         // // Attempt 2
         // console.log("There are posts in firebase");
