@@ -51,6 +51,7 @@ function StackScreens(){
     }}>
           <ProgramsStack.Screen name="ProgramsHome" component={EventsScreen} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
+          <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
     </ProgramsStack.Navigator>
   )
 }

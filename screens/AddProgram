@@ -1,0 +1,22 @@
+import React, { Children } from 'react'
+import ReactDOM from 'react-dom'
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Dialog} from 'react-native'
+
+
+export default class AddProgram extends React.Component {
+    // state = {
+    //     details = this.props.route.params
+    // }
+    currentView() {
+        return (
+            <View>
+                <Text>
+                    Create new post
+                </Text>
+            </View>
+        );
+    }
+    render() {
+        return this.currentView()
+    }
+}
