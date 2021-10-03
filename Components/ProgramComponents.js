@@ -72,27 +72,31 @@ export async function getPrograms() {
 
         return null;
     } else {
-        // const eventArray = [];
-        // const test = 1;
-        // for (let i = 0; i <= snapshot.data().NextEventID; i++) {
-        //     const usersRef = db.collection('Event').get;
-        //     const snapshot = await usersRef.get();
-        //     if (snapshot.exists) {
-        //         //console.log("Item data found: ", snapshot.data());
-        //         eventArray.push(snapshot.data());
-        //     }
-        // }
-
-        const usersRef = await db.collection('Programs').get();
+        // Attempt 1
         const programArray = [];
-        if (usersRef.exists) {
-            //console.log("Item data found: ", snapshot.data());
-            usersRef.forEach((program) => {
-                programArray.push(program);
-            })
+        for (let i = 0; i <= snapshot.data().NextEventID; i++) {
+            const usersRef = db.collection('Programs').doc(i.toString());
+            const snapshot = await usersRef.get();
+            if (snapshot.exists) {
+                //console.log("Item data found: ", snapshot.data());
+                programArray.push(snapshot.data());
+            }
         }
-        
-        console.log(programArray);
+        // console.log("The array of programs is below: ");
+        // console.log(programArray);
+
+        // // Attempt 2
+        // const usersRef = await db.collection('Programs').get();
+        // const programArray = [];
+        // if (usersRef.exists) {
+        //     //console.log("Item data found: ", snapshot.data());
+        //     usersRef.forEach((program) => {
+        //         programArray.push(program);
+        //     })
+        // }
+        // console.log("The array of programs is below: ");
+        // console.log(programArray);
+
         return programArray;
     }
 }
