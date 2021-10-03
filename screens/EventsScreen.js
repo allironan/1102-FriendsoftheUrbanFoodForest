@@ -5,17 +5,29 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../UserData/getUserData'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
+import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from './EventsScreen.style.js'
+import ProgramComponent from './ProgramsUIComponent';
 
 
 export default class EventsScreen extends React.Component {
     state = {
         email: "",
         displayName: "",
-        events: []
+        events: [],
+        programs: [
+            {id: 1, title: "program1", description: "Program 1 description"},
+            {id: 2, title: "program2", description: "Program 2 description"},
+            {id: 3, title: "program3", description: "Program 3 description"},
+            {id: 4, title: "program4", description: "Program 4 description"},
+            {id: 5, title: "program5", description: "Program 5 description"},
+            {id: 6, title: "program6", description: "Program 6 description"},
+            {id: 7, title: "program7", description: "Program 7 description"},
+            {id: 8, title: "program8", description: "Program 8 description"},
+          ]
     }
-
+    
     currentView() {
         console.log(this.state.events);
         return (
@@ -25,8 +37,19 @@ export default class EventsScreen extends React.Component {
                         <Text style= {styles.programTitle}> Programs Test </Text>
                     </View>
                     <TouchableOpacity onPress={this.createEventPressed} style={styles.addEventButton}>
-                        <Text> Add Event </Text>
+                        <Text> Add Program </Text>
                     </TouchableOpacity>
+                    <View >
+                        {this.state.programs.map((program) => (
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("SingularProgram", {
+                            title: program["title"],
+                            description: program["title"]
+                        })}> 
+                        <ProgramComponent id = {program["id"]} title={program["title"]} description={program["title"]}></ProgramComponent> 
+                        </TouchableOpacity>
+                        ))
+                        }
+                    </View>
                     <View>
                         {this.state.events.map(r => <DisplayEvent key={r.EventID} EventID={r.EventID} Title={r.Title} Information={r.Information} StartTime={r.Date} EndTime={r.EndTime} />)}
                     </View>
@@ -39,11 +62,20 @@ export default class EventsScreen extends React.Component {
         const {email, displayName} = firebase.default.auth().currentUser
         getUserData();
         this.setState({email, displayName})
-        getEvents().then((userData) => {
+        // getEvents().then((userData) => {
+        //     console.log(userData);
+        //     const events = userData;
+        //     this.setState({events})
+        // });
+        getPrograms().then((userData) => {
             console.log(userData);
-            const events = userData;
-            this.setState({events})
+            const programs = userData;
+            if (programs != null) {
+                this.setState({programs})
+            }
+            
         });
+
     }
 
     render() {
