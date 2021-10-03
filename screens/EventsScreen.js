@@ -26,26 +26,27 @@ export default class EventsScreen extends React.Component {
             {id: 7, title: "program7", description: "Program 7 description"},
             {id: 8, title: "program8", description: "Program 8 description"},
           ]
+        // programs: []
     }
     
     currentView() {
-        console.log(this.state.events);
+        //console.log(this.state.events);
         return (
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.programFrame}>
                         <Text style= {styles.programTitle}> Programs Test </Text>
                     </View>
-                    <TouchableOpacity onPress={this.createEventPressed} style={styles.addEventButton}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgram")} style={styles.addEventButton}>
                         <Text> Add Program </Text>
                     </TouchableOpacity>
                     <View >
                         {this.state.programs.map((program) => (
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("SingularProgram", {
-                            title: program["title"],
-                            description: program["title"]
+                            title: program.Title,
+                            description: program.Information
                         })}> 
-                        <ProgramComponent id = {program["id"]} title={program["title"]} description={program["title"]}></ProgramComponent> 
+                        <ProgramComponent id = {program.ProgramID} title={program.Title} description={program.Information}></ProgramComponent> 
                         </TouchableOpacity>
                         ))
                         }
@@ -70,11 +71,9 @@ export default class EventsScreen extends React.Component {
         getPrograms().then((userData) => {
             console.log(userData);
             const programs = userData;
-            if (programs != null) {
-                this.setState({programs})
-            }
-            
+            this.setState({programs})
         });
+        console.log(this.state.programs)
 
     }
 

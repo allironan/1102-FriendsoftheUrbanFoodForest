@@ -3,12 +3,12 @@ import 'firebase/database';
 import 'firebase/firestore';
 
 //Function to make new program
-export async function makeNewProgram(title, information, programID) {
+export async function makeNewProgram(title, information) {
 
     const db = firebase.firestore();
 
-    const linkedEvents = new Map();
-    
+    const linkedEvents = {};//new Map();
+    var programID = await getNextProgram()
     const data = {
         Title: title,
         Information: information,

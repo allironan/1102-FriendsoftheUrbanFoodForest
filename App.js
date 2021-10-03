@@ -9,6 +9,7 @@ import HomeScreen from './screens/HomeScreen'
 import EventsScreen from './screens/EventsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import SingularProgram from "./screens/SingularProgram"
+import AddProgram from "./screens/AddProgram"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
