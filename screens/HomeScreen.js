@@ -34,7 +34,6 @@ export default class HomeScreen extends React.Component {
                     <Button title="Hide modal" onPress={this.toggleModal} />
                     </View>
                 </Modal> */}
-                <WebViewExample/>
                 <ScrollView>
                     <View style={{ padding: 10, flex: 1}}>
                         <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
