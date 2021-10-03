@@ -34,7 +34,7 @@ async function getNextEvent() {
     
     const currentUser = firebase.auth().currentUser;
 
-    const countRef = db.collection('Events').doc('Event Count');
+    const countRef = db.collection('Counters').doc('Event Count');
     const snapshot = await countRef.get();
 
     if (!snapshot.exists) {
@@ -44,7 +44,7 @@ async function getNextEvent() {
             NextEventID: 1,
         };
 
-        const res = db.collection('Events').doc('Event Count').set(data);
+        const res = db.collection('Counters').doc('Event Count').set(data);
 
         const count = await countRef.get();
         return count.data();
@@ -55,14 +55,11 @@ async function getNextEvent() {
         // Andrew: If this is done by incrementing by one on our end, it will occur atomically.
         // Multiple events, Events, etc. may end up having the same ID. Firebase has an API increment
         // call that works atomically for this purpose.
-        const value = snapshot.data().NextEventID + 1;
-        const data = {
-            NextEventID: value
-        }
-        const res = db.collection('Events').doc('Event Count').set(data);
 
+        const res = db.collection('Counters').doc('Event Count');
+        const increment = firebase.firestore.FieldValue.increment(1);
+        await res.update({NextEventID: increment})
         const count = await countRef.get();
-        
         return count.data();
     }
 }
@@ -73,34 +70,40 @@ export async function getEvents() {
     // individually, we would query all from desired doc/collection at once.
     const db = firebase.firestore();
 
-    const countRef = db.collection('Events').doc('Event Count');
+    const countRef = db.collection('Counters').doc('Event Count');
     const snapshot = await countRef.get();
     if (!snapshot.exists) {
         console.log("No events in firebase");
 
         return null;
     } else {
-        // const eventArray = [];
-        // const test = 1;
-        // for (let i = 0; i <= snapshot.data().NextEventID; i++) {
-        //     const usersRef = db.collection('Event').get;
-        //     const snapshot = await usersRef.get();
-        //     if (snapshot.exists) {
-        //         //console.log("Item data found: ", snapshot.data());
-        //         eventArray.push(snapshot.data());
-        //     }
-        // }
-
-        const usersRef = await db.collection('Event').get();
+        // Attempt 1
         const eventArray = [];
-        if (usersRef.exists) {
-            //console.log("Item data found: ", snapshot.data());
-            usersRef.forEach((event) => {
-                eventArray.push(event);
-            })
+        for (let i = 0; i <= snapshot.data().NextEventID; i++) {
+            const usersRef = db.collection('Events').doc(i.toString());
+            const snapshot = await usersRef.get();
+            if (snapshot.exists) {
+                //console.log("Item data found: ", snapshot.data());
+                eventArray.push(snapshot.data());
+            }
         }
-        
-        console.log(eventArray);
+        // console.log("The array of events is below: ");
+        // console.log(eventArray);
+
+        // // Attempt 2
+        // console.log("There are events in firebase");
+        // const usersRef = await db.collection('Events').get();
+        // const eventArray = [];
+        // if (usersRef.exists) {
+        //     //console.log("Item data found: ", snapshot.data());
+        //     usersRef.forEach((event) => {
+        //         eventArray.push(event);
+        //     })
+        // }
+        // console.log("The array of events is below: ");
+        // console.log(eventArray);
+
+
         return eventArray;
     }
 }

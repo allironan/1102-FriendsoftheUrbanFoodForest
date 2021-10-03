@@ -32,10 +32,10 @@ export async function makeNewPost(title, contents) {
 async function getNextPost() {
 
     const db = firebase.firestore();
-    
+
     const currentUser = firebase.auth().currentUser;
 
-    const countRef = db.collection('Posts').doc('Post Count');
+    const countRef = db.collection('Counters').doc('Post Count');
     const snapshot = await countRef.get();
 
     if (!snapshot.exists) {
@@ -45,7 +45,7 @@ async function getNextPost() {
             NextPostID: 1,
         };
 
-        const res = db.collection('Posts').doc('Post Count').set(data);
+        const res = db.collection('Counters').doc('Post Count').set(data);
 
         const count = await countRef.get();
         return count.data();
@@ -53,14 +53,21 @@ async function getNextPost() {
     } else {
         //console.log("Post Count found: ", snapshot.data());
 
-        const value = snapshot.data().NextPostID + 1;
-        const data = {
-            NextPostID: value
-        }
-        const res = db.collection('Posts').doc('Post Count').set(data);
+        // const value = snapshot.data().NextPostID + 1;
+        // const data = {
+        //     NextPostID: value
+        // }
+        // const res = db.collection('Posts').doc('Post Count').set(data);
 
-        const count = await countRef.get();
+        // const count = await countRef.get();
         
+        // return count.data();
+
+        const res = db.collection('Counters').doc('Post Count');
+        const increment = firebase.firestore.FieldValue.increment(1);
+        //const count = res.update("NextPostID", admin.firestore.FieldValue.increment(1));
+        await res.update({NextPostID: increment})
+        const count = await countRef.get();
         return count.data();
     }
 }
@@ -69,15 +76,13 @@ async function getNextPost() {
 export async function getPosts() {
     const db = firebase.firestore();
 
-    const countRef = db.collection('Posts').doc('Post Count');
+    const countRef = db.collection('Counters').doc('Post Count');
     const snapshot = await countRef.get();
     if (!snapshot.exists) {
         console.log("No posts in firebase");
-
         return null;
     } else {
         const postArray = [];
-        const test = 1;
         for (let i = 0; i <= snapshot.data().NextPostID; i++) {
             const usersRef = db.collection('Posts').doc(i.toString());
             const snapshot = await usersRef.get();
@@ -86,7 +91,23 @@ export async function getPosts() {
                 postArray.push(snapshot.data());
             }
         }
-        console.log(postArray);
+        // console.log("The array of posts is below: ");
+        // console.log(postArray);
+
+        // // Attempt 2
+        // console.log("There are posts in firebase");
+        // const usersRef = await db.collection('Posts').get();
+        // const postArray = [];
+        // if (usersRef.exists) {
+        //     console.log("Users Ref DOES exist");
+        //     // console.log("Item data found: ", snapshot.data());
+        //     usersRef.forEach((post) => {
+        //         postArray.push(post);
+        //     })
+        // }
+        // console.log("The array of posts is below: ");
+        // console.log(postArray);
+
         return postArray;
     }
 }
