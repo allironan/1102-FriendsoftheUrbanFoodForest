@@ -51,21 +51,9 @@ async function getNextPost() {
         return count.data();
 
     } else {
-        //console.log("Post Count found: ", snapshot.data());
-
-        // const value = snapshot.data().NextPostID + 1;
-        // const data = {
-        //     NextPostID: value
-        // }
-        // const res = db.collection('Posts').doc('Post Count').set(data);
-
-        // const count = await countRef.get();
-        
-        // return count.data();
 
         const res = db.collection('Counters').doc('Post Count');
         const increment = firebase.firestore.FieldValue.increment(1);
-        //const count = res.update("NextPostID", admin.firestore.FieldValue.increment(1));
         await res.update({NextPostID: increment})
         const count = await countRef.get();
         return count.data();

@@ -51,16 +51,6 @@ async function getNextProgram() {
         // Multiple programs, Programs, etc. may end up having the same ID. Firebase has an API increment
         // call that works atomically for this purpose.
 
-        // const value = snapshot.data().NextProgramID + 1;
-        // const data = {
-        //     NextProgramID: value
-        // }
-        // const res = db.collection('Counters').doc('Program Count').set(data);
-
-        // const count = await countRef.get();
-        
-        // return count.data();
-
         const res = db.collection('Counters').doc('Program Count');
         const increment = firebase.firestore.FieldValue.increment(1);
         await res.update({NextProgramID: increment})
@@ -93,7 +83,7 @@ export async function getPrograms() {
         //     }
         // }
 
-        const usersRef = await db.collection('Program').get();
+        const usersRef = await db.collection('Programs').get();
         const programArray = [];
         if (usersRef.exists) {
             //console.log("Item data found: ", snapshot.data());

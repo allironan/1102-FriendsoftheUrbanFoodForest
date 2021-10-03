@@ -89,8 +89,8 @@ export async function getEvents() {
         //         eventArray.push(snapshot.data());
         //     }
         // }
-
-        const usersRef = await db.collection('Event').get();
+        console.log("I am here part 2");
+        const usersRef = await db.collection('Events').get();
         const eventArray = [];
         if (usersRef.exists) {
             //console.log("Item data found: ", snapshot.data());
