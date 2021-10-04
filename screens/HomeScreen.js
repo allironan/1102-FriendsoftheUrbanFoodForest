@@ -38,15 +38,15 @@ export default class HomeScreen extends React.Component {
                     <View style={{ padding: 10, flex: 1}}>
                         <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                     </View>
+                    <TouchableOpacity onPress={this.handleClick} style={styles.addPostButton}>
+                        <Text> Take our survey! </Text>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={this.createPostsPressed} style={styles.addPostButton}>
                         <Text> Add Post </Text>
                     </TouchableOpacity>
                     <View>
                         {this.state.posts.map(r => <DisplayPost key={r.PostID} PostID={r.PostID} Title={r.Title} Date={r.Date} Contents={r.Contents} />)}
                     </View>
-                    <TouchableOpacity onPress={this.signOutUser} style={styles.addPostButton}>
-                        <Text> Sign Out </Text>
-                    </TouchableOpacity>
                 </ScrollView>
             </View>
         );
@@ -68,15 +68,15 @@ export default class HomeScreen extends React.Component {
         this.setState({isModalVisible: !(this.state.isModalVisible)})
         console.log("Modal is now:" + this.state.isModalVisible)
     }
-
+    handleClick = () => {
+        window.open("https://forms.gle/gcmT4cyGwSarndiz9");
+      };
     // toggleModalOff = () => {
     //     this.setState({isModalVisible: false})
     //     console.log("Modal off:" + this.state.isModalVisible)
     // }
 
-    signOutUser = () => {
-        firebase.default.auth().signOut()
-    }
+   
 
     render() {
         return this.currentView()

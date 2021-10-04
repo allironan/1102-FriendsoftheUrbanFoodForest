@@ -18,7 +18,7 @@ export default StyleSheet.create({
     addPostButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
-        alignSelf: 'flex-end',
+        alignSelf: 'center',
         width: 100,
         paddingVertical: 10,
         marginHorizontal: '2%',
@@ -33,6 +33,7 @@ export default StyleSheet.create({
     postFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
+        alignSelf: 'center',
         width: 325,
         height: 'auto',
         minHeight: 150,
