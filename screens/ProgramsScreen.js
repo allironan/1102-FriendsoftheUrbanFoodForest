@@ -35,7 +35,7 @@ export default class EventsScreen extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.programFrame}>
-                        <Text style= {styles.programTitle}> Programs Test </Text>
+                        <Text style= {styles.programTitle}> Programs </Text>
                     </View>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgram")} style={styles.addEventButton}>
                         <Text> Add Program </Text>

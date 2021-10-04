@@ -13,7 +13,11 @@ export default class SingularProgram extends React.Component {
                     {this.props.route.params.title}
                     {this.props.route.params.description}
                 </Text>
-                <TouchableOpacity > <Text>Edit Program</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
+                            title: this.props.route.params.title,
+                            description: this.props.route.params.description,
+                            ProgramID: this.props.route.params.ProgramID
+                        })}> <Text>Edit Program</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteProgramLocal(this.props.route.params.ProgramID)}> <Text>Delete Program</Text></TouchableOpacity>
                 <Text>
                     Program Events Below
