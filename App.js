@@ -6,7 +6,7 @@ import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen'
-import EventsScreen from './screens/EventsScreen'
+import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import SingularProgram from "./screens/SingularProgram"
 import AddProgram from "./screens/AddProgram"
@@ -50,7 +50,7 @@ function StackScreens(){
     <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
       headerShown: false
     }}>
-          <ProgramsStack.Screen name="ProgramsHome" component={EventsScreen} />
+          <ProgramsStack.Screen name="ProgramsHome" component={ProgramsScreen} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
           <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
     </ProgramsStack.Navigator>

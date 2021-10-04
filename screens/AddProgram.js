@@ -26,6 +26,7 @@ export default class AddProgram extends React.Component {
                 onPress={() => {
                   if (this.state.content != "" || this.state.title != "") {
                     makeNewProgram(this.state.title, this.state.information)
+                    this.props.navigation.goBack()
                   } else {
                     alert('Text cannot be empty.');
                   }

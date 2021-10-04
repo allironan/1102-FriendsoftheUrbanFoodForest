@@ -74,7 +74,7 @@ export async function getPrograms() {
     } else {
         // Attempt 1
         const programArray = [];
-        for (let i = 0; i <= snapshot.data().ProgramID; i++) {
+        for (let i = 0; i <= snapshot.data().NextProgramID; i++) {
             const usersRef = db.collection('Programs').doc(i.toString());
             const snapshot = await usersRef.get();
             if (snapshot.exists) {

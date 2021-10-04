@@ -6,7 +6,6 @@ export default function ProgramComponent(props)  {
         <View style={styles.eventFrame} key={props.id}>
             <Text style={styles.eventTitle}>{props.title}</Text>
             <Text style={styles.eventDescription}>{props.description}</Text>
-            <TouchableOpacity> <Text>Edit Program</Text></TouchableOpacity>
         </View>
     );
 }
