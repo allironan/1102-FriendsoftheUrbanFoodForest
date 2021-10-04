@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../getUserData'
+import getUserData from '../Components/UserDataComponents'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './EventsScreen.style.js'
+import styles from './styles/EventsScreen.style.js'
 
 
 export default class EventsScreen extends React.Component {
@@ -36,8 +36,7 @@ export default class EventsScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser
-        getUserData();
+        const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
         getEvents().then((userData) => {
             // console.log(userData);

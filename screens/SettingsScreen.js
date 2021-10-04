@@ -4,7 +4,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
 import {getUserData, editUserData} from '../Components/UserDataComponents'
-import styles from './SettingsScreen.styles'
+import styles from './styles/SettingsScreen.styles'
 
 export default class SettingsScreen extends React.Component {
 

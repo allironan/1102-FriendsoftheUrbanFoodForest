@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../UserData/getUserData'
+import getUserData from '../Components/UserDataComponents'
 import {makeNewPost, getPosts, deletePost} from '../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import WebViewExample from '../screens/dialogScreen.js'
-import styles from './HomeScreen.style.js'
+import styles from './styles/HomeScreen.style.js'
 
 
 export default class HomeScreen extends React.Component {
@@ -53,8 +53,7 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser
-        getUserData();
+        const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
         getPosts().then((userData) => {
             // console.log(userData);
