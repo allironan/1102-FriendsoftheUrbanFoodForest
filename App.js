@@ -1,11 +1,16 @@
 import React from "react"
+import 'react-native-gesture-handler'
 import {createAppContainer, createSwitchNavigator} from 'react-navigation'
-import {createStackNavigator} from 'react-navigation-stack'
+import {createStackNavigator} from '@react-navigation/stack'
 import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen'
+import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
+import SingularProgram from "./screens/SingularProgram"
+import AddProgram from "./screens/AddProgram"
+import EditProgram from "./screens/EditProgram"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -15,6 +20,7 @@ import { FIREBASE_APIKEY,
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { registerRootComponent } from "expo"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -27,30 +33,48 @@ const firebaseConfig =
 }
 
 firebase.initializeApp(firebaseConfig);
-
-const AppStack = createStackNavigator({
-  Home: HomeScreen
-})
-const AuthStack = createStackNavigator({
-  Login: LoginScreen,
-  Register: RegisterScreen
-})
+const AuthStack = createStackNavigator();
+const ProgramsStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const authStack = () => (
+  <NavigationContainer>
+    <AuthStack.Navigator initialRouteName = "ProgramsHome">
+      <AuthStack.Screen name="Login" component={LoginScreen} />
+      <AuthStack.Screen name="Register" component={RegisterScreen} />
+    </AuthStack.Navigator>
+  </NavigationContainer>
+)
+
+function StackScreens(){
+  return (
+    <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
+      headerShown: false
+    }}>
+          <ProgramsStack.Screen name="ProgramsHome" component={ProgramsScreen} />
+          <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
+          <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
+          <ProgramsStack.Screen name="EditProgram" component={EditProgram}/>
+    </ProgramsStack.Navigator>
+  )
+}
+
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Programs" component={StackScreens}>
+      </Tab.Screen>
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>
-
 )
 export default createAppContainer(
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
       App: NavBar,
-      Auth: AuthStack
+      Auth: authStack,
     },
     {
       initialRouteName: "Loading"

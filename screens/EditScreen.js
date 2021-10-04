@@ -1,31 +1,42 @@
 import React, { Component } from 'react';
 import { Text, TouchableHighlight, View, StyleSheet, TextInput } from 'react-native';
-import makeNewPost from '../Components/PostComponents'
+import makeNewPost from '../makeNewPost'
+import PostsScreen from '../screens/PostsScreen.js'
  
-//import Modal from 'modal-react-native-web';
+import Modal from 'modal-react-native-web';
+import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStack';
  
-export default class Example extends Component {
+export default class EditScreen extends Component {
   state = {
     modalVisible: false,
-    title: "",
-    content: "",
+    //PostID: PostsScreen.passData.PostID,
+    title: PostsScreen.passData.Title,
   };
  
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
+
+  // getData = () => {
+  //   return PostsScreen.passData();
+  // }
  
   render() {
     return (
       <View style={{marginTop: 22}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          >
           <View style={{marginTop: 22}}>
             <View>
               <Text>Enter your new post</Text>
               <TextInput placeholder="Post Title" 
-                                   value={this.state.title} style={styles.textInput} 
+                                   value={this.getData().title} style={styles.textInput} 
                                    onChangeText={(value) => this.setState({title: value})} />
             <TextInput placeholder="Post Content" 
-                                    value={this.state.content} style={styles.textInput} 
+                                    value={this.getData().content} style={styles.textInput} 
                                     onChangeText={(value) => this.setState({content: value})} />
               <TouchableHighlight
                 onPress={() => {
@@ -46,11 +57,13 @@ export default class Example extends Component {
               </TouchableHighlight>
             </View>
           </View>
+        </Modal>
+ 
         <TouchableHighlight
           onPress={() => {
             this.setModalVisible(true);
           }}>
-          <Text style={styles.addPostLabel}>Add Post </Text>
+          <Text style={styles.addPostLabel}>Edit Post </Text>
         </TouchableHighlight>
       </View>
     );

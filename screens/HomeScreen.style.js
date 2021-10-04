@@ -1,31 +1,6 @@
-import React, { Children } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import deletePost from '../deletePost'
+import { StyleSheet } from "react-native";
 
-export default function PostsScreen(postsData) {
-        return (
-        <View style={styles.postFrame} key={postsData.PostID}>
-            <Text style={styles.postTitle}>{postsData.Title}</Text>
-            <Text style={styles.postDate}>{postsData.Date}</Text>
-            <Text style={styles.postContent}>{postsData.Contents}</Text>
-                <TouchableOpacity 
-                        style={styles.addPostButton}
-                        onPress={() => deletePostLocal(postsData.PostID)}
-                    >
-                        <Text style={styles.addPostLabel}> Delete Post </Text>
-                    </TouchableOpacity>
-        </View>
-        );
-}
-
-function deletePostLocal(postID){
-    //console.log(postID)
-    deletePost(postID);
-}
-
-const styles = StyleSheet.create({
+export default StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -43,7 +18,7 @@ const styles = StyleSheet.create({
     addPostButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
-        alignSelf: 'flex-end',
+        alignSelf: 'center',
         width: 100,
         paddingVertical: 10,
         marginHorizontal: '2%',
@@ -58,6 +33,7 @@ const styles = StyleSheet.create({
     postFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
+        alignSelf: 'center',
         width: 325,
         height: 'auto',
         minHeight: 150,

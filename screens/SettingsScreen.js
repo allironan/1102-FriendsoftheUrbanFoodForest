@@ -3,11 +3,11 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
-import getUserData from '../getUserData'
-import editUserData from '../editUserData'
+import getUserData from '../UserData/getUserData'
+import editUserData from '../UserData/editUserData'
 
 export default class SettingsScreen extends React.Component {
-    
+
     // const [displayName, setDisplayName] = useState("")
 
 
@@ -41,7 +41,7 @@ export default class SettingsScreen extends React.Component {
     currentView() {
         if (this.state.readOnly) {
             return (
-            <View style={styles.container}> 
+            <View style={styles.container}>
                 <View style={styles.settingFrame}>
                     <Text style={styles.settingFont}>Username: {this.state.Username} </Text>
                 </View>
@@ -51,20 +51,25 @@ export default class SettingsScreen extends React.Component {
                 <View style={styles.settingFrame}>
                     <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
                 </View>
-                
+
                 <View style={styles.choiceFrame}>
                     <TouchableOpacity onPress={this.changeSettingsPressed}>
                         <Text>Change Settings</Text>
                     </TouchableOpacity>
                 </View>
+                <View>
+                <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
+                        <Text> Sign Out </Text>
+                </TouchableOpacity>
+            </View>
             </View>
             )
         } else {
-            return <View style={styles.container}> 
+            return <View style={styles.container}>
 
             <View style={styles.settingFrame}>
                 <Text style={styles.settingFont}>Name: </Text>
-                <TextInput 
+                <TextInput
                     placeholder={this.state.Username}
                     value={this.state.Username}
                     onChangeText={Username => this.setState({Username: Username})}
@@ -74,7 +79,7 @@ export default class SettingsScreen extends React.Component {
 
             <View style={styles.settingFrame}>
                 <Text style={styles.settingFont}>Email: </Text>
-                <TextInput 
+                <TextInput
                     placeholder={this.state.Email}
                     value={this.state.Email}
                     onChangeText={Email => this.setState({Email: Email})}
@@ -99,6 +104,9 @@ export default class SettingsScreen extends React.Component {
             </View>
             </View>
         }
+    }
+    signOutUser = () => {
+        firebase.default.auth().signOut()
     }
 
     changeSettingsPressed = () => {
