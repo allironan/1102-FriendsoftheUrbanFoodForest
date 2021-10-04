@@ -8,7 +8,6 @@ import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant}
 import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from './ProgramsScreen.style.js'
-import ProgramComponent from './ProgramsUIComponent';
 
 
 export default class EventsScreen extends React.Component {
@@ -47,7 +46,7 @@ export default class EventsScreen extends React.Component {
                             description: program.Information,
                             ProgramID: program.ProgramID
                         })}> 
-                        <ProgramComponent id = {program.ProgramID} title={program.Title} description={program.Information}></ProgramComponent> 
+                            <ProgramComponent id = {program.ProgramID} title={program.Title} description={program.Information}></ProgramComponent> 
                         </TouchableOpacity>
                         ))
                         }
@@ -81,6 +80,17 @@ export default class EventsScreen extends React.Component {
         //const newData = makeNewEvent();
         //ReactDOM.render(<DisplayEvent PostID={newData.PostID} Title={newData.Title} Date={newData.Date} Contents={newData.Contents} />, document.getElementById('root'))
         //code for get posts
+    }
+}
+
+class ProgramComponent extends React.Component  {
+    render () {
+        return (
+            <View style={styles.eventFrame} key={this.props.id}>
+                <Text style={styles.eventTitle}>{this.props.title}</Text>
+                <Text style={styles.eventInformation}>{this.props.description}</Text>
+            </View>
+        );
     }
 }
 

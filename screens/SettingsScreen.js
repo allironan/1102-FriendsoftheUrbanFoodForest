@@ -1,10 +1,10 @@
 import React from 'react'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
-import getUserData from '../UserData/getUserData'
-import editUserData from '../UserData/editUserData'
+import {getUserData, editUserData} from '../Components/UserDataComponents'
+import styles from './SettingsScreen.styles'
 
 export default class SettingsScreen extends React.Component {
 
@@ -126,35 +126,3 @@ export default class SettingsScreen extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: 'rgba(233,243,196,1)'
-    },
-    flexbox_container: {
-        flexDirection: "row",
-    },
-    settingFrame: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 10,
-        width: 400,
-        paddingVertical: 20,
-        marginHorizontal: '2%',
-        marginVertical: 10,
-        textAlign: 'left'
-    },
-    choiceFrame: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 10,
-        width: 150,
-        paddingVertical: 20,
-        marginHorizontal: '2%',
-        marginVertical: 10,
-        textAlign: 'center'
-    },
-    settingFont: {
-        marginLeft: 10
-    },
-})

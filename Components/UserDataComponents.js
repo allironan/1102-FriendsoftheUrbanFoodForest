@@ -2,8 +2,18 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 
+export async function editUserData(dataToSet) {
 
-export default async function getUserData() {
+    const db = firebase.firestore();
+    
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
+
+    const res = await db.collection('Users').doc(currentUID).set(dataToSet);
+
+}
+
+export async function getUserData() {
 
     const db = firebase.firestore();
     
@@ -36,6 +46,3 @@ export default async function getUserData() {
         return snapshot.data();
     }
 }
-
-
-
