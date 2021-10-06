@@ -122,7 +122,7 @@ export async function deleteProgram(programID) {
     const db = firebase.firestore();
     const res = await db.collection('Programs').doc(programID.toString()).delete();
     //if we want to add/subtract each time
-    // const countRef = db.collection('Program').doc('Program Count');
+    // const countRef = db.collection('Programs').doc('Program Count');
     // const snapshot = await countRef.get();
     // const value = snapshot.data().NextProgramID + 1;
     // const data = {
