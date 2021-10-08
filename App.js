@@ -10,7 +10,7 @@ import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import SingularProgram from "./screens/SingularProgram"
 import AddProgram from "./screens/AddProgramScreen"
-import EditProgram from "./screens/EditProgram"
+import EditProgram from "./screens/EditProgramScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
