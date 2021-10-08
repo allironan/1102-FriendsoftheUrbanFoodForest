@@ -57,6 +57,11 @@ export default class SettingsScreen extends React.Component {
                         <Text>Change Settings</Text>
                     </TouchableOpacity>
                 </View>
+                <View>
+                <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
+                        <Text> Sign Out </Text>
+                </TouchableOpacity>
+            </View>
             </View>
             )
         } else {
@@ -99,6 +104,9 @@ export default class SettingsScreen extends React.Component {
             </View>
             </View>
         }
+    }
+    signOutUser = () => {
+        firebase.default.auth().signOut()
     }
 
     changeSettingsPressed = () => {

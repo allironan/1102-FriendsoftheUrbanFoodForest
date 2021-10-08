@@ -27,6 +27,9 @@ export default class EventsScreen extends React.Component {
         //   ]
          programs: []
     }
+
+    firestoreRefPrograms = firebase.firestore().collection('Programs')
+    firestoreRefEvents = firebase.firestore().collection('Events')
     
     currentView() {
         //console.log(this.state.events);
@@ -34,7 +37,7 @@ export default class EventsScreen extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.programFrame}>
-                        <Text style= {styles.programTitle}> Programs </Text>
+                        <Text style= {styles.programTitle}> Programs Test </Text>
                     </View>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgram")} style={styles.addEventButton}>
                         <Text> Add Program </Text>
@@ -42,6 +45,7 @@ export default class EventsScreen extends React.Component {
                     <View >
                         {this.state.programs.map((program) => (
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("SingularProgram", {
+                            key: program.ProgramID,
                             title: program.Title,
                             description: program.Information,
                             ProgramID: program.ProgramID
@@ -52,7 +56,7 @@ export default class EventsScreen extends React.Component {
                         }
                     </View>
                     <View>
-                        {this.state.events.map(r => <DisplayEvent key={r.EventID} EventID={r.EventID} Title={r.Title} Information={r.Information} StartTime={r.Date} EndTime={r.EndTime} />)}
+                        {this.state.events.map(r => <DisplayEvent key={r.EventID} EventID={r.EventID} Title={r.Title} Information={r.Information} StartTime={r.StartTime.toDate().toLocaleDateString("en-US")} EndTime={r.EndTime.toDate().toLocaleDateString("en-US")} />)}
                     </View>
                 </ScrollView>
             </View>
@@ -62,23 +66,36 @@ export default class EventsScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
-        getPrograms().then((userData) => {
-            console.log(userData);
-            const programs = userData;
-            this.setState({programs})
-        });
+        this.unsubscribe = this.firestoreRefPrograms.onSnapshot(this.getCollectionPrograms)
+        this.unsubscribeAgain = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
         console.log(this.state.programs)
 
+    }
+    
+    componentWillUnmount(){
+        this.unsubscribe
+        this.unsubscribeAgain
+    }
+
+    getCollectionPrograms = (querySnapshot) => {
+        const programs = []
+        querySnapshot.forEach((program) => {
+            programs.push(program.data())
+        })
+        this.setState({programs})
+    }
+    getCollectionEvents = (querySnapshot) => {
+        const events = []
+        querySnapshot.forEach((event) => {
+            events.push(event.data())
+        })
+        console.log(events)
+        this.setState({events})
+    
     }
 
     render() {
         return this.currentView()
-    }
-
-    createEventPressed = () => {
-        //const newData = makeNewEvent();
-        //ReactDOM.render(<DisplayEvent PostID={newData.PostID} Title={newData.Title} Date={newData.Date} Contents={newData.Contents} />, document.getElementById('root'))
-        //code for get posts
     }
 }
 
