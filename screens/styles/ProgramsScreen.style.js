@@ -29,6 +29,17 @@ export default StyleSheet.create({
     programInformation: {
 
     },
+    goBackButton: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 8,
+        alignSelf: 'flex-end',
+        width: 100,
+        paddingVertical: 10,
+        marginHorizontal: '2%',
+        marginBottom: 20,
+        textAlign: 'left',
+        textAlignVertical: 'center'
+    },
     addEventButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,

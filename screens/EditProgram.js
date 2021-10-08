@@ -2,7 +2,7 @@ import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
 import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
-
+import styles from './styles/ProgramsScreen.style.js'
 
 export default class EditProgram extends React.Component {
   state = {
@@ -11,8 +11,8 @@ export default class EditProgram extends React.Component {
   };
     currentView() {
         return (
-            <View>
-                <Button title="Back to Programs" onPress={() => this.props.navigation.navigate.goBack()} />
+            <View style={styles.container}>
+                <Button style={styles.goBackButton} title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
                 <Text>
                     Edit Post
                 </Text>

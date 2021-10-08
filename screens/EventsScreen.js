@@ -5,6 +5,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../Components/UserDataComponents'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
+import deleteProgram from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from './styles/EventsScreen.style.js'
 
@@ -16,19 +17,37 @@ export default class EventsScreen extends React.Component {
         events: []
     }
 
+    firestoreRefEvents = firebase.firestore().collection('Events')
+
     currentView() {
-        // console.log(this.state.events);
         return (
             <View style={styles.container}>
                 <ScrollView>
+                    <Button style={styles.goBackButton} title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
+
                     <View style={styles.programFrame}>
-                        <Text style= {styles.programTitle}> Programs Test </Text>
+                        <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
+                        <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
                     </View>
+
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
+                            title: this.props.route.params.title,
+                            description: this.props.route.params.description,
+                            ProgramID: this.props.route.params.ProgramID
+                        })}> 
+                        <Text> Edit Program </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => deleteProgramLocal(this.props.route.params.ProgramID)}> 
+                        <Text> Delete Program </Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity onPress={this.createEventPressed} style={styles.addEventButton}>
                         <Text> Add Event </Text>
                     </TouchableOpacity>
+
                     <View>
-                        {this.state.events.map(r => <DisplayEvent key={r.EventID} EventID={r.EventID} Title={r.Title} Information={r.Information} StartTime={r.StartTime} EndTime={r.EndTime} />)}
+                        {this.state.events.map((event) => <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} StartTime={event.StartTime.toDate().toLocaleDateString("en-US")} EndTime={event.EndTime.toDate().toLocaleDateString("en-US")} />)}
                     </View>
                 </ScrollView>
             </View>
@@ -38,11 +57,19 @@ export default class EventsScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
-        getEvents().then((userData) => {
-            // console.log(userData);
-            const events = userData;
-            this.setState({events})
-        });
+        this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
+    }
+
+    componentWillUnmount(){
+        this.unsubscribe
+    }
+
+    getCollectionEvents = (querySnapshot) => {
+        const events = []
+        querySnapshot.forEach((event) => {
+            events.push(event.data())
+        })
+        this.setState({events})
     }
 
     render() { 
@@ -58,9 +85,9 @@ export default class EventsScreen extends React.Component {
 
 class DisplayEvent extends React.Component {
     render () {
-        var startDateTime = new Date(this.props.StartTime.toDate());
+        var startDateTime = new Date(this.props.StartTime);
         // console.log(startDateTime);
-        var endDateTime = new Date(this.props.EndTime.toDate());
+        var endDateTime = new Date(this.props.EndTime);
         // console.log(endDateTime);
         return (
         <View style={styles.eventFrame} key={this.props.EventID}>
@@ -73,5 +100,8 @@ class DisplayEvent extends React.Component {
     }
 }
 
-function deletePostLocal(postID){
+function deleteProgramLocal(postID){
+    deleteProgram(postID);
+    //this.props.navigation.goBack()
+    //onPress={() => deleteProgram(this.props.route.params.ProgramID)}
 }

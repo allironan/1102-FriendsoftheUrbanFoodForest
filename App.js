@@ -21,6 +21,7 @@ import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { registerRootComponent } from "expo"
+import EventsScreen from "./screens/EventsScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -52,6 +53,7 @@ function StackScreens(){
       headerShown: false
     }}>
           <ProgramsStack.Screen name="ProgramsHome" component={ProgramsScreen} />
+          <ProgramsStack.Screen name="EventsScreen" component={EventsScreen} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
           <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
           <ProgramsStack.Screen name="EditProgram" component={EditProgram}/>
