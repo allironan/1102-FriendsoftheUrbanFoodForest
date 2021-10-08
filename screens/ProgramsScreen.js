@@ -7,7 +7,7 @@ import getUserData from '../Components/UserDataComponents'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
 import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/ProgramsScreen.style.js'
+import styles from './styles/ProgramsEventsScreen.style.js'
 
 
 export default class ProgramsScreen extends React.Component {

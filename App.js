@@ -24,6 +24,7 @@ import { registerRootComponent } from "expo"
 import EventsScreen from "./screens/EventsScreen"
 import EventInstance from "./screens/EventInstance"
 import EditEventScreen from "./screens/EditEventScreen"
+import EditProgramScreen from "./screens/EditProgramScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -59,7 +60,7 @@ function StackScreens(){
           <ProgramsStack.Screen name="EventInstance" component={EventInstance} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
           <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
-          <ProgramsStack.Screen name="EditProgram" component={EditProgram}/>
+          <ProgramsStack.Screen name="EditProgram" component={EditProgramScreen}/>
           <ProgramsStack.Screen name="EditEvent" component={EditEventScreen}/>
     </ProgramsStack.Navigator>
   )

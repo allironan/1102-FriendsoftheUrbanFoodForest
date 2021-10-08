@@ -6,7 +6,7 @@ import PostsScreen from '../screens/PostsScreen.js'
 import Modal from 'modal-react-native-web';
 import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStack';
  
-export default class EditScreen extends Component {
+export default class EditPostScreen extends Component {
   state = {
     modalVisible: false,
     //PostID: PostsScreen.passData.PostID,
