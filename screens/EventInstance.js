@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import styles from './styles/EventsScreen.style.js'
 
 
-export default class EventsScreen extends React.Component {
+export default class EventInstance extends React.Component {
     state = {
         email: "",
         displayName: "",
@@ -23,41 +23,24 @@ export default class EventsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <Button style={styles.goBackButton} title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
+                    <Button style={styles.goBackButton} title="Back to Program" onPress={() => this.props.navigation.goBack()} />
 
                     <View style={styles.programFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
                         <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditEvent", {
                             title: this.props.route.params.title,
                             description: this.props.route.params.description,
-                            ProgramID: this.props.route.params.ProgramID
+                            EventID: this.props.route.params.EventID
                         })}> 
-                        <Text> Edit Program </Text>
+                        <Text> Edit Event </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => deleteProgramLocal(this.props.route.params.ProgramID)}> 
-                        <Text> Delete Program </Text>
+                    <TouchableOpacity onPress={() => deleteEventLocal(this.props.route.params.EventID)}> 
+                        <Text> Delete Event </Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity onPress={this.createEventPressed} style={styles.addEventButton}>
-                        <Text> Add Event </Text>
-                    </TouchableOpacity>
-
-                    <View>
-                        {this.state.events.map((event) => (
-                            <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventInstance", {
-                                key: event.EventID,
-                                title: event.Title,
-                                description: event.Information,
-                                EventID: event.EventID
-                            })}> 
-                                <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} StartTime={event.StartTime.toDate().toLocaleDateString("en-US")} EndTime={event.EndTime.toDate().toLocaleDateString("en-US")} />
-                            </TouchableOpacity>
-                        ))}
-                    </View>
                 </ScrollView>
             </View>
         );
@@ -66,7 +49,6 @@ export default class EventsScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
-        this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
     }
 
     componentWillUnmount(){
@@ -109,8 +91,7 @@ class DisplayEvent extends React.Component {
     }
 }
 
-function deleteProgramLocal(postID){
-    deleteProgram(postID);
+function deleteEventLocal(postID){
     //this.props.navigation.goBack()
     //onPress={() => deleteProgram(this.props.route.params.ProgramID)}
 }

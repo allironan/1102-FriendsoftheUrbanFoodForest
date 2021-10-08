@@ -22,6 +22,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { registerRootComponent } from "expo"
 import EventsScreen from "./screens/EventsScreen"
+import EventInstance from "./screens/EventInstance"
+import EditEventScreen from "./screens/EditEventScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -54,9 +56,11 @@ function StackScreens(){
     }}>
           <ProgramsStack.Screen name="ProgramsHome" component={ProgramsScreen} />
           <ProgramsStack.Screen name="EventsScreen" component={EventsScreen} />
+          <ProgramsStack.Screen name="EventInstance" component={EventInstance} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
           <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
           <ProgramsStack.Screen name="EditProgram" component={EditProgram}/>
+          <ProgramsStack.Screen name="EditEvent" component={EditEventScreen}/>
     </ProgramsStack.Navigator>
   )
 }
