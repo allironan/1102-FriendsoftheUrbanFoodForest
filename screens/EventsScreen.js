@@ -30,7 +30,7 @@ export default class EventsScreen extends React.Component {
                         <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgramScreen", {
                             title: this.props.route.params.title,
                             description: this.props.route.params.description,
                             ProgramID: this.props.route.params.ProgramID
