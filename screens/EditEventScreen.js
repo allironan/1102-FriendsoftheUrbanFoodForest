@@ -1,13 +1,15 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
-import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
+import { editEvent } from '../Components/EventComponents.js'
 import styles from './styles/ProgramsEventsScreen.style.js'
 
 export default class EditEventScreen extends React.Component {
   state = {
     title: "",
     information: "",
+    startTime: "",
+    endTime: "",
   };
     currentView() {
         return (
@@ -16,23 +18,28 @@ export default class EditEventScreen extends React.Component {
                 <Text>
                     Edit Post
                 </Text>
-                <TextInput placeholder="Post Title" 
+                <TextInput placeholder="Event Title" 
                                    value={this.props.route.params.Title} 
                                    onChangeText={(value) => this.setState({title: value})} />
-                <TextInput placeholder="Post Content" 
-                                    value={this.props.route.params.Description}
+                <TextInput placeholder="Event Content" 
+                                    value={this.props.route.params.Information}
                                     onChangeText={(value) => this.setState({information: value})} />
-                <TouchableHighlight
+                <TextInput placeholder="Start Time" 
+                                    value={this.props.route.params.Information}
+                                    onChangeText={(value) => this.setState({startTime: value})} />
+                <TextInput placeholder="End Time" 
+                                    value={this.props.route.params.Information}
+                                    onChangeText={(value) => this.setState({endTime: value})} />
+                <Button styles={styles.submitButton} title="Submit"
                 onPress={() => {
-                  if (this.state.content != "" || this.state.title != "") {
-                    editProgram(this.state.title, this.state.information, this.props.route.params.ProgramID)
+                  if (this.state.information != "" || this.state.title != "") {
+                    editProgram(this.state.title, this.state.information, this.state.startTime, this.state.endTime, this.props.route.params.ProgramID)
                     this.props.navigation.navigate("ProgramsHome")
                   } else {
                     alert('Text cannot be empty.');
                   }
                 }}>
-                <Text>Submit</Text>
-              </TouchableHighlight>
+                </Button>
             </View>
         );
     }

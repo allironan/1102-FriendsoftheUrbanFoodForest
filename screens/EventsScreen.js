@@ -5,7 +5,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../Components/UserDataComponents'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
-import deleteProgram from '../Components/ProgramComponents'
+import { deleteProgram } from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from './styles/ProgramsEventsScreen.style.js'
 
@@ -27,12 +27,12 @@ export default class EventsScreen extends React.Component {
 
                     <View style={styles.programFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                        <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                        <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                     </View>
 
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
                             title: this.props.route.params.title,
-                            description: this.props.route.params.description,
+                            information: this.props.route.params.information,
                             ProgramID: this.props.route.params.ProgramID
                         })}> 
                         <Text> Edit Program </Text>
@@ -51,7 +51,7 @@ export default class EventsScreen extends React.Component {
                             <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventInstance", {
                                 key: event.EventID,
                                 title: event.Title,
-                                description: event.Information,
+                                information: event.Information,
                                 EventID: event.EventID
                             })}> 
                                 <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} StartTime={event.StartTime.toDate().toLocaleDateString("en-US")} EndTime={event.EndTime.toDate().toLocaleDateString("en-US")} />
@@ -98,12 +98,29 @@ class DisplayEvent extends React.Component {
         // console.log(startDateTime);
         var endDateTime = new Date(this.props.EndTime);
         // console.log(endDateTime);
+        var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         return (
         <View style={styles.eventFrame} key={this.props.EventID}>
             <Text style={styles.eventTitle}>{this.props.Title}</Text>
             <Text style={styles.eventInformation}>{this.props.Information}</Text>
-            <Text style={styles.eventStartTime}>{startDateTime.getDate()}</Text>
-            <Text style={styles.eventEndTime}>{endDateTime.getDate()}</Text>
+            <Text style={styles.eventStartTime}> {
+                "StartTime: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + " on " + monthsList[startDateTime.getMonth()] 
+                + " " + startDateTime.getDate() 
+                + ", " + startDateTime.getFullYear()
+            }
+            </Text>
+            <Text style={styles.eventEndTime}>{
+                "EndTime: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + endDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + endDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + " on " + monthsList[endDateTime.getMonth()] 
+                + " " + endDateTime.getDate() 
+                + ", " + endDateTime.getFullYear()
+            }
+            </Text>
         </View>
         );
     }

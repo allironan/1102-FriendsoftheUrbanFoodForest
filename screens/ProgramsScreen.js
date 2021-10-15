@@ -34,10 +34,10 @@ export default class ProgramsScreen extends React.Component {
                         <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("EventsScreen", {
                             key: program.ProgramID,
                             title: program.Title,
-                            description: program.Information,
+                            information: program.Information,
                             ProgramID: program.ProgramID
                         })}> 
-                            <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} description={program.Information}></ProgramComponent> 
+                            <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} information={program.Information}></ProgramComponent> 
                         </TouchableOpacity>
                         ))
                         }
@@ -73,9 +73,9 @@ export default class ProgramsScreen extends React.Component {
 class ProgramComponent extends React.Component  {
     render () {
         return (
-            <View style={styles.eventFrame} key={this.props.id}>
-                <Text style={styles.eventTitle}>{this.props.title}</Text>
-                <Text style={styles.eventInformation}>{this.props.description}</Text>
+            <View style={styles.programFrame} key={this.props.id}>
+                <Text style={styles.programTitle}>{this.props.title}</Text>
+                <Text style={styles.programInformation}>{this.props.information}</Text>
             </View>
         );
     }

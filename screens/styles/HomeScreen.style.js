@@ -10,8 +10,9 @@ export default StyleSheet.create({
     title: {
         textAlign: "center",
         padding: 20,
-        marginBottom: 60,
-        fontSize: 36,
+        marginBottom: 40,
+        maxWidth: 350,
+        fontSize: 34,
         fontWeight: 'bold',
         flexWrap: "wrap"
     },
@@ -33,7 +34,8 @@ export default StyleSheet.create({
     postFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
-        width: 325,
+        alignSelf: 'flex-center',
+        width: 350,
         height: 'auto',
         minHeight: 150,
         marginHorizontal: '2%',
