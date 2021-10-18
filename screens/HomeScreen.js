@@ -21,6 +21,8 @@ export default class HomeScreen extends React.Component {
         isModalVisible: false
     }
 
+    firestoreRef = firebase.firestore().collection('Posts')
+
     currentView() {
         // console.log(this.state.posts);
         return (
@@ -56,13 +58,17 @@ export default class HomeScreen extends React.Component {
         const {email, displayName} = firebase.default.auth().currentUser
         getUserData();
         this.setState({email, displayName})
-        getPosts().then((userData) => {
-            // console.log(userData);
-            const posts = userData;
-            this.setState({posts})
-        });
+        // getPosts().then((userData) => {
+        //     // console.log(userData);
+        //     const posts = userData;
+        //     this.setState({posts})
+        // });
+        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection)
         // console.log(this.state.isModalVisible)
         // console.log(this.state.posts)
+    }
+    componentWillUnmount() {
+        this.unsubscribe
     }
     toggleModal = () => {
         this.setState({isModalVisible: !(this.state.isModalVisible)})
@@ -75,7 +81,13 @@ export default class HomeScreen extends React.Component {
     //     this.setState({isModalVisible: false})
     //     console.log("Modal off:" + this.state.isModalVisible)
     // }
-
+    getCollection = (querySnapshot) => {
+        const posts = []
+        querySnapshot.forEach((post) => {
+            posts.push(post.data())
+        })
+        this.setState({posts})
+    }
    
 
     render() {

@@ -82,22 +82,10 @@ export async function getPosts() {
         console.log("No posts in firebase");
         return null;
     } else {
-        const postArray = [];
-        for (let i = 0; i <= snapshot.data().NextPostID; i++) {
-            const usersRef = db.collection('Posts').doc(i.toString());
-            const snapshot = await usersRef.get();
-            if (snapshot.exists) {
-                //console.log("Item data found: ", snapshot.data());
-                postArray.push(snapshot.data());
-            }
-        }
-        // console.log("The array of posts is below: ");
-        // console.log(postArray);
-
         // // Attempt 2
         // console.log("There are posts in firebase");
-        // const usersRef = await db.collection('Posts').get();
         // const postArray = [];
+        // const usersRef = db.collection('Posts').get();
         // if (usersRef.exists) {
         //     console.log("Users Ref DOES exist");
         //     // console.log("Item data found: ", snapshot.data());
@@ -107,6 +95,34 @@ export async function getPosts() {
         // }
         // console.log("The array of posts is below: ");
         // console.log(postArray);
+
+        // // Attempt 1
+        // const postArray = [];
+        // for (let i = 0; i <= snapshot.data().NextPostID; i++) {
+        //     const usersRef = db.collection('Posts').doc(i.toString());
+        //     const snapshot = await usersRef.get();
+        //     if (snapshot.exists) {
+        //         //console.log("Item data found: ", snapshot.data());
+        //         postArray.push(snapshot.data());
+        //     }
+        // }
+        // // console.log("The array of posts is below: ");
+        // // console.log(postArray);
+
+        // // Attempt 3
+        // const postArray = [];
+        // db.collection('Posts').get().then(function(querySnapshot) {
+        //     querySnapshot.forEach(function(doc) {
+        //         postArray.push(doc.data());
+        //     })
+        // });
+        // console.log("The array of posts is below: ");
+        // console.log(postArray);
+
+        // Attempt 4
+        const postArray = [];
+        console.log("The array of posts is below: ");
+        console.log(postArray);
 
         return postArray;
     }
