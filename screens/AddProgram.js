@@ -1,7 +1,7 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
-import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
+import {makeNewPost, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
 
 
 export default class AddProgram extends React.Component {
@@ -14,12 +14,12 @@ export default class AddProgram extends React.Component {
             <View>
                 <Button title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
                 <Text>
-                    Create new post
+                    Create new Program
                 </Text>
-                <TextInput placeholder="Post Title" 
+                <TextInput placeholder="Program Title" 
                                    value={this.state.title} 
                                    onChangeText={(value) => this.setState({title: value})} />
-                <TextInput placeholder="Post Content" 
+                <TextInput placeholder="Program Content" 
                                     value={this.state.content}
                                     onChangeText={(value) => this.setState({information: value})} />
                 <TouchableHighlight

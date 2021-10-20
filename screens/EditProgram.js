@@ -12,14 +12,14 @@ export default class EditProgram extends React.Component {
     currentView() {
         return (
             <View>
-                <Button title="Back to Programs" onPress={() => this.props.navigation.navigate.goBack()} />
+                <Button title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
                 <Text>
                     Edit Post
                 </Text>
-                <TextInput placeholder="Post Title" 
+                <TextInput placeholder="Program Title" 
                                    value={this.props.route.params.Title} 
                                    onChangeText={(value) => this.setState({title: value})} />
-                <TextInput placeholder="Post Content" 
+                <TextInput placeholder="Program Content" 
                                     value={this.props.route.params.Description}
                                     onChangeText={(value) => this.setState({information: value})} />
                 <TouchableHighlight

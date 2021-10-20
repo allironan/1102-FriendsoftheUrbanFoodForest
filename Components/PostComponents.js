@@ -128,10 +128,20 @@ export async function getPosts() {
     }
 }
 
-//Function to edit posts
-export async function editPost(postToSet, postID) {
+export async function editPost(title, contents, postID) {
 
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
+
+    var curTime = Date();
     const db = firebase.firestore();
+    const postToSet = {
+        Author: currentUID,
+        Title: title,
+        Contents: contents,
+        PostID: postID,
+        Date: curTime
+    };
 
     const res = await db.collection('Posts').doc(postID.toString()).set(postToSet);
 

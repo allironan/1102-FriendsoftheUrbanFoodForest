@@ -11,6 +11,8 @@ import SettingsScreen from "./screens/SettingsScreen"
 import SingularProgram from "./screens/SingularProgram"
 import AddProgram from "./screens/AddProgram"
 import EditProgram from "./screens/EditProgram"
+import AddPosts from "./screens/AddPosts"
+import EditPosts from "./screens/EditPosts"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -46,7 +48,7 @@ const authStack = () => (
   </NavigationContainer>
 )
 
-function StackScreens(){
+function ProgramStackScreens(){
   return (
     <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
       headerShown: false
@@ -59,11 +61,23 @@ function StackScreens(){
   )
 }
 
+function PostsStackScreens(){
+  return (
+    <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
+      headerShown: false
+    }}>
+          <ProgramsStack.Screen name="PostsHome" component={HomeScreen} />
+          <ProgramsStack.Screen name="AddPost" component={AddPosts}/>
+          <ProgramsStack.Screen name="EditPost" component={EditPosts}/>
+    </ProgramsStack.Navigator>
+  )
+}
+
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Programs" component={StackScreens}>
+      <Tab.Screen name="Home" component={PostsStackScreens} />
+      <Tab.Screen name="Programs" component={ProgramStackScreens}>
       </Tab.Screen>
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>

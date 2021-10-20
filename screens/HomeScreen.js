@@ -27,15 +27,6 @@ export default class HomeScreen extends React.Component {
         // console.log(this.state.posts);
         return (
             <View style={styles.container}>
-                {/* <Modal
-                isVisible={this.state.isModalVisible}
-                transparent={false} >
-                    <View>
-                    <Text>Hello!</Text>
-
-                    <Button title="Hide modal" onPress={this.toggleModal} />
-                    </View>
-                </Modal> */}
                 <ScrollView>
                     <View style={{ padding: 10, flex: 1}}>
                         <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
@@ -43,11 +34,12 @@ export default class HomeScreen extends React.Component {
                     <TouchableOpacity onPress={this.handleClick} style={styles.addPostButton}>
                         <Text> Take our survey! </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.createPostsPressed} style={styles.addPostButton}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPost")} style={styles.addPostButton}>
                         <Text> Add Post </Text>
                     </TouchableOpacity>
                     <View>
-                        {this.state.posts.map(r => <DisplayPost key={r.PostID} PostID={r.PostID} Title={r.Title} Date={r.Date} Contents={r.Contents} />)}
+                        {/* {this.state.posts.map(r => <DisplayPost key={r.PostID} PostID={r.PostID} Title={r.Title} Date={r.Date} Contents={r.Contents} navigation = {this.props.navigation} route = {this.props.route}/>)} */}
+                        {this.state.posts.map(r => this.displayPost(r.Title, r.Date, r.Contents, r.PostID))}
                     </View>
                 </ScrollView>
             </View>
@@ -94,11 +86,48 @@ export default class HomeScreen extends React.Component {
         return this.currentView()
     }
 
+    updatePosts(){
+        const posts = []
+        db.collection("Posts").onSnapshot(snapshot => {
+            let changes = snapshot.docChanges();
+            changes.forEach(change => {
+                if(change.type == 'added'){
+                    posts.push(change.data())
+                }
+            })
+        })
+        this.setState({posts})
+        // const unsub = onSnapshot(
+        //     doc(db, "Posts"), 
+        //     { includeMetadataChanges: true }, 
+        //     (doc) => {
+        //       this.setState(doc);
+        //     });
+    }
+
     createPostsPressed = () => {
         const newData = makeNewPost(this.state.title, this.state.contents);
         ReactDOM.render(<DisplayPost PostID={newData.PostID} Title={newData.Title} Date={newData.Date} Contents={newData.Contents} />, document.getElementById('root'))
         //code for get posts
     }
+
+    displayPost(title, date, contents, postID) {
+            return (
+                <View style={styles.postFrame} key={postID}>
+                <Text style={styles.postTitle}>{title}</Text>
+                <Text style={styles.postDate}>{date}</Text>
+                <Text style={styles.postContent}>{contents}</Text>
+                    <TouchableOpacity style={styles.addPostButton} onPress={() => deletePostLocal(postID)}>
+                            <Text style={styles.addPostLabel}> Delete Post </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPost", {
+                                title: title,
+                                description: contents,
+                                postID: postID
+                            })}> <Text>Edit Program</Text></TouchableOpacity>
+            </View>
+            );
+    } 
 }
 
 class DisplayPost extends React.Component {
@@ -111,6 +140,11 @@ class DisplayPost extends React.Component {
                 <TouchableOpacity style={styles.addPostButton} onPress={() => deletePostLocal(this.props.PostID)}>
                         <Text style={styles.addPostLabel}> Delete Post </Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPost", {
+                            title: title,
+                            description: description,
+                            postID: postID
+                        })}> <Text>Edit Program</Text></TouchableOpacity>
         </View>
         );
     }

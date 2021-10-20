@@ -16,17 +16,7 @@ export default class EventsScreen extends React.Component {
         email: "",
         displayName: "",
         events: [],
-        // programs: [
-        //     {id: 1, title: "program1", description: "Program 1 description"},
-        //     {id: 2, title: "program2", description: "Program 2 description"},
-        //     {id: 3, title: "program3", description: "Program 3 description"},
-        //     {id: 4, title: "program4", description: "Program 4 description"},
-        //     {id: 5, title: "program5", description: "Program 5 description"},
-        //     {id: 6, title: "program6", description: "Program 6 description"},
-        //     {id: 7, title: "program7", description: "Program 7 description"},
-        //     {id: 8, title: "program8", description: "Program 8 description"},
-        //   ]
-         programs: []
+        programs: []
     }
 
     firestoreRefPrograms = firebase.firestore().collection('Programs')
@@ -94,6 +84,19 @@ export default class EventsScreen extends React.Component {
         console.log(events)
         this.setState({events})
     
+    }
+
+    updatePosts(){
+        const posts = []
+        db.collection("Programs").onSnapshot(snapshot => {
+            let changes = snapshot.docChanges();
+            changes.forEach(change => {
+                if(change.type == 'added'){
+                    posts.push(change.data())
+                }
+            })
+        })
+        this.setState({posts})
     }
 
     render() {
