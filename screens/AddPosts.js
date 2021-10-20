@@ -7,6 +7,7 @@ export default class AddPosts extends React.Component {
     state = {
       title: "",
       information: "",
+      surveyURL: "",
     };
       currentView() {
           return (
@@ -21,10 +22,13 @@ export default class AddPosts extends React.Component {
                   <TextInput placeholder="Post Content" 
                                       value={this.state.content}
                                       onChangeText={(value) => this.setState({information: value})} />
+                  <TextInput placeholder="Post Survey Link (Optional)" 
+                                      value={this.state.surveyURL}
+                                      onChangeText={(value) => this.setState({surveyURL: value})} />
                   <TouchableHighlight
                   onPress={() => {
                     if (this.state.content != "" || this.state.title != "") {
-                      makeNewPost(this.state.title, this.state.information)
+                      makeNewPost(this.state.title, this.state.information, this.state.surveyURL)
                       this.props.navigation.goBack()
                     } else {
                       alert('Text cannot be empty.');

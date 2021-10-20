@@ -7,7 +7,7 @@ export async function makeNewProgram(title, information) {
 
     const db = firebase.firestore();
 
-    const linkedEvents = {};//new Map();
+    const linkedEvents = {}; //new Map();
     var programID = await getNextProgram();
     const data = {
         Title: title,
@@ -19,7 +19,6 @@ export async function makeNewProgram(title, information) {
     const res = await db.collection('Programs').doc(programID.NextProgramID.toString()).set(data);
 
     return data;
-
 }
 
 //Function to get next program in database
@@ -85,18 +84,6 @@ export async function getPrograms() {
         // console.log("The array of programs is below: ");
         console.log(programArray);
 
-        // // Attempt 2
-        // const usersRef = await db.collection('Programs').get();
-        // const programArray = [];
-        // if (usersRef.exists) {
-        //     //console.log("Item data found: ", snapshot.data());
-        //     usersRef.forEach((program) => {
-        //         programArray.push(program);
-        //     })
-        // }
-        // console.log("The array of programs is below: ");
-        // console.log(programArray);
-
         return programArray;
     }
 }
@@ -121,7 +108,8 @@ export async function editProgram(title, information, programID) {
 export async function deleteProgram(programID) {
     const db = firebase.firestore();
     const res = await db.collection('Programs').doc(programID.toString()).delete();
-    //if we want to add/subtract each time
+
+    // // if we want to add/subtract each time
     // const countRef = db.collection('Programs').doc('Program Count');
     // const snapshot = await countRef.get();
     // const value = snapshot.data().NextProgramID + 1;

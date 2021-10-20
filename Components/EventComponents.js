@@ -87,23 +87,7 @@ export async function getEvents() {
                 eventArray.push(snapshot.data());
             }
         }
-        // console.log("The array of events is below: ");
-        // console.log(eventArray);
-
-        // // Attempt 2
-        // console.log("There are events in firebase");
-        // const usersRef = await db.collection('Events').get();
-        // const eventArray = [];
-        // if (usersRef.exists) {
-        //     //console.log("Item data found: ", snapshot.data());
-        //     usersRef.forEach((event) => {
-        //         eventArray.push(event);
-        //     })
-        // }
-        // console.log("The array of events is below: ");
-        // console.log(eventArray);
-
-
+        
         return eventArray;
     }
 }
@@ -121,7 +105,7 @@ export async function editEvent(eventToSet, eventID) {
 export async function deleteEvent(eventID) {
     const db = firebase.firestore();
     const res = await db.collection('Events').doc(eventID.toString()).delete();
-    //if we want to add/subtract each time
+    // // if we want to add/subtract each time
     // const countRef = db.collection('Events').doc('Event Count');
     // const snapshot = await countRef.get();
     // const value = snapshot.data().NextEventID + 1;
