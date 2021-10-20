@@ -141,7 +141,7 @@ export async function removeParticipant(eventID, userID){
 }
 
 // Returns if a user is already registered for an event
-export async function getParticipant(){
+export async function getIfParticipant(){
     const db = firebase.firestore();
 
     const currentUser = firebase.auth().currentUser;
