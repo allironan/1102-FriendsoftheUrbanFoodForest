@@ -139,3 +139,17 @@ export async function removeParticipant(eventID, userID){
     participantMap.delete(userID);
     const res = await eventsRef.update({Participants: participantMap});
 }
+
+// Returns if a user is already registered for an event
+export async function getParticipant(){
+    const db = firebase.firestore();
+
+    const currentUser = firebase.auth().currentUser;
+
+    const eventsRef = db.collection('Events').doc(eventID);
+    const snapshot = await eventsRef.get();
+    const eventData = snapshot.data();
+    const participantMap = eventData.Participants();
+    
+    return participantMap.has(currentUser.uid);
+}
