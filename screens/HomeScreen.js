@@ -116,16 +116,18 @@ export default class HomeScreen extends React.Component {
 
     // TODO: Only display survey button if ((survey is not null) & (survey != ""))
     displayPost(title, date, contents, survey=null, postID) {
+        if (survey) {
             return (
                 <View style={styles.postFrame} key={postID}>
-                <Text style={styles.postTitle}>{title}</Text>
-                <Text style={styles.postDate}>{date}</Text>
+                    <Text style={styles.postTitle}>{title}</Text>
+                    <Text style={styles.postDate}>{date}</Text>
 
-                <TouchableOpacity onPress={this.postSurveyClick(survey)} style={styles.addPostButton}>
-                        <Text> Take our survey! </Text>
+                    <TouchableOpacity onPress={this.postSurveyClick(survey)} style={styles.addPostButton}>
+                            <Text> Take our survey! </Text>
                     </TouchableOpacity>
 
-                <Text style={styles.postContent}>{contents}</Text>
+                    <Text style={styles.postContent}>{contents} </Text>
+                    
                     <TouchableOpacity style={styles.addPostButton} onPress={() => deletePostLocal(postID)}>
                             <Text style={styles.addPostLabel}> Delete Post </Text>
                     </TouchableOpacity>
@@ -134,9 +136,29 @@ export default class HomeScreen extends React.Component {
                                 description: contents,
                                 survey: survey,
                                 postID: postID
-                            })}> <Text>Edit Program</Text></TouchableOpacity>
-            </View>
+                            })}> 
+                            <Text>Edit Program</Text>
+                    </TouchableOpacity>
+                </View>
             );
+        }
+        return (
+            <View style={styles.postFrame} key={postID}>
+            <Text style={styles.postTitle}>{title}</Text>
+            <Text style={styles.postDate}>{date}</Text>
+
+            <Text style={styles.postContent}>{contents}</Text>
+                <TouchableOpacity style={styles.addPostButton} onPress={() => deletePostLocal(postID)}>
+                        <Text style={styles.addPostLabel}> Delete Post </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPost", {
+                            title: title,
+                            description: contents,
+                            survey: survey,
+                            postID: postID
+                        })}> <Text>Edit Program</Text></TouchableOpacity>
+        </View>
+        );
     } 
 }
 

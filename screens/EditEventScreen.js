@@ -24,16 +24,10 @@ export default class EditEventScreen extends React.Component {
                 <TextInput placeholder="Event Content" 
                                     value={this.props.route.params.Information}
                                     onChangeText={(value) => this.setState({information: value})} />
-                <TextInput placeholder="Start Time" 
-                                    value={this.props.route.params.Information}
-                                    onChangeText={(value) => this.setState({startTime: value})} />
-                <TextInput placeholder="End Time" 
-                                    value={this.props.route.params.Information}
-                                    onChangeText={(value) => this.setState({endTime: value})} />
                 <Button styles={styles.submitButton} title="Submit"
                 onPress={() => {
                   if (this.state.information != "" || this.state.title != "") {
-                    editProgram(this.state.title, this.state.information, this.state.startTime, this.state.endTime, this.props.route.params.ProgramID)
+                    editProgram(this.state.title, this.state.information, Date(), Date(), this.props.route.params.ProgramID)
                     this.props.navigation.navigate("ProgramsHome")
                   } else {
                     alert('Text cannot be empty.');
@@ -47,3 +41,12 @@ export default class EditEventScreen extends React.Component {
         return this.currentView()
     }
 }
+
+/*
+                <TextInput placeholder="Start Time" 
+                                    value={this.props.route.params.Information}
+                                    onChangeText={(value) => this.setState({startTime: value})} />
+                <TextInput placeholder="End Time" 
+                                    value={this.props.route.params.Information}
+                                    onChangeText={(value) => this.setState({endTime: value})} />
+*/

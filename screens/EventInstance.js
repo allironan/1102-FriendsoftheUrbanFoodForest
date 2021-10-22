@@ -14,7 +14,6 @@ export default class EventInstance extends React.Component {
     state = {
         email: "",
         displayName: "",
-        events: []
     }
 
     firestoreRefEvents = firebase.firestore().collection('Events')

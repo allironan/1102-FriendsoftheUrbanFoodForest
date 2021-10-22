@@ -42,7 +42,7 @@ export default class EventsScreen extends React.Component {
                         <Text> Delete Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.createEventPressed} style={styles.addEventButton}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate("AddEvent")} style={styles.addEventButton}>
                         <Text> Add Event </Text>
                     </TouchableOpacity>
 

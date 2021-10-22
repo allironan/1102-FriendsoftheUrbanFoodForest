@@ -25,6 +25,8 @@ import EventsScreen from "./screens/EventsScreen"
 import EventInstance from "./screens/EventInstance"
 import EditEventScreen from "./screens/EditEventScreen"
 import EditProgramScreen from "./screens/EditProgramScreen"
+import AddEvent from "./screens/AddEventScreen"
+import AddPost from "./screens/AddPostScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -59,7 +61,9 @@ function ProgramStackScreens(){
           <ProgramsStack.Screen name="EventsScreen" component={EventsScreen} />
           <ProgramsStack.Screen name="EventInstance" component={EventInstance} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
+          <ProgramsStack.Screen name="AddProgram" component={AddPost}/>
           <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
+          <ProgramsStack.Screen name="AddProgram" component={AddEvent}/>
           <ProgramsStack.Screen name="EditProgram" component={EditProgramScreen}/>
           <ProgramsStack.Screen name="EditEvent" component={EditEventScreen}/>
     </ProgramsStack.Navigator>
