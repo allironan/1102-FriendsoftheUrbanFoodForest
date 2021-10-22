@@ -93,9 +93,16 @@ export async function getEvents() {
 }
 
 //Function to edit events
-export async function editEvent(eventToSet, eventID) {
+export async function editEvent(title, information, startTime, endTime, eventID) {
 
     const db = firebase.firestore();
+    const eventToSet = {
+        Title: title,
+        Information: information,
+        StartTime: startTime,
+        EndTime: endTime,
+        ProgramID: programID,
+    };
 
     const res = await db.collection('Events').doc(eventID.toString()).set(eventToSet);
 

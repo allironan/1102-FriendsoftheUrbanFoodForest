@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import firebase from 'firebase/app'
-
+import styles from './styles/LoadingScreen.styles'
 
 
 export default class LoadingScreen extends React.Component {
@@ -19,11 +19,3 @@ export default class LoadingScreen extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center" 
-    }
-})

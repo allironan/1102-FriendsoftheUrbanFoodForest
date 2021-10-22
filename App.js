@@ -9,10 +9,8 @@ import HomeScreen from './screens/HomeScreen'
 import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import SingularProgram from "./screens/SingularProgram"
-import AddProgram from "./screens/AddProgram"
-import EditProgram from "./screens/EditProgram"
-import AddPosts from "./screens/AddPosts"
-import EditPosts from "./screens/EditPosts"
+import AddProgram from "./screens/AddProgramScreen"
+import EditProgram from "./screens/EditProgramScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -23,6 +21,10 @@ import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { registerRootComponent } from "expo"
+import EventsScreen from "./screens/EventsScreen"
+import EventInstance from "./screens/EventInstance"
+import EditEventScreen from "./screens/EditEventScreen"
+import EditProgramScreen from "./screens/EditProgramScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -54,9 +56,12 @@ function ProgramStackScreens(){
       headerShown: false
     }}>
           <ProgramsStack.Screen name="ProgramsHome" component={ProgramsScreen} />
+          <ProgramsStack.Screen name="EventsScreen" component={EventsScreen} />
+          <ProgramsStack.Screen name="EventInstance" component={EventInstance} />
           <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
           <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
-          <ProgramsStack.Screen name="EditProgram" component={EditProgram}/>
+          <ProgramsStack.Screen name="EditProgram" component={EditProgramScreen}/>
+          <ProgramsStack.Screen name="EditEvent" component={EditEventScreen}/>
     </ProgramsStack.Navigator>
   )
 }

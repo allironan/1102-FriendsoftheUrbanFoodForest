@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../UserData/getUserData'
+import getUserData from '../Components/UserDataComponents'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
 import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './ProgramsScreen.style.js'
-import ProgramComponent from './ProgramsUIComponent';
+import styles from './styles/ProgramsEventsScreen.style.js'
 
 
-export default class EventsScreen extends React.Component {
+export default class ProgramsScreen extends React.Component {
     state = {
         email: "",
         displayName: "",
@@ -20,10 +19,8 @@ export default class EventsScreen extends React.Component {
     }
 
     firestoreRefPrograms = firebase.firestore().collection('Programs')
-    firestoreRefEvents = firebase.firestore().collection('Events')
     
     currentView() {
-        //console.log(this.state.events);
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -35,19 +32,16 @@ export default class EventsScreen extends React.Component {
                     </TouchableOpacity>
                     <View >
                         {this.state.programs.map((program) => (
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("SingularProgram", {
+                        <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("EventsScreen", {
                             key: program.ProgramID,
                             title: program.Title,
-                            description: program.Information,
+                            information: program.Information,
                             ProgramID: program.ProgramID
                         })}> 
-                        <ProgramComponent id = {program.ProgramID} title={program.Title} description={program.Information}></ProgramComponent> 
+                            <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} information={program.Information}></ProgramComponent> 
                         </TouchableOpacity>
                         ))
                         }
-                    </View>
-                    <View>
-                        {this.state.events.map(r => <DisplayEvent key={r.EventID} EventID={r.EventID} Title={r.Title} Information={r.Information} StartTime={r.StartTime.toDate().toLocaleDateString("en-US")} EndTime={r.EndTime.toDate().toLocaleDateString("en-US")} />)}
                     </View>
                 </ScrollView>
             </View>
@@ -55,18 +49,13 @@ export default class EventsScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser
-        getUserData();
+        const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
         this.unsubscribe = this.firestoreRefPrograms.onSnapshot(this.getCollectionPrograms)
-        this.unsubscribeAgain = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
-        console.log(this.state.programs)
-
     }
     
     componentWillUnmount(){
         this.unsubscribe
-        this.unsubscribeAgain
     }
 
     getCollectionPrograms = (querySnapshot) => {
@@ -75,15 +64,6 @@ export default class EventsScreen extends React.Component {
             programs.push(program.data())
         })
         this.setState({programs})
-    }
-    getCollectionEvents = (querySnapshot) => {
-        const events = []
-        querySnapshot.forEach((event) => {
-            events.push(event.data())
-        })
-        console.log(events)
-        this.setState({events})
-    
     }
 
     updatePosts(){
@@ -104,18 +84,13 @@ export default class EventsScreen extends React.Component {
     }
 }
 
-class DisplayEvent extends React.Component {
+class ProgramComponent extends React.Component  {
     render () {
         return (
-        <View style={styles.eventFrame} key={this.props.EventID}>
-            <Text style={styles.eventTitle}>{this.props.Title}</Text>
-            <Text style={styles.eventInformation}>{this.props.Information}</Text>
-            <Text style={styles.eventStartTime}>{this.props.StartTime}</Text>
-            <Text style={styles.eventEndTime}>{this.props.EndTime}</Text>
-        </View>
+            <View style={styles.programFrame} key={this.props.id}>
+                <Text style={styles.programTitle}>{this.props.title}</Text>
+                <Text style={styles.programInformation}>{this.props.information}</Text>
+            </View>
         );
     }
-}
-
-function deletePostLocal(postID){
 }
