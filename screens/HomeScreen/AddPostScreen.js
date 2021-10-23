@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
 import {makeNewPost} from '../Components/PostComponents'
 
-export default class AddPost extends React.Component {
+export default class AddPostScreen extends React.Component {
     state = {
       title: "",
       information: "",

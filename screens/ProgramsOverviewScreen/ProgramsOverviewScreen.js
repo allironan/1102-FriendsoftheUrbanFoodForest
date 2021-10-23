@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import styles from './styles/ProgramsEventsScreen.style.js'
 
 
-export default class ProgramsScreen extends React.Component {
+export default class ProgramsOverviewScreen extends React.Component {
     state = {
         email: "",
         displayName: "",

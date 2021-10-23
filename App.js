@@ -5,11 +5,11 @@ import {createStackNavigator} from '@react-navigation/stack'
 import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
-import HomeScreen from './screens/HomeScreen'
+import HomeScreen from './screens/HomeScreen/HomeScreen'
 import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import SingularProgram from "./screens/SingularProgram"
-import AddProgram from "./screens/AddProgramScreen"
+import AddProgram from "./screens/ProgramsOverviewScreen/AddProgramScreen"
 import EditProgram from "./screens/EditProgramScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
@@ -21,12 +21,19 @@ import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { registerRootComponent } from "expo"
-import EventsScreen from "./screens/EventsScreen"
-import EventInstance from "./screens/EventInstance"
+import EventsScreen from "./screens/ProgramScreen"
+import EventInstance from "./screens/ProgramsOverviewScreen/EventScreen"
 import EditEventScreen from "./screens/EditEventScreen"
 import EditProgramScreen from "./screens/EditProgramScreen"
 import AddEvent from "./screens/AddEventScreen"
 import AddPost from "./screens/AddPostScreen"
+import ProgramsOverviewScreen from "./screens/ProgramsOverviewScreen"
+import ProgramScreen from "./screens/ProgramScreen"
+import AddPostScreen from "./screens/HomeScreen/AddPostScreen"
+import AddProgramScreen from "./screens/ProgramsOverviewScreen/AddProgramScreen"
+import AddEventScreen from "./screens/AddEventScreen"
+import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
+import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -57,27 +64,25 @@ function ProgramStackScreens(){
     <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
       headerShown: false
     }}>
-          <ProgramsStack.Screen name="ProgramsHome" component={ProgramsScreen} />
-          <ProgramsStack.Screen name="EventsScreen" component={EventsScreen} />
-          <ProgramsStack.Screen name="EventInstance" component={EventInstance} />
-          <ProgramsStack.Screen name="SingularProgram" component={SingularProgram} />
-          <ProgramsStack.Screen name="AddProgram" component={AddPost}/>
-          <ProgramsStack.Screen name="AddProgram" component={AddProgram}/>
-          <ProgramsStack.Screen name="AddProgram" component={AddEvent}/>
-          <ProgramsStack.Screen name="EditProgram" component={EditProgramScreen}/>
-          <ProgramsStack.Screen name="EditEvent" component={EditEventScreen}/>
+          <ProgramsStack.Screen name="ProgramsOverviewScreen" component={ProgramsOverviewScreen} />
+          <ProgramsStack.Screen name="ProgramScreen" component={ProgramScreen} />
+          <ProgramsStack.Screen name="EventScreen" component={EventScreen} />
+          <ProgramsStack.Screen name="AddProgramScreen" component={AddProgramScreen}/>
+          <ProgramsStack.Screen name="AddEventScreen" component={AddEventScreen}/>
+          <ProgramsStack.Screen name="EditProgramScreen" component={EditProgramScreen}/>
+          <ProgramsStack.Screen name="EditEventScreen" component={EditEventScreen}/>
     </ProgramsStack.Navigator>
   )
 }
 
-function PostsStackScreens(){
+function HomeStackScreens(){
   return (
     <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
       headerShown: false
     }}>
           <ProgramsStack.Screen name="PostsHome" component={HomeScreen} />
-          <ProgramsStack.Screen name="AddPost" component={AddPosts}/>
-          <ProgramsStack.Screen name="EditPost" component={EditPosts}/>
+          <ProgramsStack.Screen name="AddPostScreen" component={AddPostScreen}/>
+          <ProgramsStack.Screen name="EditPostScreen" component={EditPostScreen}/>
     </ProgramsStack.Navigator>
   )
 }
@@ -85,7 +90,7 @@ function PostsStackScreens(){
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={PostsStackScreens} />
+      <Tab.Screen name="Home" component={HomeStackScreens} />
       <Tab.Screen name="Programs" component={ProgramStackScreens}>
       </Tab.Screen>
       <Tab.Screen name="Settings" component={SettingsScreen} />

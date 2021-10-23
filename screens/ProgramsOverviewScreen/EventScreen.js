@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../Components/UserDataComponents'
-import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
-import deleteProgram from '../Components/ProgramComponents'
+import getUserData from '../../Components/UserDataComponents'
+import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../../Components/EventComponents'
+import deleteProgram from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/ProgramsEventsScreen.style.js'
+import styles from '../styles/ProgramsEventsScreen.style.js'
 
 
-export default class EventInstance extends React.Component {
+export default class EventScreen extends React.Component {
     state = {
         email: "",
         displayName: "",

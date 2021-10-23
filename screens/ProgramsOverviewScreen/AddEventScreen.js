@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput,
 import { makeNewEvent } from '../Components/EventComponents';
 
 
-export default class AddEvent extends React.Component {
+export default class AddEventScreen extends React.Component {
   state = {
     title: "",
     information: "",

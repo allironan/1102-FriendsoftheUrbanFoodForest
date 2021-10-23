@@ -1,10 +1,10 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
-import { makeNewProgram } from '../Components/ProgramComponents'
+import { makeNewProgram } from '../../Components/ProgramComponents'
 
 
-export default class AddProgram extends React.Component {
+export default class AddProgramScreen extends React.Component {
   state = {
     title: "",
     information: "",
