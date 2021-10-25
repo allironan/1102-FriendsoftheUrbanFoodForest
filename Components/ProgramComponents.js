@@ -8,11 +8,14 @@ export async function makeNewProgram(title, information) {
     const db = firebase.firestore();
 
     const linkedEvents = {}; //new Map();
+    const subscribers = new Map();
+
     var programID = await getNextProgram();
     const data = {
         Title: title,
         Information: information,
         LinkedEvents: linkedEvents,
+        Subscribers: subscribers,
         ProgramID: programID.NextProgramID,
     };
 
@@ -151,4 +154,42 @@ export async function unLinkEventFromProgram(programID, eventID) {
         eventArray.splice(indexToBeRemoved, 1);
     }
     linkedEventsMap.set(programID, eventArray);
+}
+
+export async function addProgramSubscriber(programID, userID){
+
+    const db = firebase.firestore();
+
+    const programsRef = db.collection('Programs').doc(programID);
+    const snapshot = await programsRef.get();
+    const programData = snapshot.data();
+    const subscriberMap = programData.Subscribers();
+    subscriberMap.set(userID, true);
+    const res = await programsRef.update({Subscribers: subscriberMap});
+}
+
+export async function removeProgramSubscriber(programID, userID){
+
+    const db = firebase.firestore();
+
+    const programsRef = db.collection('Programs').doc(programID);
+    const snapshot = await programsRef.get();
+    const programData = snapshot.data();
+    const subscriberMap = programData.Subscribers();
+    subscriberMap.delete(userID);
+    const res = await programsRef.update({Subscribers: subscriberMap});
+}
+
+// Returns if a user is already registered for an event
+export async function getIfProgramSubscriber(programID){
+    const db = firebase.firestore();
+
+    const currentUser = firebase.auth().currentUser;
+
+    const programsRef = db.collection('Programs').doc(programID);
+    const snapshot = await programsRef.get();
+    const programData = snapshot.data();
+    const subscriberMap = programData.Subscribers();
+    
+    return subscriberMap.has(currentUser.uid);
 }

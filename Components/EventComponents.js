@@ -122,7 +122,7 @@ export async function deleteEvent(eventID) {
     // const res2 = db.collection('Events').doc('Event Count').set(data);
 }
 
-export async function addParticipant(eventID, userID){
+export async function addEventParticipant(eventID, userID){
 
     const db = firebase.firestore();
 
@@ -135,7 +135,7 @@ export async function addParticipant(eventID, userID){
 
 }
 
-export async function removeParticipant(eventID, userID){
+export async function removeEventParticipant(eventID, userID){
 
     const db = firebase.firestore();
 
@@ -148,7 +148,7 @@ export async function removeParticipant(eventID, userID){
 }
 
 // Returns if a user is already registered for an event
-export async function getIfParticipant(){
+export async function getIfEventParticipant(eventID){
     const db = firebase.firestore();
 
     const currentUser = firebase.auth().currentUser;
