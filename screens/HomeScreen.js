@@ -100,12 +100,6 @@ export default class HomeScreen extends React.Component {
             })
         })
         this.setState({posts})
-        // const unsub = onSnapshot(
-        //     doc(db, "Posts"), 
-        //     { includeMetadataChanges: true }, 
-        //     (doc) => {
-        //       this.setState(doc);
-        //     });
     }
 
     createPostsPressed = () => {

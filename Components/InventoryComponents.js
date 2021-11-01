@@ -8,46 +8,23 @@ export async function makeNewTool(name, quantity, available) {
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
-    var toolID = await getNextTool()
+    var toolID = name.toLowerCase();
+    const countRef = db.collection('ToolsRental').doc(toolID);
+    const snapshot = await countRef.get();
 
     const data = {
         Author: currentUID,
         Name: name,
-        ToolID: toolID.NextToolID,
+        ToolID: toolID,
         Available: available,
         Quantity: quantity
     };
-
-    const res = await db.collection('ToolsRental').doc(toolID.NextToolID.toString()).set(data);
-    return data;
-}
-
-async function getNextTool() {
-
-    const db = firebase.firestore();
-
-    const currentUser = firebase.auth().currentUser;
-    const countRef = db.collection('Counters').doc('Tool Count');
-    const snapshot = await countRef.get();
-
-    if (!snapshot.exists) {
-        console.log("Tool Count not found in firebase");
-
-        const data = {
-            NextToolID: 1,
-        };
-
-        const res = db.collection('Counters').doc('Tool Count').set(data);
-        const count = await countRef.get();
-        return count.data();
-
+    if (snapshot.exists) {
+        console.log("Tool already exists in firebase");
     } else {
-        const res = db.collection('Counters').doc('Tool Count');
-        const increment = firebase.firestore.FieldValue.increment(1);
-        await res.update({NextToolID: increment})
-        const count = await countRef.get();
-        return count.data();
+        const res = await db.collection('ToolsRental').doc(toolID.toString()).set(data);
     }
+    return data;
 }
 
 export async function getTools() {
@@ -70,9 +47,10 @@ export async function getTools() {
 
 export async function editTool(name, quantity, available, toolID) {
 
+    //const res = str.replace(/ /g, '')
+    // to take out all strings from string for tool id
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
-
     const db = firebase.firestore();
     const toolToSet = {
         Author: currentUID,
@@ -85,7 +63,7 @@ export async function editTool(name, quantity, available, toolID) {
     const res = await db.collection('ToolsRental').doc(toolID.toString()).set(toolToSet);
 }
 
-export async function deletePost(toolID) {
+export async function deleteTool(toolID) {
     const db = firebase.firestore();
     const res = await db.collection('ToolsRental').doc(toolID.toString()).delete();
 }

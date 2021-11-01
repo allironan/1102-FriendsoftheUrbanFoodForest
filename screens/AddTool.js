@@ -20,12 +20,8 @@ export default class AddPosts extends React.Component {
                   <TextInput placeholder="Tool Name" 
                                      value={this.state.name} 
                                      onChangeText={(value) => this.setState({name: value})} />
-                  {/* <NumericInput min={0} max={100} value={this.state.quantity}
-                                    onChange={(value) => this.setState({quantity: value})}/> */}
                 <Text>Quantity:</Text>
                 <TextInput 
-                        placeholder="Quantity" 
-                        //style={styles.textInput}
                         keyboardType='numeric'
                         value={this.state.quantity}
                         onChangeText={(value) => this.setState({quantity: value})}
