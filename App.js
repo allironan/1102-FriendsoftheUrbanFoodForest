@@ -8,9 +8,12 @@ import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
+import InventoryScreen from "./screens/InventoryHomeScreen"
 import SingularProgram from "./screens/SingularProgram"
 import AddProgram from "./screens/AddProgramScreen"
 import EditProgram from "./screens/EditProgramScreen"
+import AddPosts from "./screens/AddPosts"
+import EditPosts from "./screens/EditPosts"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -84,6 +87,7 @@ const NavBar = () => (
       <Tab.Screen name="Home" component={PostsStackScreens} />
       <Tab.Screen name="Programs" component={ProgramStackScreens}>
       </Tab.Screen>
+      <Tab.Screen name="Tool Inventory" component={InventoryScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>
