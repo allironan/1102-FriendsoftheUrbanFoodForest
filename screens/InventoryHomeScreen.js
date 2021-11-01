@@ -15,6 +15,9 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>Hi</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addPostButton}>
+                        <Text> Add Tool </Text>
+                </TouchableOpacity>
             </View>
         );
     }

@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 
-export async function makeTool(name, quantity, available) {
+export async function makeNewTool(name, quantity, available) {
 
     const db = firebase.firestore();
     const currentUser = firebase.auth().currentUser;

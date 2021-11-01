@@ -28,6 +28,7 @@ import EventsScreen from "./screens/EventsScreen"
 import EventInstance from "./screens/EventInstance"
 import EditEventScreen from "./screens/EditEventScreen"
 import EditProgramScreen from "./screens/EditProgramScreen"
+import AddTool from "./screens/AddTool"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -81,13 +82,24 @@ function PostsStackScreens(){
   )
 }
 
+function InventoryStackScreens(){
+  return (
+    <ProgramsStack.Navigator initialRouteName = "InventoryScreen" screenOptions={{
+      headerShown: false
+    }}>
+          <ProgramsStack.Screen name="InventoryHome" component={InventoryScreen} />
+          <ProgramsStack.Screen name="AddTool" component={AddTool}/>
+    </ProgramsStack.Navigator>
+  )
+}
+
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
       <Tab.Screen name="Home" component={PostsStackScreens} />
       <Tab.Screen name="Programs" component={ProgramStackScreens}>
       </Tab.Screen>
-      <Tab.Screen name="Tool Inventory" component={InventoryScreen} />
+      <Tab.Screen name="Inventory" component={InventoryStackScreens} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>
