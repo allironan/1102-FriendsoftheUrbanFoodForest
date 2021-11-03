@@ -1,7 +1,8 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
-import {makeNewPost} from '../Components/PostComponents'
+import {makeNewPost} from '../../Components/PostComponents'
+import styles from '../styles/HomeScreen.style.js'
 
 export default class AddPostScreen extends React.Component {
     state = {
@@ -11,9 +12,9 @@ export default class AddPostScreen extends React.Component {
     };
       currentView() {
           return (
-              <View>
+              <View style={styles.container}>
                   <Button title="Back to Posts" onPress={() => this.props.navigation.goBack()} />
-                  <Text>
+                  <Text style={styles.title}>
                       Create new post
                   </Text>
                   <TextInput placeholder="Post Title" 
@@ -27,7 +28,7 @@ export default class AddPostScreen extends React.Component {
                                       onChangeText={(value) => this.setState({surveyURL: value})} />
                   <TouchableHighlight
                   onPress={() => {
-                    if (this.state.content != "" || this.state.title != "") {
+                    if (this.state.information != "" && this.state.title != "") {
                       makeNewPost(this.state.title, this.state.information, this.state.surveyURL)
                       this.props.navigation.goBack()
                     } else {

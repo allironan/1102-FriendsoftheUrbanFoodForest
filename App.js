@@ -6,11 +6,7 @@ import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
-import ProgramsScreen from './screens/ProgramsScreen'
 import SettingsScreen from "./screens/SettingsScreen"
-import SingularProgram from "./screens/SingularProgram"
-import AddProgram from "./screens/ProgramsOverviewScreen/AddProgramScreen"
-import EditProgram from "./screens/EditProgramScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -21,17 +17,13 @@ import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { registerRootComponent } from "expo"
-import EventsScreen from "./screens/ProgramScreen"
-import EventInstance from "./screens/ProgramsOverviewScreen/EventScreen"
-import EditEventScreen from "./screens/EditEventScreen"
-import EditProgramScreen from "./screens/EditProgramScreen"
-import AddEvent from "./screens/AddEventScreen"
-import AddPost from "./screens/AddPostScreen"
-import ProgramsOverviewScreen from "./screens/ProgramsOverviewScreen"
-import ProgramScreen from "./screens/ProgramScreen"
+import EditEventScreen from "./screens/ProgramsOverviewScreen/EditEventScreen"
+import EditProgramScreen from "./screens/ProgramsOverviewScreen/EditProgramScreen"
+import ProgramsOverviewScreen from "./screens/ProgramsOverviewScreen/ProgramsOverviewScreen"
+import ProgramScreen from "./screens/ProgramsOverviewScreen/ProgramScreen"
 import AddPostScreen from "./screens/HomeScreen/AddPostScreen"
 import AddProgramScreen from "./screens/ProgramsOverviewScreen/AddProgramScreen"
-import AddEventScreen from "./screens/AddEventScreen"
+import AddEventScreen from "./screens/ProgramsOverviewScreen/AddEventScreen"
 import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
 console.log(FIREBASE_APIKEY)

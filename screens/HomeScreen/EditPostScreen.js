@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
-import { Text, TouchableHighlight, View, StyleSheet, TextInput } from 'react-native';
-import makeNewPost from '../makeNewPost'
-import PostsScreen from '../screens/PostsScreen.js'
- 
+import { Text, TouchableHighlight, View, TextInput } from 'react-native';
+import { makeNewPost } from '../../Components/PostComponents'
 import Modal from 'modal-react-native-web';
 import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStack';
-import styles from './styles/HomeScreen.style'
+import styles from '../styles/HomeScreen.style'
  
 export default class EditPostScreen extends Component {
   state = {
     modalVisible: false,
-    //PostID: PostsScreen.passData.PostID,
     title: PostsScreen.passData.Title,
   };
  
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-
-  // getData = () => {
-  //   return PostsScreen.passData();
-  // }
  
   render() {
     return (
-      <View style={{marginTop: 22}}>
+      <View style={styles.container}>
         <Modal
           animationType="slide"
           transparent={false}
@@ -34,16 +27,16 @@ export default class EditPostScreen extends Component {
             <View>
               <Text>Enter your new post</Text>
               <TextInput placeholder="Post Title" 
-                                   value={this.getData().title} style={styles.textInput} 
+                                   value={this.getData().title} style={styles.buttonLabel} 
                                    onChangeText={(value) => this.setState({title: value})} />
             <TextInput placeholder="Post Content" 
-                                    value={this.getData().content} style={styles.textInput} 
+                                    value={this.getData().content} style={styles.buttonLabel} 
                                     onChangeText={(value) => this.setState({content: value})} />
               <TouchableHighlight
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
-                  if (this.state.content != "" || this.state.title != "") {
-                    makeNewPost(this.state.title, this.state.content)
+                  if (this.state.title != "") {
+                    makeNewPost(this.state.title)
                   } else {
                     alert('Text cannot be empty.');
                   }
@@ -64,7 +57,7 @@ export default class EditPostScreen extends Component {
           onPress={() => {
             this.setModalVisible(true);
           }}>
-          <Text style={styles.addPostLabel}>Edit Post </Text>
+          <Text style={styles.buttonLabel}>Edit Post </Text>
         </TouchableHighlight>
       </View>
     );

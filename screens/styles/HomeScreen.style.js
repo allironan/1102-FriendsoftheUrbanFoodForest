@@ -16,7 +16,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         flexWrap: "wrap"
     },
-    addPostButton: {
+    button: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
         alignSelf: 'flex-end',
@@ -27,7 +27,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center'
     },
-    addPostLabel: {
+    buttonLabel: {
         fontSize: 16,
         color: 'rgba(196,196,196,1)'
     },

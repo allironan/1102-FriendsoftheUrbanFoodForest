@@ -1,8 +1,8 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
-import { editEvent } from '../Components/EventComponents.js'
-import styles from './styles/ProgramsEventsScreen.style.js'
+import { editEvent } from '../../Components/EventComponents'
+import styles from '../styles/ProgramsEventsScreen.style.js'
 
 export default class EditEventScreen extends React.Component {
   state = {
@@ -28,7 +28,7 @@ export default class EditEventScreen extends React.Component {
                 onPress={() => {
                   if (this.state.information != "" || this.state.title != "") {
                     editProgram(this.state.title, this.state.information, Date(), Date(), this.props.route.params.ProgramID)
-                    this.props.navigation.navigate("ProgramsHome")
+                    this.props.navigation.navigate("ProgramsOverviewScreen")
                   } else {
                     alert('Text cannot be empty.');
                   }

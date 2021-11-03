@@ -1,7 +1,7 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
-import { makeNewEvent } from '../Components/EventComponents';
+import {View, Text, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
+import { makeNewEvent } from '../../Components/EventComponents';
 
 
 export default class AddEventScreen extends React.Component {

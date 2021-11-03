@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../Components/UserDataComponents'
-import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
-import { deleteProgram } from '../Components/ProgramComponents'
+import getUserData from '../../Components/UserDataComponents'
+import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../../Components/EventComponents'
+import { deleteProgram } from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/ProgramsEventsScreen.style.js'
+import styles from '../styles/ProgramsEventsScreen.style.js'
 
 
 export default class ProgramScreen extends React.Component {
@@ -30,7 +30,7 @@ export default class ProgramScreen extends React.Component {
                         <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgramScreen", {
                             title: this.props.route.params.title,
                             information: this.props.route.params.information,
                             ProgramID: this.props.route.params.ProgramID
@@ -42,13 +42,13 @@ export default class ProgramScreen extends React.Component {
                         <Text> Delete Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.props.navigation.navigate("AddEvent")} style={styles.addEventButton}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate("AddEventScreen")} style={styles.addEventButton}>
                         <Text> Add Event </Text>
                     </TouchableOpacity>
 
                     <View>
                         {this.state.events.map((event) => (
-                            <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventInstance", {
+                            <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventScreen", {
                                 key: event.EventID,
                                 title: event.Title,
                                 information: event.Information,

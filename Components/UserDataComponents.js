@@ -58,7 +58,7 @@ export async function getUserData(requestedUID = null) {
 
     
 
-    const usersRef = db.collection('Users').doc(currentUID);
+    /*const usersRef = db.collection('Users').doc(currentUID);
     const snapshot = await usersRef.get();
 
     if (!snapshot.exists) {
@@ -82,7 +82,7 @@ export async function getUserData(requestedUID = null) {
     } else {
         // console.log("User data found: ", snapshot.data());
         return snapshot.data();
-    }
+    }*/
 }
 
 //Function to edit User Data
