@@ -17,13 +17,13 @@ export default class AddPostScreen extends React.Component {
                   <Text style={styles.title}>
                       Create new post
                   </Text>
-                  <TextInput placeholder="Post Title" 
+                  <TextInput style={styles.textFillField} placeholder="Post Title" 
                                      value={this.state.title} 
                                      onChangeText={(value) => this.setState({title: value})} />
-                  <TextInput placeholder="Post Content" 
-                                      value={this.state.content}
+                  <TextInput style={styles.textFillField} placeholder="Post Content" 
+                                      value={this.state.information}
                                       onChangeText={(value) => this.setState({information: value})} />
-                  <TextInput placeholder="Post Survey Link (Optional)" 
+                  <TextInput style={styles.textFillField} placeholder="Post Survey Link (Optional)" 
                                       value={this.state.surveyURL}
                                       onChangeText={(value) => this.setState({surveyURL: value})} />
                   <TouchableHighlight

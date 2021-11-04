@@ -1,11 +1,8 @@
 import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../../Components/UserDataComponents'
 import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../../Components/EventComponents'
-import deleteProgram from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
 
@@ -22,14 +19,16 @@ export default class EventScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <Button style={styles.goBackButton} title="Back to Program" onPress={() => this.props.navigation.goBack()} />
+                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Text style={styles.goBackLabel}> Back to Program </Text>
+                    </TouchableOpacity>
 
                     <View style={styles.programFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
                         <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditEventScreen", {
+                    <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditEventScreen", {
                             title: this.props.route.params.title,
                             description: this.props.route.params.description,
                             EventID: this.props.route.params.EventID
@@ -37,7 +36,7 @@ export default class EventScreen extends React.Component {
                         <Text> Edit Event </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => deleteEventLocal(this.props.route.params.EventID)}> 
+                    <TouchableOpacity style={styles.leftButton} onPress={() => deleteEventLocal(this.props.route.params.EventID)}> 
                         <Text> Delete Event </Text>
                     </TouchableOpacity>
                 </ScrollView>

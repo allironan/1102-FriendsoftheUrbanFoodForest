@@ -1,7 +1,7 @@
 import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
 import { makeNewProgram } from '../../Components/ProgramComponents'
+import styles from '../styles/ProgramsEventsScreen.style.js'
 
 
 export default class AddProgramScreen extends React.Component {
@@ -11,28 +11,31 @@ export default class AddProgramScreen extends React.Component {
   };
     currentView() {
         return (
-            <View>
-                <Button title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
-                <Text>
+            <View style={styles.container}>
+              <View style={styles.viewContainer}>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Text style={styles.goBackLabel}> Back to Programs </Text>
+                </TouchableOpacity>
+                <Text style={styles.programTitle}>
                     Create new Program
                 </Text>
-                <TextInput placeholder="Program Title" 
+                <TextInput style={styles.textFillField} placeholder="Program Title" 
                                    value={this.state.title} 
                                    onChangeText={(value) => this.setState({title: value})} />
-                <TextInput placeholder="Program Information" 
+                <TextInput style={styles.textFillField} placeholder="Program Information" 
                                     value={this.state.information}
                                     onChangeText={(value) => this.setState({information: value})} />
-                <TouchableHighlight
-                onPress={() => {
-                  if (this.state.information != "" || this.state.title != "") {
+                <TouchableHighlight style={styles.submitButton} onPress={() => {
+                  if (this.state.information != "" && this.state.title != "") {
                     makeNewProgram(this.state.title, this.state.information)
                     this.props.navigation.goBack()
                   } else {
                     alert('Text cannot be empty.');
                   }
                 }}>
-                <Text>Submit</Text>
-              </TouchableHighlight>
+                  <Text style={{textAlign: "center"}}> Submit </Text>
+                </TouchableHighlight>
+              </View>
             </View>
         );
     }

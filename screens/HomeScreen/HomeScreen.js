@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <View style={{ padding: 10, flex: 1}}>
+                    <View style={styles.titleFrame}>
                         <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                     </View>
                     <TouchableOpacity onPress={this.handleClick} style={styles.button}>
@@ -121,22 +121,22 @@ export default class HomeScreen extends React.Component {
                     <Text style={styles.postTitle}>{title}</Text>
                     <Text style={styles.postDate}>{date}</Text>
 
-                    <TouchableOpacity onPress={this.postSurveyClick(survey)} style={styles.addPostButton}>
+                    <TouchableOpacity onPress={this.postSurveyClick(survey)}>
                             <Text> Take our survey! </Text>
                     </TouchableOpacity>
 
                     <Text style={styles.postContent}>{contents} </Text>
                     
-                    <TouchableOpacity style={styles.button} onPress={() => deletePostLocal(postID)}>
-                            <Text style={styles.buttonLabel}> Delete Post </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("EditPost", {
-                                title: title,
-                                description: contents,
-                                survey: survey,
-                                postID: postID
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPostScreen", {
+                                Title: title,
+                                Information: contents,
+                                Survey: survey,
+                                PostID: postID
                             })}> 
-                            <Text style={styles.buttonLabel}>Edit Program</Text>
+                            <Text style={styles.postFeatureLabel}>Edit Post </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => deletePostLocal(postID)}>
+                            <Text style={styles.postFeatureLabel}> Delete Post </Text>
                     </TouchableOpacity>
                 </View>
             );
@@ -147,16 +147,17 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.postDate}>{date}</Text>
 
             <Text style={styles.postContent}>{contents}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => deletePostLocal(postID)}>
-                        <Text style={styles.buttonLabel}> Delete Post </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("EditPost", {
-                            title: title,
-                            description: contents,
-                            survey: survey,
-                            postID: postID
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPostScreen", {
+                            Title: title,
+                            Information: contents,
+                            Survey: survey,
+                            PostID: postID
                         })}> 
-                        <Text style={styles.buttonLabel}>Edit Program</Text></TouchableOpacity>
+                        <Text style={styles.postFeatureLabel}>Edit Post </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => deletePostLocal(postID)}>
+                        <Text style={styles.postFeatureLabel}> Delete Post </Text>
+                </TouchableOpacity>
         </View>
         );
     } 
