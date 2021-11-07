@@ -22,8 +22,7 @@ export async function makeNewUser(paypal = null, permissions = "base", colorThem
 
     const res = await db.collection('Users').doc(currentUID).set(data);
 
-    const newData = await usersRef.get();
-    return newData;
+    return data;
 
 }
 
@@ -47,9 +46,9 @@ export async function getUserData(requestedUID = null) {
 
         makeNewUser();
         
-        const res = await db.collection('Users').doc(currentUID).set(data);
+        const res = await db.collection('Users').doc(currentUID);
 
-        const newData = await usersRef.get();
+        const newData = await res.get();
         return newData;
     } else {
 
