@@ -101,7 +101,7 @@ export async function editEvent(title, information, startTime, endTime, eventID)
         Information: information,
         StartTime: startTime,
         EndTime: endTime,
-        ProgramID: programID,
+        EventID: eventID,
     };
 
     const res = await db.collection('Events').doc(eventID.toString()).set(eventToSet);

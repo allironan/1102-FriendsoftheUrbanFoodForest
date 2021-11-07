@@ -1,16 +1,12 @@
 import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../Components/UserDataComponents'
-import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
-import {makeNewProgram, getPrograms, deleteProgram, editProgram} from '../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/ProgramsEventsScreen.style.js'
+import styles from '../styles/ProgramsEventsScreen.style.js'
 
 
-export default class ProgramsScreen extends React.Component {
+export default class ProgramsOverviewScreen extends React.Component {
     state = {
         email: "",
         displayName: "",
@@ -24,24 +20,25 @@ export default class ProgramsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <View style={styles.programFrame}>
-                        <Text style= {styles.programTitle}> Programs Test </Text>
+                    <View style={styles.titleFrame}>
+                        <Text style= {styles.programTitle}> Programs </Text>
                     </View>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgram")} style={styles.addEventButton}>
+
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgramScreen")} style={styles.addEventButton}>
                         <Text> Add Program </Text>
                     </TouchableOpacity>
-                    <View >
+
+                    <View>
                         {this.state.programs.map((program) => (
-                        <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("EventsScreen", {
-                            key: program.ProgramID,
-                            title: program.Title,
-                            information: program.Information,
-                            ProgramID: program.ProgramID
-                        })}> 
-                            <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} information={program.Information}></ProgramComponent> 
-                        </TouchableOpacity>
-                        ))
-                        }
+                            <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("ProgramScreen", {
+                                key: program.ProgramID,
+                                title: program.Title,
+                                information: program.Information,
+                                programID: program.ProgramID
+                            })}> 
+                                <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} information={program.Information}></ProgramComponent> 
+                            </TouchableOpacity>
+                        ))}
                     </View>
                 </ScrollView>
             </View>
