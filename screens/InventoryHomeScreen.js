@@ -6,7 +6,6 @@ import 'firebase/auth'
 import getUserData from '../Components/UserDataComponents'
 import {makeNewPost, getPosts, deletePost} from '../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import WebViewExample from '../screens/dialogScreen.js'
 import styles from './styles/HomeScreen.style.js'
 import {deleteTool} from '../Components/InventoryComponents'
 
