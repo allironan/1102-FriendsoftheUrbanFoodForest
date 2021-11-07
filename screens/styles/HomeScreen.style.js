@@ -10,13 +10,23 @@ export default StyleSheet.create({
     title: {
         textAlign: "center",
         padding: 20,
-        marginBottom: 40,
+        marginBottom: 20,
         maxWidth: 350,
         fontSize: 34,
         fontWeight: 'bold',
         flexWrap: "wrap"
     },
-    addPostButton: {
+    titleFrame: {
+        backgroundColor: 'rgba(164,116,73,1)',
+        borderRadius: 25,
+        flex: 1,
+        padding: 10,
+        maxHeight: 200,
+        marginHorizontal: '2%',
+        marginBottom: 12,
+        textAlign: 'center'
+    },
+    button: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
         alignSelf: 'flex-end',
@@ -27,7 +37,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center'
     },
-    addPostLabel: {
+    buttonLabel: {
         fontSize: 16,
         color: 'rgba(196,196,196,1)'
     },
@@ -46,7 +56,7 @@ export default StyleSheet.create({
         fontSize: 24,
         textAlign: 'left',
         flexWrap: 'wrap',
-        marginHorizontal: '8%',
+        marginHorizontal: '7%',
         marginTop: 15,
         marginVertical: '2%',
         fontWeight: 'Bold'
@@ -55,7 +65,7 @@ export default StyleSheet.create({
         fontSize: 10,
         textAlign: 'left',
         flexWrap: 'wrap',
-        marginHorizontal: '8%',
+        marginHorizontal: '7%',
         marginBottom: 20,
         color: 'rgba(196,196,196,1)'
     },
@@ -63,8 +73,23 @@ export default StyleSheet.create({
         fontSize: 12,
         textAlign: 'left',
         flexWrap: 'wrap',
-        marginHorizontal: '8%',
+        marginHorizontal: '7%',
         marginVertical: '5%',
         marginBottom: 30
+    },
+    postFeatureLabel: {
+        fontSize: 14,
+        textAlign: "right",
+        marginRight: "7%",
+        marginBottom: "4%",
+    },
+    textFillField: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        alignSelf: 'center',
+        width: 350,
+        paddingVertical: 10,
+        marginHorizontal: '10%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     }
 })

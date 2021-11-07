@@ -1,16 +1,13 @@
 import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../Components/UserDataComponents'
-import {makeNewEvent, getEvents, deleteEvent, addParticipant, removeParticipant} from '../Components/EventComponents'
-import { deleteProgram } from '../Components/ProgramComponents'
+import { deleteProgram } from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/ProgramsEventsScreen.style.js'
+import styles from '../styles/ProgramsEventsScreen.style.js'
 
 
-export default class EventsScreen extends React.Component {
+export default class ProgramScreen extends React.Component {
     state = {
         email: "",
         displayName: "",
@@ -23,32 +20,36 @@ export default class EventsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <Button style={styles.goBackButton} title="Back to Programs" onPress={() => this.props.navigation.goBack()} />
+                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Text style={styles.goBackLabel}> Back to Programs </Text>
+                    </TouchableOpacity>
 
-                    <View style={styles.programFrame}>
+                    <View style={styles.titleFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                        <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
+                        <Text> {this.props.route.params.information} </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProgram", {
+                    <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditProgramScreen", {
                             title: this.props.route.params.title,
                             information: this.props.route.params.information,
-                            ProgramID: this.props.route.params.ProgramID
+                            programID: this.props.route.params.programID
                         })}> 
                         <Text> Edit Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => deleteProgramLocal(this.props.route.params.ProgramID)}> 
+                    <TouchableOpacity style={styles.leftButton} onPress={() => deleteProgramLocal(this.props.route.params.programID)}> 
                         <Text> Delete Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.createEventPressed} style={styles.addEventButton}>
+                    <TouchableOpacity style={styles.addEventButton} onPress={() => this.props.navigation.navigate("AddEventScreen", {
+                            programID: this.props.route.params.programID
+                        })}>
                         <Text> Add Event </Text>
                     </TouchableOpacity>
 
                     <View>
                         {this.state.events.map((event) => (
-                            <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventInstance", {
+                            <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventScreen", {
                                 key: event.EventID,
                                 title: event.Title,
                                 information: event.Information,
@@ -103,8 +104,8 @@ class DisplayEvent extends React.Component {
         <View style={styles.eventFrame} key={this.props.EventID}>
             <Text style={styles.eventTitle}>{this.props.Title}</Text>
             <Text style={styles.eventInformation}>{this.props.Information}</Text>
-            <Text style={styles.eventStartTime}> {
-                "StartTime: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+            <Text style={styles.eventStartTime}>{
+                "Start Time: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + " on " + monthsList[startDateTime.getMonth()] 
@@ -113,7 +114,7 @@ class DisplayEvent extends React.Component {
             }
             </Text>
             <Text style={styles.eventEndTime}>{
-                "EndTime: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                "End Time: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + ":" + endDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + ":" + endDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + " on " + monthsList[endDateTime.getMonth()] 
@@ -128,6 +129,4 @@ class DisplayEvent extends React.Component {
 
 function deleteProgramLocal(postID){
     deleteProgram(postID);
-    //this.props.navigation.goBack()
-    //onPress={() => deleteProgram(this.props.route.params.ProgramID)}
 }

@@ -7,10 +7,26 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
+    viewContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        width: 350,
+        alignItems: 'center',
+        backgroundColor: 'rgba(233,243,196,1)'
+    },
+    titleFrame: {
+        backgroundColor: 'rgba(255,174,66,1)',
+        borderRadius: 25,
+        flex: 1,
+        paddingVertical: 10,
+        maxHeight: 200,
+        width: 350,
+        marginVertical: 10,
+        textAlign: 'center'
+    },
     programTitle: {
         textAlign: "center",
-        padding: 20,
-        marginBottom: 20,
+        paddingVertical: 20,
         fontSize: 36,
         fontWeight: 'bold',
         flexWrap: "wrap"
@@ -23,6 +39,7 @@ export default StyleSheet.create({
         height: 'auto',
         minHeight: 100,
         paddingVertical: 10,
+        marginTop: 10,
         marginBottom: 20,
         textAlign: 'center',
         textAlignVertical: 'center'
@@ -35,24 +52,36 @@ export default StyleSheet.create({
         marginHorizontal: '8%',
     },
     goBackButton: {
+        backgroundColor: 'rgba(8,39,245,1)',
+        borderRadius: 15,
+        alignSelf: 'flex-start',
+        width: 150,
+        textAlign: "center",
+        paddingVertical: 8,
+        textAlignVertical: 'center',
+    },
+    goBackLabel: {
+        fontSize: 16,
+        color: 'rgba(255,255,255,1)',
+    },
+    leftButton: {
         backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 8,
-        alignSelf: 'flex-end',
-        width: 100,
-        paddingVertical: 10,
-        marginHorizontal: '2%',
-        marginBottom: 20,
-        textAlign: 'left',
-        textAlignVertical: 'center'
+        borderRadius: 15,
+        alignSelf: 'flex-start',
+        width: 150,
+        textAlign: "center",
+        paddingVertical: 8,
+        textAlignVertical: 'center',
+        marginVertical: 5
     },
     submitButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
-        alignSelf: 'flex-end',
+        alignSelf: 'flex-center',
         width: 100,
         paddingVertical: 10,
         marginHorizontal: '2%',
-        marginBottom: 20,
+        marginVertical: 10,
         textAlign: 'left',
         textAlignVertical: 'center'
     },
@@ -64,7 +93,7 @@ export default StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: '2%',
         marginBottom: 20,
-        textAlign: 'left',
+        textAlign: 'center',
         textAlignVertical: 'center'
     },
     addEventLabel: {
@@ -98,9 +127,6 @@ export default StyleSheet.create({
         marginBottom: 20,
         color: 'rgba(196,196,196,1)'
     },
-    attendButton: {
-
-    },
     eventStartTime: {
         fontSize: 12,
         textAlign: 'left',
@@ -114,6 +140,15 @@ export default StyleSheet.create({
         textAlign: 'left',
         flexWrap: 'wrap',
         marginHorizontal: '5%',
-        marginBottom: 30
+        marginBottom: 20
+    },
+    textFillField: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        alignSelf: 'center',
+        width: 350,
+        paddingVertical: 10,
+        marginHorizontal: '10%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     }
 })
