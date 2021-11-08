@@ -21,6 +21,11 @@ export default class InventoryHomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>Hi</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addPostButton}>
+                        <Text> Checkout Tool </Text>
+                </TouchableOpacity>
+                {/* here add an admin only view to a page that has all the tools currently checked out */}
+                {/* here add list of tools that are currenly checked out by UID */}
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addPostButton}>
                         <Text> Add Tool </Text>
                 </TouchableOpacity>

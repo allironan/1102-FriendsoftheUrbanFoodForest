@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput,
 import {makeNewTool} from '../Components/InventoryComponents'
 //import * as NumericInput from "react-numeric-input"
 
-export default class AddPosts extends React.Component {
+export default class AddTool extends React.Component {
     state = {
       name: "",
       quantity: 0,

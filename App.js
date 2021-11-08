@@ -30,6 +30,7 @@ import AddEventScreen from "./screens/ProgramsOverviewScreen/AddEventScreen"
 import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
 import AddTool from "./screens/AddTool"
+import CheckoutTool from "./screens/CheckoutTool"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -90,6 +91,7 @@ function InventoryStackScreens(){
     }}>
           <ProgramsStack.Screen name="InventoryHome" component={InventoryScreen} />
           <ProgramsStack.Screen name="AddTool" component={AddTool}/>
+          <ProgramsStack.Screen name="CheckoutTool" component={CheckoutTool}/>
     </ProgramsStack.Navigator>
   )
 }
