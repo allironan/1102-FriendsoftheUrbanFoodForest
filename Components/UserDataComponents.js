@@ -9,11 +9,13 @@ export async function makeNewUser(paypal = null, permissions = "base", colorThem
     
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
+    const totalDonations = 0;
 
     const data = {
         Username: currentUser.displayName,
         Email: currentUser.email,
         UID: currentUID,
+        TotalDonations: totalDonations,
         Paypal: paypal,
         Permissions: permissions,
         ColorTheme: colorTheme,
@@ -23,9 +25,7 @@ export async function makeNewUser(paypal = null, permissions = "base", colorThem
     const res = await db.collection('Users').doc(currentUID).set(data);
 
     return data;
-
 }
-
 
 //Function to get User Data
 export async function getUserData(requestedUID = null) {
