@@ -46,27 +46,26 @@ export async function getTools() {
     }
 }
 
-export async function editTool(name, quantity, available, toolID) {
-    //figure out here if theres anyway to change the actual doc or do i need to delete it and make a new one
-    //const res = str.replace(/ /g, '')
-    // to take out all strings from string for tool id
-    const currentUser = firebase.auth().currentUser;
-    const currentUID = currentUser.uid;
-    const db = firebase.firestore();
-    const toolToSet = {
-        Author: currentUID,
-        Name: name,
-        ToolID: toolID,
-        Available: available,
-        Quantity: quantity
-    };
-
-    const res = await db.collection('ToolsRental').doc(toolID.toString()).set(toolToSet);
-}
-
 export async function deleteTool(toolID) {
     const db = firebase.firestore();
     const res = await db.collection('ToolsRental').doc(toolID.toString()).delete();
+}
+
+export async function editTool(quantity, available, toolID, name, amountCheckedOut){
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
+
+    const db = firebase.firestore();
+    const postToSet = {
+        Author: currentUID,
+        Available: available,
+        AmountCheckedOut: amountCheckedOut,
+        Quantity: quantity,
+        ToolID: toolID,
+        Name: name
+    };
+
+    const res = await db.collection('ToolsRental').doc(toolID.toString()).set(postToSet);
 }
 
 //get tools name for checkout 
@@ -98,7 +97,7 @@ export async function getToolNames() {
 }
 
 //checkout new tool (fully functional)
-export async function checkoutTool(toolName, number) {
+export async function checkoutTool(toolName, number, userName) {
 
     const db = firebase.firestore();
     const currentUser = firebase.auth().currentUser;
@@ -106,6 +105,7 @@ export async function checkoutTool(toolName, number) {
 
     console.log(toolName);
     var toolID = toolName.toLowerCase();
+    toolID = toolID.replace(/ /g, '')
     console.log(toolID);
     //might need to remove spaces here
     toolID = toolID + number.toString();
@@ -117,7 +117,8 @@ export async function checkoutTool(toolName, number) {
         UID: currentUID,
         Tool: toolName,
         Number: number,
-        CheckoutID: toolID
+        CheckoutID: toolID,
+        UserName: userName
     };
     if (snapshot.exists) {
         console.log("Tool already exists in firebase");
@@ -125,4 +126,9 @@ export async function checkoutTool(toolName, number) {
         const res = await db.collection('CheckedOutTool').doc(toolID.toString()).set(data);
     }
     return data;
+}
+
+export async function checkInTool(CheckoutID){
+    const db = firebase.firestore();
+    const res = await db.collection('CheckedOutTool').doc(CheckoutID.toString()).delete();
 }
