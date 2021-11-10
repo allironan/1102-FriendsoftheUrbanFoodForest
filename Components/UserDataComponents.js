@@ -1,8 +1,9 @@
 import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
+import { ReadStream } from 'fs';
 
-//Function to make new event
+//Function to make new user
 export async function makeNewUser(paypal = null, permissions = "base", colorTheme = "Default", textSize = "Medium") {
 
     const db = firebase.firestore();
@@ -38,50 +39,21 @@ export async function getUserData(requestedUID = null) {
     if (!requestedUID == null) {
         currentUID = requestedUID;
     }
-    const res = await db.collection('Users').doc(currentUID);
-    const snapshot = await res.get();
+    const res = await db.collection('Users').doc(currentUID).get().then((snapshot) => {
+        if (snapshot) {
+            return snapshot.data()
+        }   
+    });
 
-    if (!snapshot.exists) {
-        console.log("User not found in database");
+    return res
 
-        makeNewUser();
-        
-        const res = await db.collection('Users').doc(currentUID);
-
-        const newData = await res.get();
-        return newData;
-    } else {
-
-        return snapshot.data;
-    }
-
-    
-
-    // const usersRef = db.collection('Users').doc(currentUID);
-    // const snapshot = await usersRef.get();
-
-    // if (!snapshot.exists) {
-    //     console.log("User data not found in firebase");
-
-    //     const data = {
-    //         Username: currentUser.displayName,
-    //         Email: currentUser.email,
-    //         UID: currentUID,
-    //         Paypal: null,
-    //         Permissions: "base",
-    //         ColorTheme: "Default",
-    //         TextSize: "Medium"
-    //     };
-
-    //     const res = await db.collection('Users').doc(currentUID).set(data);
-
-    //     const newData = await usersRef.get();
-    //     return newData;
-
-    // } else {
-    //     // console.log("User data found: ", snapshot.data());
-    //     return snapshot.data();
-    // }
+    makeNewUser();
+    const newData = await db.collection('Users').doc(currentUID).get().then((snapshot) => {
+        if (snapshot) {
+            return snapshot.data()
+        }   
+    });
+    return newData
 }
 
 //Function to edit User Data

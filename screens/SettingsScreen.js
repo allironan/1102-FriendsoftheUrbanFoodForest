@@ -9,33 +9,24 @@ import styles from './styles/SettingsScreen.styles'
 export default class SettingsScreen extends React.Component {
 
     // const [displayName, setDisplayName] = useState("")
-
-
-
     state = {
         Username: "",
         Email: "",
         Paypal: "",
+        Permissions: "",
         TextSize: "",
         ColorTheme: "",
-
         readOnly: true
     }
 
     componentDidMount() {
         const {Email, Username} = firebase.default.auth().currentUser
-
         getUserData().then((userData) => {
-            // this.state.Paypal = userData.Paypal;
-            // this.state.TextSize = userData.TextSize;
-            // this.state.ColorTheme = userData.ColorTheme;
-            console.log(userData)
             this.setState({Username : userData.Username})
             this.setState({Email : userData.Email})
-            //this.setState({Paypal : userData.Permissions})
+            this.setState({Permissions: userData.Permissions})
+            this.setState({Paypal: userData.Paypal})
         });
-
-        this.setState({Email , Username})
     }
 
     currentView() {
@@ -57,11 +48,17 @@ export default class SettingsScreen extends React.Component {
                         <Text>Change Settings</Text>
                     </TouchableOpacity>
                 </View>
+                {this.state.Permissions == "admin" && 
+                <View> 
+                    <TouchableOpacity style={styles.choiceFrame}>
+                        <Text>View Users</Text>
+                    </TouchableOpacity>
+                </View>}
                 <View>
-                <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
-                        <Text> Sign Out </Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
+                            <Text> Sign Out </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             )
         } else {
