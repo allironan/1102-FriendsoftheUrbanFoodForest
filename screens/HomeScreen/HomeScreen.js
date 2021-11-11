@@ -157,26 +157,6 @@ export default class HomeScreen extends React.Component {
     } 
 }
 
-/*class DisplayPost extends React.Component {
-    render () {
-        return (
-        <View style={styles.postFrame} key={this.props.PostID}>
-            <Text style={styles.postTitle}>{this.props.Title}</Text>
-            <Text style={styles.postDate}>{this.props.Date}</Text>
-            <Text style={styles.postContent}>{this.props.Contents}</Text>
-                <TouchableOpacity style={styles.addPostButton} onPress={() => deletePostLocal(this.props.PostID)}>
-                        <Text style={styles.addPostLabel}> Delete Post </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPost", {
-                            title: title,
-                            description: description,
-                            postID: postID
-                        })}> <Text>Edit Program</Text></TouchableOpacity>
-        </View>
-        );
-    }
-}*/
-
 function deletePostLocal(postID){
     //console.log(postID)
     deletePost(postID);

@@ -1,8 +1,10 @@
 import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
+import './ImageComponents'
+import { deleteImage, selectImage, uploadImage } from './ImageComponents';
 
-//Function to make new posts
+//Function to make new item
 export async function makeNewItem(name, description, price) {
 
     const db = firebase.firestore();
@@ -13,14 +15,14 @@ export async function makeNewItem(name, description, price) {
         Name: name,
         Description: description,
         Price: price,
-        ItemID: itemID.NextItemID
+        ItemID: itemID.NextItemID,
     };
 
     const res = await db.collection('StoreGoods').doc(itemID.NextItemID.toString()).set(data);
     return data;
 }
 
-// Function to get next post in database
+// Function to get next item in database
 async function getNextItem() {
 
     const db = firebase.firestore();
@@ -49,7 +51,7 @@ async function getNextItem() {
     }
 }
 
-//Function to get all posts in database
+//Function to get all items in database
 export async function getItems() {
     const db = firebase.firestore();
 
@@ -68,7 +70,7 @@ export async function getItems() {
     }
 }
 
-export async function editItem(name, description, price, itemID) {
+export async function editItem(name, description, price, itemID, imageName) {
 
     const db = firebase.firestore();
 
@@ -76,23 +78,27 @@ export async function editItem(name, description, price, itemID) {
         Name: name,
         Description: description,
         Price: price,
-        ItemID: itemID
+        ItemID: itemID,
+        Image: imageName
     };
 
     const res = await db.collection('StoreGoods').doc(itemID.toString()).set(itemToSet);
 }
 
-//Function to delete posts
+//Function to delete item
 export async function deleteItem(itemID) {
     const db = firebase.firestore();
     const res = await db.collection('StoreGoods').doc(itemID.toString()).delete();
+}
 
-    // // if we want to add/subtract each time
-    // const countRef = db.collection('StoreGoods').doc('Store Item Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextItemID + 1;
-    // const data = {
-    //     NextItemID: value
-    // }
-    // const res2 = db.collection('StoreGoods').doc('Store Item Count').set(data);
+export async function editItemImage(itemName) {
+
+    uploadUri = selectImage();
+
+    if (uploadUri == -1) {
+        return;
+    }
+
+    deleteImage(itemName);
+    uploadImage(itemName, uploadUri);
 }

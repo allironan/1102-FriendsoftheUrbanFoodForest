@@ -31,11 +31,14 @@ import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
 import AddTool from "./screens/AddTool"
 import CheckoutTool from "./screens/CheckoutTool"
+import AdminToolCheckoutScreen from "./screens/AdminToolCheckoutScreen"
+import EditTool from "./screens/EditTool"
 import FundraisingOptionsScreen from "./screens/FundraisingScreens/FundraisingOptionsScreen"
 import DonationScreen from "./screens/FundraisingScreens/DonationScreen"
 import StoreScreen from "./screens/FundraisingScreens/StoreScreen"
 import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
 import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
+
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -97,6 +100,8 @@ function InventoryStackScreens(){
           <ProgramsStack.Screen name="InventoryHome" component={InventoryScreen} />
           <ProgramsStack.Screen name="AddTool" component={AddTool}/>
           <ProgramsStack.Screen name="CheckoutTool" component={CheckoutTool}/>
+          <ProgramsStack.Screen name="EditTool" component={EditTool}/>
+          <ProgramsStack.Screen name="AdminToolCheckoutScreen" component={AdminToolCheckoutScreen}/>
     </ProgramsStack.Navigator>
   )
 }
