@@ -31,6 +31,11 @@ import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
 import AddTool from "./screens/AddTool"
 import CheckoutTool from "./screens/CheckoutTool"
+import FundraisingOptionsScreen from "./screens/FundraisingScreens/FundraisingOptionsScreen"
+import DonationScreen from "./screens/FundraisingScreens/DonationScreen"
+import StoreScreen from "./screens/FundraisingScreens/StoreScreen"
+import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
+import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -96,13 +101,27 @@ function InventoryStackScreens(){
   )
 }
 
+function FundraisingStackScreens() {
+  return (
+    <ProgramsStack.Navigator initialRouteName = "FundraisingScreens" screenOptions={{
+      headerShown: false
+    }}>
+      <ProgramsStack.Screen name="FundraisingOptionsScreen" component={FundraisingOptionsScreen}/>
+      <ProgramsStack.Screen name="DonationScreen" component={DonationScreen}/>
+      <ProgramsStack.Screen name="StoreScreen" component={StoreScreen}/>
+      <ProgramsStack.Screen name="ProductScreen" component={ProductScreen}/>
+      <ProgramsStack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
+    </ProgramsStack.Navigator>
+  )
+}
+
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeStackScreens} />
-      <Tab.Screen name="Programs" component={ProgramStackScreens}>
-      </Tab.Screen>
+      <Tab.Screen name="Programs" component={ProgramStackScreens} />
       <Tab.Screen name="Inventory" component={InventoryStackScreens} />
+      <Tab.Screen name="Fundraising" component={FundraisingStackScreens} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>

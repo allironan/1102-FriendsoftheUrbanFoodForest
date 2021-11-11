@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'

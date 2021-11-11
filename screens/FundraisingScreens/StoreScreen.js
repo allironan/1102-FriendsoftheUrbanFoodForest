@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Text, TouchableHighlight, View, TextInput } from 'react-native';
-import { styles } from '../styles/FundraisingScreens.styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import firebase from 'firebase/app'
+import {} from '../../Components/StoreItemComponents'
+import styles from '../styles/FundraisingScreens.styles';
 
 export default class StoreScreen extends React.Component {
     state = {
@@ -10,13 +13,15 @@ export default class StoreScreen extends React.Component {
     }
 
     currentView() {
-
+        <View style={styles.container}>
+            
+        </View>
     }
-    
+
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
-        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection)
+        this.unsubscribe = this.firestoreRefStoreGoods.onSnapshot(this.getCollection)
     }
 
     componentWillUnmount() {
@@ -29,5 +34,9 @@ export default class StoreScreen extends React.Component {
             products.push(product.data())
         })
         this.setState({products})
+    }
+
+    goToDonationScreen() {
+
     }
 }
