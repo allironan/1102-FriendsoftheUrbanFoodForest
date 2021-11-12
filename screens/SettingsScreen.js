@@ -23,19 +23,23 @@ export default class SettingsScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {Email, Username} = firebase.default.auth().currentUser
 
-        getUserData().then((userData) => {
-            // this.state.Paypal = userData.Paypal;
-            // this.state.TextSize = userData.TextSize;
-            // this.state.ColorTheme = userData.ColorTheme;
-            console.log(userData)
-            this.setState({Username : userData.Username})
-            this.setState({Email : userData.Email})
-            //this.setState({Paypal : userData.Permissions})
-        });
+        const db = firebase.firestore();
+    
+        const currentUser = firebase.auth().currentUser;
+        //const currentUID = currentUser.uid;
 
-        this.setState({Email , Username})
+        // getUserData(currentUID).then((userData) => {
+        //     // this.state.Paypal = userData.Paypal;
+        //     // this.state.TextSize = userData.TextSize;
+        //     // this.state.ColorTheme = userData.ColorTheme;
+
+        //     this.setState({Username : userData.Username})
+        //     this.setState({Email : userData.Email})
+        //     //this.setState({Paypal : userData.Permissions})
+        // });
+
+        this.setState({Username: currentUser.Username, Email: currentUser.email})
     }
 
     currentView() {
