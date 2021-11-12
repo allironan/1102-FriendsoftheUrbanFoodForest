@@ -36,6 +36,7 @@ import EditTool from "./screens/EditTool"
 import FundraisingOptionsScreen from "./screens/FundraisingScreens/FundraisingOptionsScreen"
 import DonationScreen from "./screens/FundraisingScreens/DonationScreen"
 import StoreScreen from "./screens/FundraisingScreens/StoreScreen"
+import AddProductScreen from "./screens/FundraisingScreens/AddProductScreen"
 import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
 import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
 
@@ -114,6 +115,7 @@ function FundraisingStackScreens() {
       <ProgramsStack.Screen name="FundraisingOptionsScreen" component={FundraisingOptionsScreen}/>
       <ProgramsStack.Screen name="DonationScreen" component={DonationScreen}/>
       <ProgramsStack.Screen name="StoreScreen" component={StoreScreen}/>
+      <ProgramsStack.Screen name="AddProductScreen" component={AddProductScreen}/>
       <ProgramsStack.Screen name="ProductScreen" component={ProductScreen}/>
       <ProgramsStack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
     </ProgramsStack.Navigator>

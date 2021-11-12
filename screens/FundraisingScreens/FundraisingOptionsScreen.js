@@ -13,7 +13,7 @@ export default class FundraisingOptionsScreen extends React.Component {
                     <Text>Store</Text>
                 </TouchableOpacity>
             </View>
-        );
+        )
     }
 
     render() {

@@ -55,7 +55,8 @@ async function getNextItem() {
 export async function getItems() {
     const db = firebase.firestore();
 
-    const countRef = db.collection('Counters').doc('Store Item Count');
+    return db.collection('StoreGoods')
+    /*const countRef = db.collection('Counters').doc('Store Item Count');
     const snapshot = await countRef.get();
     if (!snapshot.exists) {
         console.log("No items in firebase");
@@ -67,7 +68,7 @@ export async function getItems() {
         console.log(itemArray);
 
         return itemArray;
-    }
+    }*/
 }
 
 export async function editItem(name, description, price, itemID, imageName) {
