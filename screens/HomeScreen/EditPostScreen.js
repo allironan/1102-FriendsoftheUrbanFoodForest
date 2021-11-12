@@ -33,12 +33,10 @@ export default class EditPostScreen extends Component {
         <TextInput style={styles.textFillField} placeholder="Post Information"
                             placeholder = {'Old Information: ' + this.props.route.params.Information}
                             value={this.state.information}
-
                             onChangeText={(value) => this.setState({information: value})} />
+                            
         <Button styles={styles.button} title="Submit" onPress={() => {
           if (this.state.title != "") {
-            console.log(this.state.title)
-            console.log(this.state.information)
             editPost(this.state.title, this.state.information, this.props.route.params.Survey, this.props.route.params.PostID)
             this.props.navigation.goBack()
           } else {
