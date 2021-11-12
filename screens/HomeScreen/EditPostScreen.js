@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Text, TouchableHighlight, View, TextInput, Button } from 'react-native';
 import { editPost } from '../../Components/PostComponents'
 import Modal from 'modal-react-native-web';
@@ -8,8 +8,8 @@ import styles from '../styles/HomeScreen.style'
 export default class EditPostScreen extends Component {
   state = {
     modalVisible: false,
-    title: "",
-    information: "",
+    title: this.props.route.params.Title,
+    information: this.props.route.params.Information,
     survey: "",
     postID: ""
   };
@@ -25,18 +25,24 @@ export default class EditPostScreen extends Component {
         <Text style={styles.title}>
             Edit Post
         </Text>
-        <TextInput style={styles.textFillField} placeholder="Post Title" 
-                            value={this.props.route.params.Title} 
+        <TextInput style={styles.textFillField} placeholder="Post Title"
+                            placeholder = {'Old Title: ' + this.props.route.params.Title}
+                            value={this.state.title}
                             onChangeText={(value) => this.setState({title: value})} />
-        <TextInput style={styles.textFillField} placeholder="Post Information" 
-                            value={this.props.route.params.Information}
+                            
+        <TextInput style={styles.textFillField} placeholder="Post Information"
+                            placeholder = {'Old Information: ' + this.props.route.params.Information}
+                            value={this.state.information}
+
                             onChangeText={(value) => this.setState({information: value})} />
         <Button styles={styles.button} title="Submit" onPress={() => {
-          if (this.state.information != "" || this.state.title != "") {
-            editPost(state.title, state.information, this.props.route.params.Survey, this.props.route.params.PostID)
-            this.props.navigation.navigate("ProgramsOverviewScreen")
+          if (this.state.title != "") {
+            console.log(this.state.title)
+            console.log(this.state.information)
+            editPost(this.state.title, this.state.information, this.props.route.params.Survey, this.props.route.params.PostID)
+            this.props.navigation.goBack()
           } else {
-            alert('Text cannot be empty.');
+            alert('Title cannot be empty.');
           }
         }}>
         </Button>
