@@ -12,7 +12,7 @@ export async function makeNewPost(title, contents, survey=null) {
     var curTime = Date();
     var postID = await getNextPost()
 
-    if(survey.equals("")) {
+    if(survey === "") {
         survey = null;
     }
 
