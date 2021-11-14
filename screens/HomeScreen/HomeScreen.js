@@ -46,11 +46,10 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser;
         getUserData().then((userData) => {
-            console.log(userData)
+            this.setState({Username : userData.Username})
+            this.setState({Email : userData.Email})
         });
-        this.setState({email, displayName})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection)
     }
     componentWillUnmount() {

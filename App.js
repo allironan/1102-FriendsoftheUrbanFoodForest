@@ -6,7 +6,8 @@ import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
-import SettingsScreen from "./screens/SettingsScreen"
+import SettingsScreen from "./screens/SettingsScreen/SettingsScreen"
+import UsersScreen from "./screens/SettingsScreen/UsersScreen"
 import InventoryScreen from "./screens/InventoryHomeScreen"
 import SingularProgram from "./screens/SingularProgram"
 import EditPosts from "./screens/EditPosts"
@@ -31,7 +32,6 @@ import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
 import AddTool from "./screens/AddTool"
 import CheckoutTool from "./screens/CheckoutTool"
-console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
   apiKey: 'AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM',
@@ -45,6 +45,7 @@ const firebaseConfig =
 firebase.initializeApp(firebaseConfig);
 const AuthStack = createStackNavigator();
 const ProgramsStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const authStack = () => (
@@ -84,6 +85,16 @@ function HomeStackScreens(){
   )
 }
 
+function SettingsStackScreens(){
+  return (
+      <SettingsStack.Navigator initialRouteName = "SettingsHome" screenOptions={{
+        headerShown: false}}>
+        <SettingsStack.Screen name="SettingsScreen" component={SettingsScreen}/>
+        <SettingsStack.Screen name="UsersScreen" component={UsersScreen}/>
+      </SettingsStack.Navigator>
+  )
+}
+
 function InventoryStackScreens(){
   return (
     <ProgramsStack.Navigator initialRouteName = "InventoryScreen" screenOptions={{
@@ -103,7 +114,7 @@ const NavBar = () => (
       <Tab.Screen name="Programs" component={ProgramStackScreens}>
       </Tab.Screen>
       <Tab.Screen name="Inventory" component={InventoryStackScreens} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Settings" component={SettingsStackScreens} />
     </Tab.Navigator>
   </NavigationContainer>
 )

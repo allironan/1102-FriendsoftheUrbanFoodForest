@@ -3,8 +3,8 @@ import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
-import {getUserData, editUserData} from '../Components/UserDataComponents'
-import styles from './styles/SettingsScreen.styles'
+import {getUserData, editUserData} from '../../Components/UserDataComponents'
+import styles from '../styles/SettingsScreen.styles'
 
 export default class SettingsScreen extends React.Component {
 
@@ -20,13 +20,13 @@ export default class SettingsScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {Email, Username} = firebase.default.auth().currentUser
         getUserData().then((userData) => {
             this.setState({Username : userData.Username})
             this.setState({Email : userData.Email})
             this.setState({Permissions: userData.Permissions})
             this.setState({Paypal: userData.Paypal})
         });
+        
     }
 
     currentView() {
@@ -50,7 +50,7 @@ export default class SettingsScreen extends React.Component {
                 </View>
                 {this.state.Permissions == "admin" && 
                 <View> 
-                    <TouchableOpacity style={styles.choiceFrame}>
+                    <TouchableOpacity style={styles.choiceFrame} onPress={() => this.props.navigation.navigate("UsersScreen")}>
                         <Text>View Users</Text>
                     </TouchableOpacity>
                 </View>}
