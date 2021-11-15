@@ -17,17 +17,18 @@ export default class StoreScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
                     <Text>Go Back</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProductScreen")}>
+                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.navigate("AddProductScreen")}>
                     <Text> Add Product </Text>
                 </TouchableOpacity>
 
                 <ScrollView>
                     <View style={styles.storeContainer}>
                         {this.state.products.map((product) => (
+                            product.ItemID &&
                             <TouchableOpacity style={styles.productFrame} key={product.ItemID} onPress={() => this.props.navigation.navigate("ProductScreen", {
                                 id: product.ItemID,
                                 name: product.Name,
@@ -36,7 +37,8 @@ export default class StoreScreen extends React.Component {
                             })}>
                                 <ProductComponent key={product.ItemID} id={product.ItemID} name={product.Name} description={product.Description} price={product.Price}></ProductComponent>
                             </TouchableOpacity>
-                        ))}
+                            ))
+                        }
                     </View>
                 </ScrollView>
             </View>
@@ -61,10 +63,6 @@ export default class StoreScreen extends React.Component {
         this.setState({products})
     }
 
-    goToDonationScreen() {
-
-    }
-
     render() {
         return this.currentView()
     }
@@ -75,7 +73,6 @@ class ProductComponent extends React.Component {
         return (
             <View key={this.props.id}>
                 <Text style={styles.productName}>{this.props.name}</Text>
-                <Text style={styles.productDescription}>{this.props.description}</Text>
                 <Text style={styles.productPrice}>{this.props.price}</Text>
             </View>
         )

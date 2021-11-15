@@ -71,7 +71,7 @@ export async function getItems() {
     }*/
 }
 
-export async function editItem(name, description, price, itemID, imageName) {
+export async function editItem(name, description, price, itemID) {
 
     const db = firebase.firestore();
 
@@ -80,7 +80,6 @@ export async function editItem(name, description, price, itemID, imageName) {
         Description: description,
         Price: price,
         ItemID: itemID,
-        Image: imageName
     };
 
     const res = await db.collection('StoreGoods').doc(itemID.toString()).set(itemToSet);

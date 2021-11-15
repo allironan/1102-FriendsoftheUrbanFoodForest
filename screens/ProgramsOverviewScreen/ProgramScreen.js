@@ -82,6 +82,10 @@ export default class ProgramScreen extends React.Component {
         this.setState({events})
     }
 
+    deleteProgramLocal(postID){
+        deleteProgram(postID);
+    }
+
     render() { 
         return this.currentView()
     }
@@ -127,6 +131,3 @@ class DisplayEvent extends React.Component {
     }
 }
 
-function deleteProgramLocal(postID){
-    deleteProgram(postID);
-}

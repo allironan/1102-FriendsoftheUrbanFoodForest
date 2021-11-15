@@ -1,7 +1,8 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog, Switch} from 'react-native'
-import {makeNewTool} from '../Components/InventoryComponents'
+import {makeNewTool} from '../../Components/InventoryComponents'
+import styles from '../styles/InventoryScreens.styles'
 //import * as NumericInput from "react-numeric-input"
 
 export default class AddTool extends React.Component {
@@ -12,8 +13,10 @@ export default class AddTool extends React.Component {
     };
       currentView() {
           return (
-              <View>
-                  <Button title="Back to Tools" onPress={() => this.props.navigation.goBack()} />
+              <View style={styles.container}>
+                  <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
+                    <Text>Go back</Text>
+                  </TouchableOpacity>
                   <Text>
                       Create new tool
                   </Text>
@@ -33,7 +36,7 @@ export default class AddTool extends React.Component {
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={this.toggleSwitch}
                         value={this.state.available} />
-                  <TouchableHighlight
+                  <TouchableHighlight style={styles.addToolFrame}
                   onPress={() => {
                     if (this.state.name != "" || this.state.quantity > 0) {
                       makeNewTool(this.state.name, this.state.quantity, this.state.available)

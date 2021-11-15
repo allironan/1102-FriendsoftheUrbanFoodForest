@@ -3,11 +3,23 @@ import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 import styles from '../styles/FundraisingScreens.styles';
 
 export default class DonationScreen extends React.Component {
+    state = {
+        donation: ""
+    }
+
     currentView() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
                     <Text> Go back </Text>
+                </TouchableOpacity>
+
+                <TextInput placeholder="Donation Amount" 
+                                        value={this.state.donation}
+                                        onChangeText={(value) => this.setState({donation: value})} />
+
+                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
+                    <Text> Submit </Text>
                 </TouchableOpacity>
             </View>
         )

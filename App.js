@@ -7,9 +7,8 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
 import SettingsScreen from "./screens/SettingsScreen"
-import InventoryScreen from "./screens/InventoryHomeScreen"
+import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
 import SingularProgram from "./screens/SingularProgram"
-import EditPosts from "./screens/EditPosts"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -29,16 +28,17 @@ import AddProgramScreen from "./screens/ProgramsOverviewScreen/AddProgramScreen"
 import AddEventScreen from "./screens/ProgramsOverviewScreen/AddEventScreen"
 import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
-import AddTool from "./screens/AddTool"
-import CheckoutTool from "./screens/CheckoutTool"
-import AdminToolCheckoutScreen from "./screens/AdminToolCheckoutScreen"
-import EditTool from "./screens/EditTool"
+import AddTool from "./screens/InventoryScreens/AddTool"
+import CheckoutTool from "./screens/InventoryScreens/CheckoutTool"
+import AdminToolCheckoutScreen from "./screens/InventoryScreens/AdminToolCheckoutScreen"
+import EditTool from "./screens/InventoryScreens//EditTool"
 import FundraisingOptionsScreen from "./screens/FundraisingScreens/FundraisingOptionsScreen"
 import DonationScreen from "./screens/FundraisingScreens/DonationScreen"
 import StoreScreen from "./screens/FundraisingScreens/StoreScreen"
 import AddProductScreen from "./screens/FundraisingScreens/AddProductScreen"
 import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
 import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
+import EditProductScreen from "./screens/FundraisingScreens/EditProductScreen"
 
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
@@ -117,6 +117,7 @@ function FundraisingStackScreens() {
       <ProgramsStack.Screen name="StoreScreen" component={StoreScreen}/>
       <ProgramsStack.Screen name="AddProductScreen" component={AddProductScreen}/>
       <ProgramsStack.Screen name="ProductScreen" component={ProductScreen}/>
+      <ProgramsStack.Screen name="EditProductScreen" component={EditProductScreen}/>
       <ProgramsStack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
     </ProgramsStack.Navigator>
   )

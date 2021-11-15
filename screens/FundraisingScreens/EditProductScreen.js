@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import { makeNewItem } from '../../Components/StoreItemComponents'
+import { editItem } from '../../Components/StoreItemComponents'
 import styles from '../styles/FundraisingScreens.styles';
 
-export default class AddProductScreen extends React.Component {
+export default class EditProductScreen extends React.Component {
     state = {
         name: "",
         description: "",
@@ -17,9 +17,9 @@ export default class AddProductScreen extends React.Component {
                     <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
                         <Text> Go Back </Text>
                     </TouchableOpacity>
-                    
-                    <Text style={styles.productName}>Create new Product</Text>
 
+                    <Text style={styles.productName}>Edit Product</Text>
+                    
                     <TextInput placeholder="Product Name" 
                                     value={this.state.name} 
                                     onChangeText={(value) => this.setState({name: value})} />
@@ -30,10 +30,10 @@ export default class AddProductScreen extends React.Component {
                                         value={this.state.price}
                                         onChangeText={(value) => this.setState({price: value})} />
                     <TouchableOpacity style={styles.productFunction} onPress={() => {
-                        makeNewItem(this.state.name, this.state.description, this.state.price)
+                        editItem(this.state.name, this.state.description, this.state.price, this.props.route.params.id)
                         this.props.navigation.goBack()
                     }}>
-                        <Text> Submit </Text>
+                        <Text style={{textAlign: "center"}}> Submit </Text>
                     </TouchableOpacity>
                 </View>
             </View>

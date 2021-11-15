@@ -1,9 +1,10 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog, Switch} from 'react-native'
-import {getToolNames, checkoutTool} from '../Components/InventoryComponents'
+import {getToolNames, checkoutTool} from '../../Components/InventoryComponents'
 import { Picker } from "react-native";
 import firebase from 'firebase/app'
+import styles from '../styles/InventoryScreens.styles'
 
 
 export default class CheckoutTool extends React.Component {
@@ -20,8 +21,10 @@ export default class CheckoutTool extends React.Component {
       currentView() {
           //if (this.state.toolNames.size() != 0) {
             return (
-                <View>
-                    <Button title="Back to Tools" onPress={() => this.props.navigation.goBack()} />
+                <View style={styles.container}>
+                    <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
+                    <Text>Go back</Text>
+                  </TouchableOpacity>
                     <Text>
                         Checkout Tool
                     </Text>
@@ -38,7 +41,7 @@ export default class CheckoutTool extends React.Component {
                           onChangeText={(value) => this.setState({toolNumber: value})}
                           maxLength={3}  //setting limit of input
                   />
-                  <TouchableHighlight
+                  <TouchableHighlight style={styles.addToolFrame}
                     onPress={() => {
                       if (this.state.selectedTool != "" || this.state.toolNumber > 0) {
                           //send toolname (selectedTool), and number

@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../Components/UserDataComponents'
-import {makeNewPost, getPosts, deletePost} from '../Components/PostComponents'
+import getUserData from '../../Components/UserDataComponents'
+import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/HomeScreen.style.js'
-import {deleteTool} from '../Components/InventoryComponents'
+import styles from '../styles/InventoryScreens.styles'
+import {deleteTool} from '../../Components/InventoryComponents'
 
 export default class AdminToolCheckoutScreen extends React.Component {
     state = {
@@ -21,12 +21,15 @@ export default class AdminToolCheckoutScreen extends React.Component {
         //if (this.state.checkedOutTools.length != 0) {
             return (
                 <View style={styles.container}>
-                    <Text>Hi</Text>
-                    <Button title="Back to Tools" onPress={() => this.props.navigation.goBack()} />
+                    <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
+                        <Text>Go back</Text>
+                    </TouchableOpacity>
                     {/* here add an admin only view to a page that has all the tools currently checked out */}
-                    <View>
-                            {this.state.checkedOutTools.map(r => this.displayCheckedOutTools(r.Tool, r.Number, r.UserName))}
-                    </View>
+                    <ScrollView>
+                        <View style={styles.toolsContainer}>
+                                {this.state.checkedOutTools.map(r => this.displayCheckedOutTools(r.Tool, r.Number, r.UserName))}
+                        </View>
+                    </ScrollView>
                     {/* here add list of tools that are currenly checked out by UID */}
                 </View>
             );
@@ -77,10 +80,10 @@ export default class AdminToolCheckoutScreen extends React.Component {
 
     displayCheckedOutTools(tool, number, username) {
         return (
-        <View>
-            <Text style={styles.postTitle}>{tool}</Text>
-            <Text style={styles.postTitle}>{number}</Text>
-            <Text style={styles.postTitle}>{username}</Text>
+        <View style={styles.toolFrame}>
+            <Text>{tool}</Text>
+            <Text>{number}</Text>
+            <Text>{username}</Text>
         </View>
         );
     }

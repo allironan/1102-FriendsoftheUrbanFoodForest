@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../Components/UserDataComponents'
-import {makeNewPost, getPosts, deletePost} from '../Components/PostComponents'
+import getUserData from '../../Components/UserDataComponents'
+import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
-import styles from './styles/HomeScreen.style.js'
-import {deleteTool, checkInTool} from '../Components/InventoryComponents'
+import styles from '../styles/InventoryScreens.styles'
+import {deleteTool, checkInTool} from '../../Components/InventoryComponents'
 
 
 
@@ -25,24 +25,25 @@ export default class InventoryHomeScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
+                {/* here add an admin only view to a page that has all the tools currently checked out */}
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
+                        <Text> Admin: See checked out tools </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
+                        <Text> Admin Add Tool </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
+                        <Text> Checkout Tool </Text>
+                </TouchableOpacity>
                 <ScrollView>
-                    <Text>Hi</Text>
-                    {/* here add an admin only view to a page that has all the tools currently checked out */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.button}>
-                            <Text style= {styles.buttonLabel}> Admin: See checked out tools </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addPostButton}>
-                            <Text> Admin Add Tool </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addPostButton}>
-                            <Text> Checkout Tool </Text>
-                    </TouchableOpacity>
                     {/* here add list of tools that are currenly checked out by UID */}
-                    <View>
-                        <Text>Your checked out tools:</Text>
+                    <View style={styles.toolsContainer}>
+                        <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
                         {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
                     </View>
-                    <View>
+                    <View style={styles.toolsContainer}>
                             {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.AmountCheckedOut))}
                     </View>
                 </ScrollView>
@@ -108,28 +109,28 @@ export default class InventoryHomeScreen extends React.Component {
     }
     displayTools(name, quantity, toolID, Available, amountCheckedOut) {
         return (
-        <View>
-            <Text style={styles.postTitle}>{name}</Text>
-            <Text style={styles.postTitle}>{quantity}</Text>
-            <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditTool", {
-                            name: name,
-                            quantity: quantity,
-                            toolID: toolID,
-                            Available: Available,
-                            AmountCheckedOut: amountCheckedOut
-                        })}> 
-                    <Text> Edit Tool </Text>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.toolFrame}>
+                <Text>{name}</Text>
+                <Text>{"ID: " + quantity}</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
+                                name: name,
+                                quantity: quantity,
+                                toolID: toolID,
+                                Available: Available,
+                                AmountCheckedOut: amountCheckedOut
+                            })}> 
+                        <Text> Edit Tool </Text>
+                </TouchableOpacity>
+            </View>
         );
 }
     displayUserCheckedOutTools(tool, number, CheckoutID){
         return (
-            <View style={styles.postFrame}>
-                <Text style={styles.postTitle}>{tool}</Text>
-                <Text style={styles.postTitle}>{number}</Text>
+            <View style={styles.toolFrame}>
+                <Text>{tool}</Text>
+                <Text>{"ID: " + number}</Text>
                 <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID)}>
-                        <Text style={styles.postFeatureLabel}> Check In Tool </Text>
+                        <Text> Check In Tool </Text>
                 </TouchableOpacity>
             </View>
         );
