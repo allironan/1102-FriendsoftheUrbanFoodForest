@@ -39,10 +39,11 @@ export default class InventoryHomeScreen extends React.Component {
                 </TouchableOpacity>
                 <ScrollView>
                     {/* here add list of tools that are currenly checked out by UID */}
+                    <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
                     <View style={styles.toolsContainer}>
-                        <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
                         {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
                     </View>
+                    <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
                     <View style={styles.toolsContainer}>
                             {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.AmountCheckedOut))}
                     </View>
@@ -111,7 +112,7 @@ export default class InventoryHomeScreen extends React.Component {
         return (
             <View style={styles.toolFrame}>
                 <Text>{name}</Text>
-                <Text>{"ID: " + quantity}</Text>
+                <Text>{"Number: " + quantity}</Text>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
                                 name: name,
                                 quantity: quantity,

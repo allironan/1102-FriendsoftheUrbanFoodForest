@@ -39,7 +39,7 @@ export default StyleSheet.create({
         borderRadius: 20,
         alignSelf: 'center',
         height: 120,
-        width: 150,
+        width: 140,
         marginVertical: 10,
         marginHorizontal: 15,
         textAlign: 'center',
