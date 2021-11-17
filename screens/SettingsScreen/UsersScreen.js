@@ -6,14 +6,33 @@ import {
     ActivityIndicator,
     SafeAreaView,
     StatusBar,
+    StyleSheet,
+    Button
   } from "react-native";
-import { ListItem, SearchBar } from "react-native-elements";
+import { ListItem, SearchBar, ButtonGroup } from "react-native-elements";
 import 'firebase/firestore';
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 import _ from "lodash";
+import styles from '../styles/SettingsScreen.styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+});
 export default class UsersScreen extends React.Component {
-
     firestoreRef = firebase.firestore().collection('Users')
 
     constructor(props) {
@@ -24,8 +43,13 @@ export default class UsersScreen extends React.Component {
           users: null,
           searchText: "",
           filteredData: null,
+          selectedIndex: 2,
+          buttonData: [1, 0, 0, 0, 0, 0, 1],
         };
-      }
+        // this.updateIndexes = this.updateIndexes.bind(this)
+    }
+    
+    
     async componentDidMount(){
        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection)
     }
@@ -34,14 +58,25 @@ export default class UsersScreen extends React.Component {
         this.unsubscribe
     }
 
+    // updateIndexes (buttonData) {
+    //   this.setState({buttonData})
+    // }
+
     getCollection = (querySnapshot) => {
         const users = []
         this.setState({loading: true})
         querySnapshot.forEach((user) => {
             users.push(user.data())
         })
+       
         this.setState({users: users, filteredData: users ,loading: false})
+        const adminData = this.state.users.map(user => user.Permissions == "admin")
+        const buttonData = adminData.map(button => button ? 1 : 0)
+        console.log(buttonData)
+        this.setState({buttonData: buttonData})
     }
+
+    
 
     handleSearch = (username) => {
         const query = username.toLowerCase();
@@ -91,27 +126,28 @@ export default class UsersScreen extends React.Component {
             </View>
         );
     };
-
+    changePermissions = (item) => {
+      if (item.Permissions == "admin") {
+        this.state.data.indexOf(item).Permissions = "base"
+      } else {
+        this.state.data.indexOf(item).Permissions = "admin"
+      }
+    }
     render() {
-        // return (
-        //     <Text>hi</Text>
-        // )
         return (<SafeAreaView>
             <StatusBar style="light-content" />
                 <FlatList
                 data={this.state.filteredData}
                 renderItem={({ item }) => (
-                    <ListItem bottomDivider>
-                    <ListItem.Content>
-                        <ListItem.Title>{`${item.Username}`}</ListItem.Title>
-                        <ListItem.Subtitle>{item.Email}</ListItem.Subtitle>
-                    </ListItem.Content>
-                    <ListItem.Chevron />
-                    </ListItem>
+                  <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={style.title}>{item.Username}</Text>
+                    <View style={{flex:1, flexDirection: 'row-reverse'}}>
+                      <Button title={item.Permissions} onPress={() => {this.changePermissions(item)}} />
+                    </View>
+                  </View>
                 )}
                 keyExtractor={(item) => item.Email}
                 extraData={this.state}
-                ItemSeparatorComponent={this.renderSeparator}
                 ListHeaderComponent={this.renderHeader}
                 ListFooterComponent={this.renderFooter}
                 />
