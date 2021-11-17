@@ -17,11 +17,11 @@ export default class StoreScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
+                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
                     <Text>Go Back</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.navigate("AddProductScreen")}>
+                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.navigate("AddProductScreen")}>
                     <Text> Add Product </Text>
                 </TouchableOpacity>
 

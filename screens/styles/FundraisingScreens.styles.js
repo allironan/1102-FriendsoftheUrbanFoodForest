@@ -69,7 +69,7 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         backgroundColor: 'rgba(233,243,196,1)'
     },
-    productFunction: {
+    functionButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 20,
         height: 40,

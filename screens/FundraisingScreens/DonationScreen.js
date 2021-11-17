@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, TextInput, BackHandler } from 'react-native';
 import styles from '../styles/FundraisingScreens.styles';
 
 export default class DonationScreen extends React.Component {
@@ -10,7 +10,7 @@ export default class DonationScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
+                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
                     <Text> Go back </Text>
                 </TouchableOpacity>
 
@@ -18,7 +18,7 @@ export default class DonationScreen extends React.Component {
                                         value={this.state.donation}
                                         onChangeText={(value) => this.setState({donation: value})} />
 
-                <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
+                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
                     <Text> Submit </Text>
                 </TouchableOpacity>
             </View>

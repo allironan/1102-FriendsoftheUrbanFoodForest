@@ -14,7 +14,7 @@ export default class EditProductScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.viewContainer}>
-                    <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
                         <Text> Go Back </Text>
                     </TouchableOpacity>
 
@@ -29,7 +29,7 @@ export default class EditProductScreen extends React.Component {
                     <TextInput placeholder="Product Price" 
                                         value={this.state.price}
                                         onChangeText={(value) => this.setState({price: value})} />
-                    <TouchableOpacity style={styles.productFunction} onPress={() => {
+                    <TouchableOpacity style={styles.functionButton} onPress={() => {
                         editItem(this.state.name, this.state.description, this.state.price, this.props.route.params.id)
                         this.props.navigation.goBack()
                     }}>

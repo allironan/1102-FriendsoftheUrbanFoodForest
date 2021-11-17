@@ -8,7 +8,7 @@ export default class ProductScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.viewContainer}>
-                    <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
                         <Text> Go Back </Text>
                     </TouchableOpacity>
 
@@ -19,7 +19,7 @@ export default class ProductScreen extends React.Component {
                     </View>
 
                     <View style={styles.productFunctions}>
-                        <TouchableOpacity style={styles.productFunction} onPress={() => this.props.navigation.navigate("EditProductScreen", {
+                        <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.navigate("EditProductScreen", {
                                 id: this.props.route.params.id,
                                 name: this.props.route.params.name,
                                 description: this.props.route.params.description,
