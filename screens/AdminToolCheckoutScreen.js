@@ -21,7 +21,6 @@ export default class AdminToolCheckoutScreen extends React.Component {
         //if (this.state.checkedOutTools.length != 0) {
             return (
                 <View style={styles.container}>
-                    <Text>Hi</Text>
                     <Button title="Back to Tools" onPress={() => this.props.navigation.goBack()} />
                     {/* here add an admin only view to a page that has all the tools currently checked out */}
                     <View>

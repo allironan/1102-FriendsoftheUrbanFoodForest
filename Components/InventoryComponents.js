@@ -128,7 +128,22 @@ export async function checkoutTool(toolName, number, userName) {
     return data;
 }
 
-export async function checkInTool(CheckoutID){
+export async function checkInTool(CheckoutID, tool){
     const db = firebase.firestore();
     const res = await db.collection('CheckedOutTool').doc(CheckoutID.toString()).delete();
+    var toolID = tool.toLowerCase();
+    toolID = toolID.replace(/ /g, '')
+    const countRef = db.collection('ToolsRental').doc(toolID);
+    const snapshot = await countRef.get();
+    //to do: come back to here and get the increment to work
+    // const data = {
+    //     Author: snapshot.Author,
+    //     AmountCheckedOut: snapshot.AmountCheckedOut + 1,
+    //     Name: snapshot.Name,
+    //     Quantity: snapshot.Quantity,
+    //     Available: snapshot.Available,
+    //     ToolID: snapshot.ToolID
+    // };
+    // const res2 = await db.collection('ToolsRental').doc(toolID.toString()).set(data);
+
 }

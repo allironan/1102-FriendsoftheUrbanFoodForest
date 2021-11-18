@@ -26,7 +26,6 @@ export default class InventoryHomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <Text>Hi</Text>
                     {/* here add an admin only view to a page that has all the tools currently checked out */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.button}>
                             <Text style= {styles.buttonLabel}> Admin: See checked out tools </Text>
@@ -110,7 +109,8 @@ export default class InventoryHomeScreen extends React.Component {
         return (
         <View>
             <Text style={styles.postTitle}>{name}</Text>
-            <Text style={styles.postTitle}>{quantity}</Text>
+            <Text style={styles.postTitle}>Quantity: {quantity}</Text>
+            <Text style={styles.postTitle}>Amount Available: {parseInt(quantity) - amountCheckedOut}</Text>
             <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditTool", {
                             name: name,
                             quantity: quantity,
@@ -128,13 +128,13 @@ export default class InventoryHomeScreen extends React.Component {
             <View style={styles.postFrame}>
                 <Text style={styles.postTitle}>{tool}</Text>
                 <Text style={styles.postTitle}>{number}</Text>
-                <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID)}>
+                <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID, tool)}>
                         <Text style={styles.postFeatureLabel}> Check In Tool </Text>
                 </TouchableOpacity>
             </View>
         );
     }
 }
-function checkInToolLocal(CheckoutID){
-    checkInTool(CheckoutID);
+function checkInToolLocal(CheckoutID, tool){
+    checkInTool(CheckoutID, tool);
 }
