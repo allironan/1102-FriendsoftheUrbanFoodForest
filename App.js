@@ -33,6 +33,10 @@ import AddTool from "./screens/AddTool"
 import CheckoutTool from "./screens/CheckoutTool"
 import AdminToolCheckoutScreen from "./screens/AdminToolCheckoutScreen"
 import EditTool from "./screens/EditTool"
+
+import StripeCheckout from "react-stripe-checkout"
+const stripeKey = "pk_test_51JxdYlDXjNLHEd6TkmxykUQJgaD4aDLnWHJMwBPE1taFoKGRXQ31jBMKNuXwhaB9JHtB49grLDZI77FrFKb7iojU00835SodMc"
+
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
