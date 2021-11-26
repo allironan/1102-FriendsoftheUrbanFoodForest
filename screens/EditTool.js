@@ -29,7 +29,7 @@ export default class EditTool extends React.Component {
                         value={this.state.available} />
                 <TouchableOpacity style={styles.submitButton} title="Submit" onPress={() => {
                   if (this.state.quantity != "") {
-                    editTool(this.state.quantity, this.state.available, this.props.route.params.toolID, this.props.route.params.name, this.props.route.params.AmountCheckedOut)
+                    editTool(this.state.quantity, this.state.available, this.props.route.params.toolID, this.props.route.params.name, this.props.route.params.checkedOut)
                     this.props.navigation.goBack();
                   } else {
                     alert('Quantity cannot be empty.');

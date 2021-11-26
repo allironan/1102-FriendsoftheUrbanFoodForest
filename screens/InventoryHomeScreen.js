@@ -16,37 +16,60 @@ export default class InventoryHomeScreen extends React.Component {
         email: "",
         displayName: "",
         tools: [],
+        visibleTools: [],
         checkedOutTools: [],
-        userCheckedOutTools: []
+        userCheckedOutTools: [],
+        admin: true //to do: make this dynamic
     }
     firestoreRef = firebase.firestore().collection('ToolsRental');
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
 
     currentView() {
-        return (
-            <View style={styles.container}>
-                <ScrollView>
-                    {/* here add an admin only view to a page that has all the tools currently checked out */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.button}>
-                            <Text style= {styles.buttonLabel}> Admin: See checked out tools </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addPostButton}>
-                            <Text> Admin Add Tool </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addPostButton}>
-                            <Text> Checkout Tool </Text>
-                    </TouchableOpacity>
-                    {/* here add list of tools that are currenly checked out by UID */}
-                    <View>
-                        <Text>Your checked out tools:</Text>
-                        {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
-                    </View>
-                    <View>
-                            {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.AmountCheckedOut))}
-                    </View>
-                </ScrollView>
-            </View>
-        );
+        if (this.state.admin) {
+            return (
+                <View style={styles.container}>
+                    <ScrollView>
+                        {/* here add an admin only view to a page that has all the tools currently checked out */}
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.button}>
+                                <Text style= {styles.buttonLabel}> Admin: See checked out tools </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addPostButton}>
+                                <Text> Admin Add Tool </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addPostButton}>
+                                <Text> Checkout Tool </Text>
+                        </TouchableOpacity>
+                        {/* here add list of tools that are currenly checked out by UID */}
+                        <View>
+                            <Text>Your checked out tools:</Text>
+                            {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
+                        </View>
+                        <View>
+                                {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                        </View>
+                    </ScrollView>
+                </View>
+            );
+        } else {
+            return (
+                <View style={styles.container}>
+                    <ScrollView>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addPostButton}>
+                                <Text> Checkout Tool </Text>
+                        </TouchableOpacity>
+                        {/* here add list of tools that are currenly checked out by UID */}
+                        <View>
+                            <Text>Your checked out tools:</Text>
+                            {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
+                        </View>
+                        <View>
+                                {this.state.visibleTools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                        </View>
+                    </ScrollView>
+                </View>
+            );
+        }
+        
     }
 
     componentDidMount() {
@@ -63,10 +86,15 @@ export default class InventoryHomeScreen extends React.Component {
     }
     getCollectionToolsRental = (querySnapshot) => {
         const tools = []
+        const visibleTools = []
         querySnapshot.forEach((tool) => {
             tools.push(tool.data())
+            if (tool.data().Available){
+                visibleTools.push(tool.data())
+            }
         })
         this.setState({tools})
+        this.setState({visibleTools})
     }
     getCollectionCheckedOut = (querySnapshot) => {
         const checkedOutTools = []
@@ -82,15 +110,20 @@ export default class InventoryHomeScreen extends React.Component {
     }
     updateTools(){
         const tools = []
+        const visibleTools = []
         db.collection("ToolsRental").onSnapshot(snapshot => {
             let changes = snapshot.docChanges();
             changes.forEach(change => {
                 if(change.type == 'added'){
                     tools.push(change.data())
+                    if (change.data().Available){
+                        visibleTools.push(change.data())
+                    }
                 }
             })
         })
         this.setState({tools})
+        this.setState({visibleTools})
     }
     updateCheckedOutTools(){
         const tools = []
@@ -105,23 +138,23 @@ export default class InventoryHomeScreen extends React.Component {
         })
         this.setState({tools})
     }
-    displayTools(name, quantity, toolID, Available, amountCheckedOut) {
-        return (
-        <View>
-            <Text style={styles.postTitle}>{name}</Text>
-            <Text style={styles.postTitle}>Quantity: {quantity}</Text>
-            <Text style={styles.postTitle}>Amount Available: {parseInt(quantity) - amountCheckedOut}</Text>
-            <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditTool", {
-                            name: name,
-                            quantity: quantity,
-                            toolID: toolID,
-                            Available: Available,
-                            AmountCheckedOut: amountCheckedOut
-                        })}> 
-                    <Text> Edit Tool </Text>
-            </TouchableOpacity>
-        </View>
-        );
+    displayTools(name, quantity, toolID, Available, checkedOut) {
+            return (
+                <View>
+                    <Text style={styles.postTitle}>{name}</Text>
+                    <Text style={styles.postTitle}>Quantity: {quantity}</Text>
+                    <Text style={styles.postTitle}>Amount Available: {parseInt(quantity) - checkedOut}</Text>
+                    <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditTool", {
+                                    name: name,
+                                    quantity: quantity,
+                                    toolID: toolID,
+                                    Available: Available,
+                                    checkedOut: checkedOut
+                                })}> 
+                            <Text> Edit Tool </Text>
+                    </TouchableOpacity>
+                </View>
+             );
 }
     displayUserCheckedOutTools(tool, number, CheckoutID){
         return (
