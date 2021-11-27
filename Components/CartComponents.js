@@ -29,7 +29,7 @@ export async function getUserCart() {
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
-    const res = await db.collection('UserCart').doc(currentUID);
+    //const res = await db.collection('UserCart').doc(currentUID);
     const snapshot = await res.get();
 
     if (!snapshot.exists) {
@@ -55,7 +55,7 @@ export async function addToCart(itemID) {
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
-    const res = await db.collection('UserCart').doc(currentUID);
+    //const res = await db.collection('UserCart').doc(currentUID);
 
     const contents = await res.get();
 
@@ -84,7 +84,7 @@ export async function removeFromCart(itemID) {
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
-    const res = await db.collection('UserCart').doc(currentUID);
+    //const res = await db.collection('UserCart').doc(currentUID);
 
     const contents = await res.get();
 

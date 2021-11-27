@@ -7,9 +7,7 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
 import SettingsScreen from "./screens/SettingsScreen"
-import InventoryScreen from "./screens/InventoryHomeScreen"
-import SingularProgram from "./screens/SingularProgram"
-import EditPosts from "./screens/EditPosts"
+import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
 import { FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN,
         FIREBASE_PROJECTID,
@@ -19,7 +17,6 @@ import { FIREBASE_APIKEY,
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { registerRootComponent } from "expo"
 import EditEventScreen from "./screens/ProgramsOverviewScreen/EditEventScreen"
 import EditProgramScreen from "./screens/ProgramsOverviewScreen/EditProgramScreen"
 import ProgramsOverviewScreen from "./screens/ProgramsOverviewScreen/ProgramsOverviewScreen"
@@ -29,10 +26,19 @@ import AddProgramScreen from "./screens/ProgramsOverviewScreen/AddProgramScreen"
 import AddEventScreen from "./screens/ProgramsOverviewScreen/AddEventScreen"
 import EditPostScreen from "./screens/HomeScreen/EditPostScreen"
 import EventScreen from "./screens/ProgramsOverviewScreen/EventScreen"
-import AddTool from "./screens/AddTool"
-import CheckoutTool from "./screens/CheckoutTool"
-import AdminToolCheckoutScreen from "./screens/AdminToolCheckoutScreen"
-import EditTool from "./screens/EditTool"
+import AddTool from "./screens/InventoryScreens/AddTool"
+import CheckoutTool from "./screens/InventoryScreens/CheckoutTool"
+import AdminToolCheckoutScreen from "./screens/InventoryScreens/AdminToolCheckoutScreen"
+import EditTool from "./screens/InventoryScreens//EditTool"
+import FundraisingOptionsScreen from "./screens/FundraisingScreens/FundraisingOptionsScreen"
+import DonationScreen from "./screens/FundraisingScreens/DonationScreen"
+import StoreScreen from "./screens/FundraisingScreens/StoreScreen"
+import AddProductScreen from "./screens/FundraisingScreens/AddProductScreen"
+import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
+import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
+import EditProductScreen from "./screens/FundraisingScreens/EditProductScreen"
+import CartScreen from "./screens/FundraisingScreens/CartScreen"
+
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
 {
@@ -46,7 +52,10 @@ const firebaseConfig =
 
 firebase.initializeApp(firebaseConfig);
 const AuthStack = createStackNavigator();
-const ProgramsStack = createStackNavigator();
+const HomeStackNavigator = createStackNavigator();
+const ProgramStackNavigator = createStackNavigator();
+const InventoryStackNavigator = createStackNavigator();
+const FundraisingStackNavigator = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const authStack = () => (
@@ -58,55 +67,78 @@ const authStack = () => (
   </NavigationContainer>
 )
 
-function ProgramStackScreens(){
+function HomeStack(){
   return (
-    <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
+    <HomeStackNavigator.Navigator initialRouteName = "HomeStackHome" screenOptions={{
       headerShown: false
     }}>
-          <ProgramsStack.Screen name="ProgramsOverviewScreen" component={ProgramsOverviewScreen} />
-          <ProgramsStack.Screen name="ProgramScreen" component={ProgramScreen} />
-          <ProgramsStack.Screen name="EventScreen" component={EventScreen} />
-          <ProgramsStack.Screen name="AddProgramScreen" component={AddProgramScreen}/>
-          <ProgramsStack.Screen name="AddEventScreen" component={AddEventScreen}/>
-          <ProgramsStack.Screen name="EditProgramScreen" component={EditProgramScreen}/>
-          <ProgramsStack.Screen name="EditEventScreen" component={EditEventScreen}/>
-    </ProgramsStack.Navigator>
+          <HomeStackNavigator.Screen name="HomeScreen" component={HomeScreen} />
+          <HomeStackNavigator.Screen 
+            name="AddPostScreen" 
+            component={AddPostScreen}
+          />
+          <HomeStackNavigator.Screen 
+            name="EditPostScreen" 
+            component={EditPostScreen}
+          />
+    </HomeStackNavigator.Navigator>
   )
 }
 
-function HomeStackScreens(){
+function ProgramStack(){
   return (
-    <ProgramsStack.Navigator initialRouteName = "ProgramsHome" screenOptions={{
+    <ProgramStackNavigator.Navigator initialRouteName = "ProgramStackHome" screenOptions={{
       headerShown: false
     }}>
-          <ProgramsStack.Screen name="PostsHome" component={HomeScreen} />
-          <ProgramsStack.Screen name="AddPostScreen" component={AddPostScreen}/>
-          <ProgramsStack.Screen name="EditPostScreen" component={EditPostScreen}/>
-    </ProgramsStack.Navigator>
+          <ProgramStackNavigator.Screen name="ProgramsOverviewScreen" component={ProgramsOverviewScreen} />
+          <ProgramStackNavigator.Screen name="ProgramScreen" component={ProgramScreen} />
+          <ProgramStackNavigator.Screen name="EventScreen" component={EventScreen} />
+          <ProgramStackNavigator.Screen name="AddProgramScreen" component={AddProgramScreen}/>
+          <ProgramStackNavigator.Screen name="AddEventScreen" component={AddEventScreen}/>
+          <ProgramStackNavigator.Screen name="EditProgramScreen" component={EditProgramScreen}/>
+          <ProgramStackNavigator.Screen name="EditEventScreen" component={EditEventScreen}/>
+    </ProgramStackNavigator.Navigator>
   )
 }
 
-function InventoryStackScreens(){
+function InventoryStack(){
   return (
-    <ProgramsStack.Navigator initialRouteName = "InventoryScreen" screenOptions={{
+    <InventoryStackNavigator.Navigator initialRouteName = "InventoryStackHome" screenOptions={{
       headerShown: false
     }}>
-          <ProgramsStack.Screen name="InventoryHome" component={InventoryScreen} />
-          <ProgramsStack.Screen name="AddTool" component={AddTool}/>
-          <ProgramsStack.Screen name="CheckoutTool" component={CheckoutTool}/>
-          <ProgramsStack.Screen name="EditTool" component={EditTool}/>
-          <ProgramsStack.Screen name="AdminToolCheckoutScreen" component={AdminToolCheckoutScreen}/>
-    </ProgramsStack.Navigator>
+          <InventoryStackNavigator.Screen name="InventoryHome" component={InventoryScreen} />
+          <InventoryStackNavigator.Screen name="AddTool" component={AddTool}/>
+          <InventoryStackNavigator.Screen name="CheckoutTool" component={CheckoutTool}/>
+          <InventoryStackNavigator.Screen name="EditTool" component={EditTool}/>
+          <InventoryStackNavigator.Screen name="AdminToolCheckoutScreen" component={AdminToolCheckoutScreen}/>
+    </InventoryStackNavigator.Navigator>
+  )
+}
+
+function FundraisingStack() {
+  return (
+    <FundraisingStackNavigator.Navigator initialRouteName = "FundraisingStackHome" screenOptions={{
+      headerShown: false
+    }}>
+      <FundraisingStackNavigator.Screen name="FundraisingOptionsScreen" component={FundraisingOptionsScreen}/>
+      <FundraisingStackNavigator.Screen name="DonationScreen" component={DonationScreen}/>
+      <FundraisingStackNavigator.Screen name="StoreScreen" component={StoreScreen}/>
+      <FundraisingStackNavigator.Screen name="AddProductScreen" component={AddProductScreen}/>
+      <FundraisingStackNavigator.Screen name="ProductScreen" component={ProductScreen}/>
+      <FundraisingStackNavigator.Screen name="EditProductScreen" component={EditProductScreen}/>
+      <FundraisingStackNavigator.Screen name="CheckoutScreen" component={CheckoutScreen}/>
+      <FundraisingStackNavigator.Screen name="CartScreen" component={CartScreen}/>
+    </FundraisingStackNavigator.Navigator>
   )
 }
 
 const NavBar = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeStackScreens} />
-      <Tab.Screen name="Programs" component={ProgramStackScreens}>
-      </Tab.Screen>
-      <Tab.Screen name="Inventory" component={InventoryStackScreens} />
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Programs" component={ProgramStack} />
+      <Tab.Screen name="Inventory" component={InventoryStack} />
+      <Tab.Screen name="Fundraising" component={FundraisingStack} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>

@@ -1,7 +1,7 @@
 import React, { Children } from 'react'
 import {View, Text, TouchableOpacity, TouchableHighlight,Switch, TextInput, Button, Dialog} from 'react-native'
-import styles from './styles/HomeScreen.style.js'
-import {deleteTool, editTool} from '../Components/InventoryComponents'
+import styles from '../styles/HomeScreen.style.js'
+import {deleteTool, editTool} from '../../Components/InventoryComponents'
 
 export default class EditTool extends React.Component {
     state = {

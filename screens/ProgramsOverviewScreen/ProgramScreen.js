@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -82,6 +82,10 @@ export default class ProgramScreen extends React.Component {
         this.setState({events})
     }
 
+    deleteProgramLocal(postID){
+        deleteProgram(postID);
+    }
+
     render() { 
         return this.currentView()
     }
@@ -127,6 +131,3 @@ class DisplayEvent extends React.Component {
     }
 }
 
-function deleteProgramLocal(postID){
-    deleteProgram(postID);
-}

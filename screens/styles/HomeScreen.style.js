@@ -23,8 +23,23 @@ export default StyleSheet.create({
         padding: 10,
         maxHeight: 200,
         marginHorizontal: '2%',
-        marginBottom: 12,
+        marginVertical: 14,
         textAlign: 'center'
+    },
+    titleFrameHover: {
+        backgroundColor: 'rgba(164,116,73,1)',
+        borderRadius: 25,
+        flex: 1,
+        padding: 10,
+        maxHeight: 200,
+        marginHorizontal: '2%',
+        marginVertical: 14,
+        textAlign: 'center',
+        shadowOffset: { width: 8, height: -8 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        shadowColor: 'black',
+        elevation: 5
     },
     button: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -36,6 +51,22 @@ export default StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center',
         textAlignVertical: 'center'
+    },
+    buttonFrameHover: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 8,
+        alignSelf: 'flex-end',
+        width: 100,
+        paddingVertical: 10,
+        marginHorizontal: '2%',
+        marginBottom: 20,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        shadowOffset: { width: 4, height: -4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        shadowColor: 'black',
+        elevation: 5
     },
     buttonLabel: {
         fontSize: 16,
@@ -51,6 +82,22 @@ export default StyleSheet.create({
         marginHorizontal: '2%',
         marginBottom: 12,
         textAlign: 'center'
+    },
+    postFrameHover: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 25,
+        alignSelf: 'flex-center',
+        width: 350,
+        height: 'auto',
+        minHeight: 150,
+        marginHorizontal: '2%',
+        marginBottom: 12,
+        textAlign: 'center',
+        shadowOffset: { width: 8, height: -8 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        shadowColor: 'black',
+        elevation: 5
     },
     postTitle: {
         fontSize: 24,

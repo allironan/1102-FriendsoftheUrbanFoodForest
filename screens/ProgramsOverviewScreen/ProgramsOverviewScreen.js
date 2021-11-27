@@ -30,6 +30,7 @@ export default class ProgramsOverviewScreen extends React.Component {
 
                     <View>
                         {this.state.programs.map((program) => (
+                            program.Title &&
                             <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("ProgramScreen", {
                                 key: program.ProgramID,
                                 title: program.Title,
