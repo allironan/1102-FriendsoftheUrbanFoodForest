@@ -38,6 +38,7 @@
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
+    "react-paypal-button-v2": "^2.6.3",
     "stripe": "^8.190.0"
   },
   "devDependencies": {

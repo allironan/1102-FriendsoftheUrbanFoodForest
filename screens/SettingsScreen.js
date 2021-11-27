@@ -5,6 +5,7 @@ import 'firebase/auth'
 import { TextInput } from 'react-native'
 import {getUserData, editUserData} from '../Components/UserDataComponents'
 import styles from './styles/SettingsScreen.styles'
+import { PayPalButton } from "react-paypal-button-v2"
 
 export default class SettingsScreen extends React.Component {
 
@@ -27,17 +28,6 @@ export default class SettingsScreen extends React.Component {
         const db = firebase.firestore();
     
         const currentUser = firebase.auth().currentUser;
-        //const currentUID = currentUser.uid;
-
-        // getUserData(currentUID).then((userData) => {
-        //     // this.state.Paypal = userData.Paypal;
-        //     // this.state.TextSize = userData.TextSize;
-        //     // this.state.ColorTheme = userData.ColorTheme;
-
-        //     this.setState({Username : userData.Username})
-        //     this.setState({Email : userData.Email})
-        //     //this.setState({Paypal : userData.Permissions})
-        // });
 
         this.setState({Username: currentUser.Username, Email: currentUser.email})
     }
