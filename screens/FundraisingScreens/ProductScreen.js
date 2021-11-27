@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { addToCart } from '../../Components/CartComponents';
 import { deleteItem } from '../../Components/StoreItemComponents'
 import styles from '../styles/FundraisingScreens.styles';
 
@@ -19,6 +20,10 @@ export default class ProductScreen extends React.Component {
                     </View>
 
                     <View style={styles.productFunctions}>
+                        <TouchableOpacity style={styles.functionButton} onPress={() => this.addProductLocal()}>
+                            <Text> Add Product to Cart </Text>
+                        </TouchableOpacity>
+
                         <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.navigate("EditProductScreen", {
                                 id: this.props.route.params.id,
                                 name: this.props.route.params.name,
@@ -28,7 +33,7 @@ export default class ProductScreen extends React.Component {
                             <Text> Edit Product </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.productFunction} onPress={() => this.deleteProductLocal()}>
+                        <TouchableOpacity style={styles.functionButton} onPress={() => this.deleteProductLocal()}>
                             <Text> Delete Product </Text>
                         </TouchableOpacity>
                     </View>
@@ -37,7 +42,12 @@ export default class ProductScreen extends React.Component {
         )
     }
 
-    deleteProductLocal(){
+    addProductLocal() {
+        addToCart(this.props.route.params.id)
+        this.props.navigation.goBack()
+    }
+
+    deleteProductLocal() {
         deleteItem(this.props.route.params.id)
         this.props.navigation.goBack()
     }

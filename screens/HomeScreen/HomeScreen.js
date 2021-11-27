@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <View style={styles.titleFrame}>
+                    <View style={styles.titleFrame} onMouseEnter={this.mouseEnter} onMouseOut={this.mouseOut}>
                         <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                     </View>
                     <TouchableOpacity onPress={this.handleClick} style={styles.button}>
@@ -82,7 +82,17 @@ export default class HomeScreen extends React.Component {
         })
         this.setState({posts})
     }
-   
+
+    mouseEnter = (event) => {
+        console.log("over")
+        event.target.style = styles.titleFrameHover
+        this.setState
+    }
+
+    mouseOut = (event) => {
+        event.target.style = styles.titleFrame
+        this.setState
+    }
 
     render() {
         return this.currentView()

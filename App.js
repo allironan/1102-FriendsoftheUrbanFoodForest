@@ -37,6 +37,7 @@ import AddProductScreen from "./screens/FundraisingScreens/AddProductScreen"
 import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
 import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
 import EditProductScreen from "./screens/FundraisingScreens/EditProductScreen"
+import CartScreen from "./screens/FundraisingScreens/CartScreen"
 
 console.log(FIREBASE_APIKEY)
 const firebaseConfig = 
@@ -126,6 +127,7 @@ function FundraisingStack() {
       <FundraisingStackNavigator.Screen name="ProductScreen" component={ProductScreen}/>
       <FundraisingStackNavigator.Screen name="EditProductScreen" component={EditProductScreen}/>
       <FundraisingStackNavigator.Screen name="CheckoutScreen" component={CheckoutScreen}/>
+      <FundraisingStackNavigator.Screen name="CartScreen" component={CartScreen}/>
     </FundraisingStackNavigator.Navigator>
   )
 }
