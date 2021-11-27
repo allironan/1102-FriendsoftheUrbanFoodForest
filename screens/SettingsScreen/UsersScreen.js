@@ -46,7 +46,7 @@ export default class UsersScreen extends React.Component {
           selectedIndex: 2,
           buttonData: [1, 0, 0, 0, 0, 0, 1],
         };
-        // this.updateIndexes = this.updateIndexes.bind(this)
+
     }
     
     
@@ -57,10 +57,6 @@ export default class UsersScreen extends React.Component {
     componentWillUnmount(){
         this.unsubscribe
     }
-
-    // updateIndexes (buttonData) {
-    //   this.setState({buttonData})
-    // }
 
     getCollection = (querySnapshot) => {
         const users = []

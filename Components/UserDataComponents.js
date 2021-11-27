@@ -44,8 +44,9 @@ export async function getUserData(requestedUID = null) {
             return snapshot.data()
         }   
     });
-
-    return res
+    if (res) {
+        return res
+    }
 
     makeNewUser();
     const newData = await db.collection('Users').doc(currentUID).get().then((snapshot) => {
