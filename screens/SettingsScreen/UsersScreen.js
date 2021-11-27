@@ -127,10 +127,16 @@ export default class UsersScreen extends React.Component {
         );
     };
     changePermissions = (item) => {
-      if (item.Permissions == "admin") {
-        this.state.data.indexOf(item).Permissions = "base"
+      if (item.Permissions == 'admin') {
+        this.state.users[this.state.users.indexOf(item)].Permissions = 'base'
+        let uid  = this.state.users[this.state.users.indexOf(item)].UID
+        const db = firebase.firestore();
+        db.collection('Users').doc(uid).update({'Permissions': 'base'})
       } else {
-        this.state.data.indexOf(item).Permissions = "admin"
+        this.state.users[this.state.users.indexOf(item)].Permissions = 'admin'
+        let uid  = this.state.users[this.state.users.indexOf(item)].UID
+        const db = firebase.firestore();
+        db.collection('Users').doc(uid).update({'Permissions': 'admin'})
       }
     }
     render() {
