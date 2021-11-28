@@ -134,7 +134,7 @@ export default class HomeScreen extends React.Component {
                     <Text style={styles.postTitle}>{title}</Text>
                     <Text style={styles.postDate}>{date}</Text>
 
-                    <TouchableOpacity onPress={this.postSurveyClick(survey)}>
+                    <TouchableOpacity>
                             <Text> Take our survey! </Text>
                     </TouchableOpacity>
 
@@ -208,3 +208,4 @@ export default class HomeScreen extends React.Component {
     render() {
         return this.currentView()
     }
+}
