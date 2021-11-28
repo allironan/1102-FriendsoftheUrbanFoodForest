@@ -10,71 +10,40 @@ import styles from '../styles/HomeScreen.style.js'
 
 
 export default class HomeScreen extends React.Component {
+    
+    /* 
+    The state variable locally stores the data specific to this component. 
+    The component uses this local data for rendering purposes or to execute other logic. 
+     */
     state = {
-        email: "",
-        displayName: "",
         title: "Default Title: Hi",
         contents: "Default Content: Teest!",
         survey: "Default survey",
-        postID: 26, //for testing deleting,
         posts: [],
         isModalVisible: false
     }
 
-    firestoreRef = firebase.firestore().collection('Posts')
+    /*
+     postsRef makes a call to get the collection of Post data documents from Firestore.
+    */
+    postsRef = firebase.firestore().collection('Posts')
 
-    currentView() {
-        // console.log(this.state.posts);
-        return (
-            <View style={styles.container}>
-                <ScrollView>
-                    <View style={styles.titleFrame} onMouseEnter={this.mouseEnter} onMouseOut={this.mouseOut}>
-                        <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
-                    </View>
-                    <TouchableOpacity onPress={this.handleClick} style={styles.button}>
-                        <Text style= {styles.buttonLabel}> Take our survey! </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
-                        <Text style= {styles.buttonLabel}> Add Post </Text>
-                    </TouchableOpacity>
-                    <View>
-                        {/* {this.state.posts.map(r => <DisplayPost key={r.PostID} PostID={r.PostID} Title={r.Title} Date={r.Date} Contents={r.Contents} navigation = {this.props.navigation} route = {this.props.route}/>)} */}
-                        {this.state.posts.map(r => this.displayPost(r.Title, r.Date, r.Contents, r.Survey, r.PostID))}
-                    </View>
-                </ScrollView>
-            </View>
-        );
-    }
-
+    /*
+    componentDidMount() executes functionality necessary before the home screen renders. 
+    Here it sets up an event listener for the posts collection (any time the posts collection in the database changes, the UI changes as well).
+    Once the database call to get the posts collection returns, it calls the getCollection method. 
+    */
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser;
-        this.setState({email, displayName})
-        // getPosts().then((userData) => {
-        //     // console.log(userData);
-        //     const posts = userData;
-        //     this.setState({posts})
-        // });
-        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection)
-        // console.log(this.state.isModalVisible)
-        // console.log(this.state.posts)
+        this.unsubscribe = this.postsRef.onSnapshot(this.getCollection)
     }
-    componentWillUnmount() {
-        this.unsubscribe
-    }
-    toggleModal = () => {
-        this.setState({isModalVisible: !(this.state.isModalVisible)})
-        console.log("Modal is now:" + this.state.isModalVisible)
-    }
-    handleClick = () => {
-        window.open("https://forms.gle/gcmT4cyGwSarndiz9");
-      };
-    postSurveyClick = (surveyLink) => {
-        // window.open(surveyLink);
-      };
-    // toggleModalOff = () => {
-    //     this.setState({isModalVisible: false})
-    //     console.log("Modal off:" + this.state.isModalVisible)
-    // }
+
+    /*
+    This function takes the post collection and stores it in the component's state
+    
+        Args:
+        querySnapshot (Firestore Collection): This is a Firestore collection with all the data documents 
+        for the collection (in this case posts)
+    */
     getCollection = (querySnapshot) => {
         const posts = []
         querySnapshot.forEach((post) => {
@@ -83,8 +52,35 @@ export default class HomeScreen extends React.Component {
         this.setState({posts})
     }
 
+    /*
+    componentDidMount() executes functionality right before a component is exited. 
+    Before the HomeScreen component is exited, this unsubscribes the event listener set up on the posts collection. 
+    */
+    componentWillUnmount() {
+        this.unsubscribe
+    }
+    
+    /*
+    toggleModal() sets a boolean on whether a modal should be visible or not
+    */
+    toggleModal = () => {
+        this.setState({isModalVisible: !(this.state.isModalVisible)})
+    }
+
+    /*
+    handleclick() opens a browser window that navigates the user to the specicified link 
+    (used for displaying Google Form surveys)
+    */
+    handleClick = () => {
+        window.open("https://forms.gle/gcmT4cyGwSarndiz9");
+      };
+
+    
+    /*
+    The following two functions change the styling of the title component on the home screen 
+    depending on whether the user taps on the title. 
+    */
     mouseEnter = (event) => {
-        console.log("over")
         event.target.style = styles.titleFrameHover
         this.setState
     }
@@ -94,33 +90,46 @@ export default class HomeScreen extends React.Component {
         this.setState
     }
 
-    render() {
-        return this.currentView()
-    }
-
+    /*
+    updatePosts() is called when any posts were changed or added to the database to 
+    accordingly change the post data in the components state.
+    */
     updatePosts(){
         const posts = []
         db.collection("Posts").onSnapshot(snapshot => {
             let changes = snapshot.docChanges();
-            changes.forEach(change => {
-                if(change.type == 'added'){
-                    posts.push(change.data())
+            changes.forEach(post => {
+                if(post.type == 'added'){
+                    posts.push(post.data())
                 }
             })
         })
         this.setState({posts})
     }
 
+    /*
+    updatePosts() is called when any posts were changed or added to the database to 
+    accordingly change the post data in the components state.
+    */
     createPostsPressed = () => {
         const newData = makeNewPost(this.state.title, this.state.contents);
         ReactDOM.render(<DisplayPost PostID={newData.PostID} Title={newData.Title} Date={newData.Date} Contents={newData.Contents} />, document.getElementById('root'))
-        //code for get posts
     }
 
-    // TODO: Only display survey button if ((survey is not null) & (survey != ""))
+    /*
+    displayPost() is called for rendering each post with it's relevant data. 
+
+        Args: title (string): title of the post,
+              date (string): date the post was made,
+              contents (string): the post's content,
+              postID (string): the id of the post
+        Returns:    
+            View: A view representing a post with it's styling and relevant info.
+    */
     displayPost(title, date, contents, survey=null, postID) {
         if (survey) {
             return (
+
                 <View style={styles.postFrame} key={postID}>
                     <Text style={styles.postTitle}>{title}</Text>
                     <Text style={styles.postDate}>{date}</Text>
@@ -139,7 +148,7 @@ export default class HomeScreen extends React.Component {
                             })}> 
                             <Text style={styles.postFeatureLabel}>Edit Post </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => deletePostLocal(postID)}>
+                    <TouchableOpacity onPress={() => deletePost(postID)}>
                             <Text style={styles.postFeatureLabel}> Delete Post </Text>
                     </TouchableOpacity>
                 </View>
@@ -159,17 +168,43 @@ export default class HomeScreen extends React.Component {
                         })}> 
                         <Text style={styles.postFeatureLabel}>Edit Post </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => deletePostLocal(postID)}>
+                <TouchableOpacity onPress={() => deletePost(postID)}>
                         <Text style={styles.postFeatureLabel}> Delete Post </Text>
                 </TouchableOpacity>
         </View>
         );
     } 
-}
 
-function deletePostLocal(postID){
-    //console.log(postID)
-    deletePost(postID);
-}
+    /*
+    currentView() is called for rendering everything to display on the home screen. 
+        Returns:    
+            View: A view with the application's title, any surveys, and a list of posts.
+    */
+    currentView() {
+        return (
+            <View style={styles.container}>
+                <ScrollView>
+                    <View style={styles.titleFrame} onMouseEnter={this.mouseEnter} onMouseOut={this.mouseOut}>
+                        <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
+                    </View>
+                    {/* this button navigates the user to the survey link */}
+                    <TouchableOpacity onPress={this.handleClick} style={styles.button}>
+                        <Text style= {styles.buttonLabel}> Take our survey! </Text>
+                    </TouchableOpacity>
+                    {/* this button navigates the user to the screen to add posts */}
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
+                        <Text style= {styles.buttonLabel}> Add Post </Text>
+                    </TouchableOpacity>
+                    <View>
+                        {/* this takes all of the component's posts and passes in each post's data to 
+                        displayPost() to return the view for each post */}
+                        {this.state.posts.map(r => this.displayPost(r.Title, r.Date, r.Contents, r.Survey, r.PostID))}
+                    </View>
+                </ScrollView>
+            </View>
+        );
+    }
 
-<div id='test'></div>
+    render() {
+        return this.currentView()
+    }
