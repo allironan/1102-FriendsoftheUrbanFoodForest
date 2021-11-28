@@ -44,7 +44,7 @@ export default class UsersScreen extends React.Component {
           searchText: "",
           filteredData: null,
           selectedIndex: 2,
-          buttonData: [1, 0, 0, 0, 0, 0, 1],
+          buttonData: null,
         };
 
     }
@@ -68,7 +68,6 @@ export default class UsersScreen extends React.Component {
         this.setState({users: users, filteredData: users ,loading: false})
         const adminData = this.state.users.map(user => user.Permissions == "admin")
         const buttonData = adminData.map(button => button ? 1 : 0)
-        console.log(buttonData)
         this.setState({buttonData: buttonData})
     }
 
