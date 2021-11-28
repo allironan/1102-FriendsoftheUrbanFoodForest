@@ -25,21 +25,21 @@ export default class InventoryHomeScreen extends React.Component {
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
 
     currentView() {
-        return (
-            <View style={styles.container}>
-                {/* here add an admin only view to a page that has all the tools currently checked out */}
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
-                        <Text> Admin: See checked out tools </Text>
-                </TouchableOpacity>
+        if (this.state.admin) {
+            return (
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
+                            <Text> Admin: See checked out tools </Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
-                        <Text> Admin Add Tool </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
+                            <Text> Admin: Add Tool </Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
-                        <Text> Checkout Tool </Text>
-                </TouchableOpacity>
-                <ScrollView>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
+                            <Text> Checkout Tool </Text>
+                    </TouchableOpacity>
+                    <ScrollView>
                     {/* here add list of tools that are currenly checked out by UID */}
                     <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
                     <View style={styles.toolsContainer}>
@@ -47,11 +47,31 @@ export default class InventoryHomeScreen extends React.Component {
                     </View>
                     <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
                     <View style={styles.toolsContainer}>
-                            {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.AmountCheckedOut))}
+                            {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
                     </View>
-                </ScrollView>
-            </View>
-        );
+                    </ScrollView>
+                </View>
+            );
+        } else {
+            return (
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
+                            <Text> Checkout Tool </Text>
+                    </TouchableOpacity>
+                    <ScrollView>
+                        {/* here add list of tools that are currenly checked out by UID */}
+                        <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
+                        <View style={styles.toolsContainer}>
+                            {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
+                        </View>
+                        <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
+                        <View style={styles.toolsContainer}>
+                                {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                        </View>
+                    </ScrollView>
+                </View>
+            );
+        }
     }
 
     componentDidMount() {
@@ -120,29 +140,42 @@ export default class InventoryHomeScreen extends React.Component {
         })
         this.setState({tools})
     }
-    displayTools(name, quantity, toolID, Available, amountCheckedOut) {
-        return (
-            <View style={styles.toolFrame}>
-                <Text>{name}</Text>
-                <Text>{"Number: " + quantity}</Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
-                                name: name,
-                                quantity: quantity,
-                                toolID: toolID,
-                                Available: Available,
-                                AmountCheckedOut: amountCheckedOut
-                            })}> 
-                        <Text> Edit Tool </Text>
-                </TouchableOpacity>
-            </View>
-        );
+
+    displayTools(name, quantity, toolID, Available, checkedOut) {
+        if (this.state.admin){
+            return (
+                <View style={styles.toolFrame}>
+                    <Text>{name}</Text>
+                    <Text>Quantity: {quantity}</Text>
+                    <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
+                                    name: name,
+                                    quantity: quantity,
+                                    toolID: toolID,
+                                    Available: Available,
+                                    checkedOut: checkedOut
+                                })}> 
+                            <Text> Edit Tool </Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        } else {
+            return (
+                <View style={styles.toolFrame}>
+                    <Text>{name}</Text>
+                    <Text>Quantity: {quantity}</Text>
+                    <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
+                </View>
+            );
+        }
 }
+
     displayUserCheckedOutTools(tool, number, CheckoutID){
         return (
             <View style={styles.toolFrame}>
                 <Text>{tool}</Text>
                 <Text>{"ID: " + number}</Text>
-                <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID)}>
+                <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID, tool)}>
                         <Text> Check In Tool </Text>
                 </TouchableOpacity>
             </View>
