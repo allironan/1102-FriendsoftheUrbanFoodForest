@@ -19,6 +19,7 @@ export async function makeNewTool(name, quantity, available) {
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
+    name = name.trim()
     var toolID = name.toLowerCase();
     toolID = toolID.replace(/ /g, '')
     const countRef = db.collection('ToolsRental').doc(toolID);
