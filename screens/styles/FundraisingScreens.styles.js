@@ -79,5 +79,14 @@ export default StyleSheet.create({
         marginHorizontal: 15,
         textAlign: 'center',
         justifyContent: 'center'
+    },
+    textFillField: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        alignSelf: 'center',
+        width: 350,
+        paddingVertical: 10,
+        marginHorizontal: '10%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     }
 })

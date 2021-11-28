@@ -98,16 +98,18 @@ export async function editPost(title, contents, survey, postID) {
 }
 
 //Function to delete posts
+/*
+ Function that deletes posts from Firebase with provided ID
+
+    Args:
+        postID (string): A list of (x_test, y_test, predictions) tuples
+
+    Returns:
+        list: A list of silhouette scores, returns a list because there is a
+              a recall rate for each for the folds in K-fold
+*/
 export async function deletePost(postID) {
     const db = firebase.firestore();
     const res = await db.collection('Posts').doc(postID.toString()).delete();
 
-    // // if we want to add/subtract each time
-    // const countRef = db.collection('Posts').doc('Post Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextPostID + 1;
-    // const data = {
-    //     NextPostID: value
-    // }
-    // const res2 = db.collection('Posts').doc('Post Count').set(data);
 }
