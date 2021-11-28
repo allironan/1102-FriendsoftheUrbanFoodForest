@@ -12,6 +12,12 @@ export default class DonationScreen extends React.Component {
         donation_amount: "0.00"
     }
 
+    /*
+        currentView() is called for rendering everything to display on the display screen. 
+            Returns:    
+                View: A view with the donation page, a field to enter the amount you wish to donate,
+                and the buttons to continue your transaction.
+        */
     currentView() {
         return (
             <View style={styles.container}>
