@@ -19,7 +19,7 @@ export default class InventoryHomeScreen extends React.Component {
         visibleTools: [],
         checkedOutTools: [],
         userCheckedOutTools: [],
-        admin: true //to do: make this dynamic
+        admin: true 
     }
     firestoreRef = firebase.firestore().collection('ToolsRental');
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
@@ -66,7 +66,7 @@ export default class InventoryHomeScreen extends React.Component {
                         </View>
                         <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
                         <View style={styles.toolsContainer}>
-                                {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                                {this.state.visibleTools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
                         </View>
                     </ScrollView>
                 </View>
@@ -140,7 +140,7 @@ export default class InventoryHomeScreen extends React.Component {
         })
         this.setState({tools})
     }
-
+    
     displayTools(name, quantity, toolID, Available, checkedOut) {
         if (this.state.admin){
             return (

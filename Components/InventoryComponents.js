@@ -84,34 +84,6 @@ export async function editTool(quantity, available, toolID, name, checkedOut){
 }
 
 /*
- Function is used for the sole purpose of creating an array of current tool names in the database 
- to supply to the drop down menu in CheckoutTool.js
- 
-    Returns:
-        toolArray: Array of names of tools found in ToolsRental and whose field Available is currently set to true
-*/
-
-export async function getToolNames() {
-    const db = firebase.firestore();
-    const countRef = db.collection('ToolsRental');
-    const snapshot = await countRef.get();
-
-    if (!snapshot.exists) {
-        console.log("No tools in firebase");
-        return null;
-    } else {
-        const toolArray = [];
-        for (i = 0; i < snapshot.size(); i++) {
-            if (snapshot[i].Available) {
-                toolArray.push(snapshot[i]);
-            }
-        }
-
-        return toolArray;
-    }
-}
-
-/*
  Function is used by end users and volunteers to checkout a tool they would like to use. It allows a user to check out a
  singular tool, so if users are checking out more than one they must use the function more than once. They provide the toolname
  and the unique number of the tool in the checkout process. This is then added to a collection in Firebase.
@@ -150,7 +122,7 @@ export async function checkoutTool(toolName, number, userName) {
 
     /* This aspect of the function below is to increase the amount of the 
     tool currently checkedout in the ToolsRental collection when one gets checked out*/
-    const countRef2 = db.collection('ToolsRental').doc(toolName.toLowerCase());
+    const countRef2 = db.collection('ToolsRental').doc(toolName.toLowerCase().replace(/ /g, ''));
     const snapshot2 = await countRef2.get();
     const dataInitial = snapshot2.data();
     const dataChange = {
@@ -161,7 +133,7 @@ export async function checkoutTool(toolName, number, userName) {
             Available: dataInitial.Available,
             ToolID: dataInitial.ToolID
         };
-    const res2 = await db.collection('ToolsRental').doc(toolName.toLowerCase()).set(dataChange);
+    const res2 = await db.collection('ToolsRental').doc(toolName.toLowerCase().replace(/ /g, '')).set(dataChange);
 
     return data;
 }
