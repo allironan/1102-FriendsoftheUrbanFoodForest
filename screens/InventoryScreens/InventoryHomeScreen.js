@@ -80,7 +80,7 @@ export default class InventoryHomeScreen extends React.Component {
                         <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
                         {/* Creates a view object with a list of all available tools to checkout */}
                         <View style={styles.toolsContainer}>
-                                {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                                {this.state.visibleTools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
                         </View>
                     </ScrollView>
                 </View>
