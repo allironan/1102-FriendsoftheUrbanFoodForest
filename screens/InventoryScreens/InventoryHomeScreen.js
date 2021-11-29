@@ -13,58 +13,72 @@ import {deleteTool, checkInTool} from '../../Components/InventoryComponents'
 
 export default class InventoryHomeScreen extends React.Component {
     state = {
-        email: "",
-        displayName: "",
-        tools: [],
-        visibleTools: [],
-        checkedOutTools: [],
+        email: "", 
+        displayName: "", 
+        tools: [], 
+        visibleTools: [], 
+        checkedOutTools: [], 
         userCheckedOutTools: [],
-        admin: true //to do: make this dynamic
+        admin: true
     }
+    //Creates a collection of the available tools to check out
     firestoreRef = firebase.firestore().collection('ToolsRental');
+    //Creates a collection of the Checked Out Tools
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
 
+    /*
+        Function used to create view object that displays all information, graphics, and components of InventoryHomeScreen
+        */
     currentView() {
+        // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
         if (this.state.admin) {
             return (
                 <View style={styles.container}>
+                    {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
-                            <Text> Admin: See checked out tools </Text>
+                            <Text> All checked out tools </Text>
                     </TouchableOpacity>
 
+                    {/* Creates a Button that navigates the user to AddTool, a screen to add a new tool */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
-                            <Text> Admin: Add Tool </Text>
+                            <Text> Add Tool </Text>
                     </TouchableOpacity>
 
+                    {/* Creates a Button that navigates the user to CheckoutTool, a screen to checkout an available tool */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
-                            <Text> Checkout Tool </Text>
+                            <Text> Check Out Tool </Text>
                     </TouchableOpacity>
+
                     <ScrollView>
-                    {/* here add list of tools that are currenly checked out by UID */}
-                    <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
-                    <View style={styles.toolsContainer}>
-                        {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
-                    </View>
-                    <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
-                    <View style={styles.toolsContainer}>
-                            {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
-                    </View>
+                        <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
+                        {/* Creates a view object with a list of all checked out tools of the current user */}
+                        <View style={styles.toolsContainer}>
+                            {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
+                        </View>
+                        <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
+                        {/* Creates a view object with a list of all available tools to checkout */}
+                        <View style={styles.toolsContainer}>
+                                {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                        </View>
                     </ScrollView>
                 </View>
             );
         } else {
             return (
                 <View style={styles.container}>
+                    {/* Creates a Button that navigates the user to CheckoutTool, a screen to checkout an available tool */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
                             <Text> Checkout Tool </Text>
                     </TouchableOpacity>
+
                     <ScrollView>
-                        {/* here add list of tools that are currenly checked out by UID */}
                         <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
+                        {/* Creates a view object with a list of all checked out tools of the current user */}
                         <View style={styles.toolsContainer}>
                             {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
                         </View>
                         <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
+                        {/* Creates a view object with a list of all available tools to checkout */}
                         <View style={styles.toolsContainer}>
                                 {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
                         </View>
@@ -74,18 +88,31 @@ export default class InventoryHomeScreen extends React.Component {
         }
     }
 
+    /*
+        Function called when navigating into InventoryHomeScreen.js
+        */
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
         this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
     }
+    /*
+        Function called when navigating off of InventoryHomeScreen.js
+        */
     componentWillUnmount() {
         this.unsubscribe
     }
+    /*
+        Function to render the screen at start-up
+        */
     render() {
         return this.currentView()
     }
+
+    /*
+        Function to create new tools list for state from tools in database.
+        */
     getCollectionToolsRental = (querySnapshot) => {
         const tools = []
         const visibleTools = []
@@ -98,6 +125,9 @@ export default class InventoryHomeScreen extends React.Component {
         this.setState({tools})
         this.setState({visibleTools})
     }
+    /*
+        Function to create new checked out tools list for state from checked out tools in database.
+        */
     getCollectionCheckedOut = (querySnapshot) => {
         const checkedOutTools = []
         const userCheckedOutTools = [];
@@ -110,44 +140,30 @@ export default class InventoryHomeScreen extends React.Component {
         this.setState({checkedOutTools})
         this.setState({userCheckedOutTools})
     }
-    updateTools(){
-        const tools = []
-        const visibleTools = []
-        db.collection("ToolsRental").onSnapshot(snapshot => {
-            let changes = snapshot.docChanges();
-            changes.forEach(change => {
-                if(change.type == 'added'){
-                    tools.push(change.data())
-                    if (change.data().Available){
-                        visibleTools.push(change.data())
-                    }
-                }
-            })
-        })
-        this.setState({tools})
-        this.setState({visibleTools})
-    }
-    updateCheckedOutTools(){
-        const tools = []
-        db.collection("CheckedOutTool").onSnapshot(snapshot => {
-            let changes = snapshot.docChanges();
-            changes.forEach(change => {
-                if(change.type == 'added'){
-                    tools.push(change.data())
-                }
-                //to do: add update for user ones?
-            })
-        })
-        this.setState({tools})
-    }
 
+    /*
+        Function to create a view object for a user's checked out tool
+            Args:
+                name (string): The name of the tool type
+                quantity (string): The amount of tools available
+                ToolID (string): ID of the tool
+                Available (boolean): If tool is available to check out
+                checkedOut (boolean): If tool is checked out
+            Returns:    
+                View: A view object with the tool information
+        */
     displayTools(name, quantity, toolID, Available, checkedOut) {
+        // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
         if (this.state.admin){
             return (
                 <View style={styles.toolFrame}>
+                    {/* The name of the tool type */}
                     <Text>{name}</Text>
+                    {/* The total number of tools */}
                     <Text>Quantity: {quantity}</Text>
+                    {/* The number of currently available tools */}
                     <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
+                    {/* Creates a Button that navigates the user to EditTool to edit the selected tool */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
                                     name: name,
                                     quantity: quantity,
@@ -162,19 +178,34 @@ export default class InventoryHomeScreen extends React.Component {
         } else {
             return (
                 <View style={styles.toolFrame}>
+                    {/* The name of the tool type */}
                     <Text>{name}</Text>
+                    {/* The total number of tools */}
                     <Text>Quantity: {quantity}</Text>
+                    {/* The number of currently available tools */}
                     <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
                 </View>
             );
         }
-}
+    }
 
+    /*
+        Function to create a view object for a user's checked out tool
+            Args:
+                tool (string): The name of the tool type
+                number (string): The number associated with the tool
+                CheckoutID (string): ID of the currently checked out tool
+            Returns:    
+                View: A view object with the tool information and an option to check it back in
+        */
     displayUserCheckedOutTools(tool, number, CheckoutID){
         return (
             <View style={styles.toolFrame}>
+                {/* The name of the tool type */}
                 <Text>{tool}</Text>
+                {/* ID of the currently checked out tool */}
                 <Text>{"ID: " + number}</Text>
+                {/* Button to check in tool */}
                 <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID, tool)}>
                         <Text> Check In Tool </Text>
                 </TouchableOpacity>
@@ -182,6 +213,13 @@ export default class InventoryHomeScreen extends React.Component {
         );
     }
 }
+
+/*
+        Function to check in a tool using InventoryComponent's checkInTool
+            Args:
+                CheckoutID (string): ID of the currently checked out tool
+                tool (string): The name of the tool type
+        */
 function checkInToolLocal(CheckoutID, tool){
     checkInTool(CheckoutID, tool);
 }
