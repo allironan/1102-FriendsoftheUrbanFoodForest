@@ -9,7 +9,7 @@ Additionally, this screen is responsible for donation transactions through Paypa
 */ 
 export default class DonationScreen extends React.Component {
     state = {
-        donation_amount: "0.00"
+        donation_amount: 0
     }
 
     /*
@@ -30,11 +30,14 @@ export default class DonationScreen extends React.Component {
                 <TextInput 
                     style={styles.textFillField}
                     placeholder="Donation Amount" 
-                    value={"$" + this.state.donation_amount}
+                    value={"$" + (this.state.donation_amount).toFixed(2)}
                     keyboardType = 'numeric'
                     onChangeText={
-                        (value) => this.setState({donation_amount: parseFloat(value.replace(/[^0-9.]/g, '')).toFixed(2)})
-                    } 
+                        (value) => { 
+                            this.setState({donation_amount: (parseFloat(value.replace(/[^0-9.]/g, '')) * 10)});
+                            console.log(this.state.donation_amount)
+                        }
+                    }
                 />
                 {/* Utilizing react-paypal-button-v2 we render a number of options for the user
                 to complete a transaction based on the value currently in the donation input.
@@ -46,14 +49,14 @@ export default class DonationScreen extends React.Component {
                             purchase_units: [{
                                 amount: {
                                     currency_code: "USD",
-                                    value: this.state.donation_amount
+                                    value: (this.state.donation_amount / 100)
                                 },
                                 description: "Donation to Friends of the Urban Food Forest at Brown Mills",
                             }]
                         });
                     }}
                     onSuccess={(details, data) => {
-                        alert("Thank you for your generous donation of $" + this.state.donation_amount + " " + details.payer.name.given_name + "!");
+                        alert("Thank you for your generous donation of $" + (this.state.donation_amount / 100) + " " + details.payer.name.given_name + "!");
                         this.props.navigation.goBack()
                     }}
                     currency = "USD"
