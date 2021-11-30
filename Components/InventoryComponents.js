@@ -108,6 +108,7 @@ export async function checkoutTool(toolName, number, userName) {
     const countRef = db.collection('CheckedOutTool').doc(toolID);
     const snapshot = await countRef.get();
 
+    console.log("in checkouttool function:" + toolName)
     const data = {
         UID: currentUID,
         Tool: toolName,

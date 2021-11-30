@@ -42,7 +42,7 @@ export default class CheckoutTool extends React.Component {
                       style={{ height: 50, width: 150 }}
                       onValueChange={(itemValue) => this.setState({selectedTool: itemValue})}
                   > 
-                      {this.state.toolNames.map(r => <Picker.Item label={r.Name} value={r.ToolID}/>)}
+                      {this.state.toolNames.map(r => <Picker.Item label={r.Name} value={r.Name}/>)}
                   </Picker>
                   <TextInput 
                           keyboardType='numeric'
@@ -54,7 +54,7 @@ export default class CheckoutTool extends React.Component {
                     onPress={() => {
                       if (this.state.selectedTool != "" || this.state.toolNumber > 0) {
                           //send toolname (selectedTool), and number
-                          console.log(this.state.selectedTool);
+                          console.log("In on press, selected tool:" + this.state.selectedTool);
                           checkoutTool(this.state.selectedTool, this.state.toolNumber, this.state.displayName)
                         this.props.navigation.goBack()
                         //might need to come back to do an if this exists 
@@ -77,10 +77,11 @@ export default class CheckoutTool extends React.Component {
         this.setState({email, displayName})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental);
     }
+
     getCollectionToolsRental = (querySnapshot) => {
         const toolNames = []
         querySnapshot.forEach((tool) => {
-            if (tool.data().Available) {
+            if (tool.data().Available && tool.data().CheckedOut < tool.data().Quantity) {
               toolNames.push(tool.data())
             }    
         })
@@ -89,7 +90,6 @@ export default class CheckoutTool extends React.Component {
           const selectedTool = toolNames[0].Name;
           this.setState({selectedTool});
         }
-       
     }
       createItem(name, toolID){
           return (

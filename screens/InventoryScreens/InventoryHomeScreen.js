@@ -163,6 +163,7 @@ export default class InventoryHomeScreen extends React.Component {
                     <Text>Quantity: {quantity}</Text>
                     {/* The number of currently available tools */}
                     <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
+                    <Text>Visible: {String(Available)}</Text>
                     {/* Creates a Button that navigates the user to EditTool to edit the selected tool */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
                                     name: name,
