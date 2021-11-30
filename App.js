@@ -8,7 +8,6 @@ import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
-
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';

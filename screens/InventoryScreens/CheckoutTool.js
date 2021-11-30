@@ -19,7 +19,16 @@ export default class CheckoutTool extends React.Component {
     firestoreRef = firebase.firestore().collection('ToolsRental');
 
       currentView() {
-          //if (this.state.toolNames.size() != 0) {
+          if (this.state.toolNames.length == 0){
+            return (
+              <View style={styles.container}>
+                  <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
+                  <Text>Go back</Text>
+                  </TouchableOpacity>
+                  <Text> There are no tools available at this time.</Text>
+              </View>
+            );
+          } else {
             return (
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
@@ -33,7 +42,7 @@ export default class CheckoutTool extends React.Component {
                       style={{ height: 50, width: 150 }}
                       onValueChange={(itemValue) => this.setState({selectedTool: itemValue})}
                   > 
-                      {this.state.toolNames.map(r => <Picker.Item label={r.Name} value={r.ToolID}/>)}
+                      {this.state.toolNames.map(r => <Picker.Item label={r.Name} value={r.Name}/>)}
                   </Picker>
                   <TextInput 
                           keyboardType='numeric'
@@ -45,7 +54,7 @@ export default class CheckoutTool extends React.Component {
                     onPress={() => {
                       if (this.state.selectedTool != "" || this.state.toolNumber > 0) {
                           //send toolname (selectedTool), and number
-                          console.log(this.state.selectedTool);
+                          console.log("In on press, selected tool:" + this.state.selectedTool);
                           checkoutTool(this.state.selectedTool, this.state.toolNumber, this.state.displayName)
                         this.props.navigation.goBack()
                         //might need to come back to do an if this exists 
@@ -57,16 +66,7 @@ export default class CheckoutTool extends React.Component {
                   </TouchableHighlight>
                 </View>
             );
-        //   } else {
-        //     return (
-        //         <View>
-        //             <Button title="Back to Tools" onPress={() => this.props.navigation.goBack()} />
-        //             <Text>
-        //                 There are no tools currently available.
-        //             </Text>
-        //         </View>
-        //     );
-        //   }
+          }
           
       }
       render() {
@@ -77,14 +77,19 @@ export default class CheckoutTool extends React.Component {
         this.setState({email, displayName})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental);
     }
+
     getCollectionToolsRental = (querySnapshot) => {
         const toolNames = []
         querySnapshot.forEach((tool) => {
-            toolNames.push(tool.data())
+            if (tool.data().Available && tool.data().CheckedOut < tool.data().Quantity) {
+              toolNames.push(tool.data())
+            }    
         })
-        this.setState({toolNames})
-        const selectedTool = toolNames[0].Name;
-        this.setState({selectedTool});
+        if (toolNames.length != 0){
+          this.setState({toolNames})
+          const selectedTool = toolNames[0].Name;
+          this.setState({selectedTool});
+        }
     }
       createItem(name, toolID){
           return (
