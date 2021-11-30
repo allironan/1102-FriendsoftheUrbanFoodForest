@@ -34,7 +34,7 @@ export default StyleSheet.create({
     programFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 20,
-        alignSelf: 'flex-center',
+        alignSelf: 'center',
         width: 350,
         height: 'auto',
         minHeight: 100,
@@ -77,7 +77,7 @@ export default StyleSheet.create({
     submitButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
-        alignSelf: 'flex-center',
+        alignSelf: 'center',
         width: 100,
         paddingVertical: 10,
         marginHorizontal: '2%',
@@ -117,7 +117,7 @@ export default StyleSheet.create({
         marginHorizontal: '8%',
         marginTop: 15,
         marginVertical: '2%',
-        fontWeight: 'Bold'
+        fontWeight: 'bold'
     },
     eventInformation: {
         fontSize: 10,

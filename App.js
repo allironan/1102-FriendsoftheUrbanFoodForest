@@ -8,12 +8,7 @@ import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
-import { FIREBASE_APIKEY,
-        FIREBASE_AUTHDOMAIN,
-        FIREBASE_PROJECTID,
-        FIREBASE_STORAGEBUCKET,
-        FIREBASE_MESSAGINGSENDERID,
-        FIREBASE_APPID} from 'react-native-dotenv'
+
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -39,7 +34,7 @@ import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
 import EditProductScreen from "./screens/FundraisingScreens/EditProductScreen"
 import CartScreen from "./screens/FundraisingScreens/CartScreen"
 
-console.log(FIREBASE_APIKEY)
+
 const firebaseConfig = 
 {
   apiKey: 'AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM',

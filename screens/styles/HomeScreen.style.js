@@ -75,7 +75,7 @@ export default StyleSheet.create({
     postFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
-        alignSelf: 'flex-center',
+        alignSelf: 'center',
         width: 350,
         height: 'auto',
         minHeight: 150,
@@ -86,7 +86,7 @@ export default StyleSheet.create({
     postFrameHover: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
-        alignSelf: 'flex-center',
+        alignSelf: 'center',
         width: 350,
         height: 'auto',
         minHeight: 150,
@@ -106,7 +106,7 @@ export default StyleSheet.create({
         marginHorizontal: '7%',
         marginTop: 15,
         marginVertical: '2%',
-        fontWeight: 'Bold'
+        fontWeight: 'bold'
     },
     postDate: {
         fontSize: 10,
