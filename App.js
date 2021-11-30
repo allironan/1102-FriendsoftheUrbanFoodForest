@@ -13,7 +13,7 @@ import { FIREBASE_APIKEY,
         FIREBASE_PROJECTID,
         FIREBASE_STORAGEBUCKET,
         FIREBASE_MESSAGINGSENDERID,
-        FIREBASE_APPID} from 'react-native-dotenv'
+        FIREBASE_APPID} from '@env'
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
