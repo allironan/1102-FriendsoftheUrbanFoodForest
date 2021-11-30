@@ -86,6 +86,7 @@ export default class InventoryHomeScreen extends React.Component {
     render() {
         return this.currentView()
     }
+
     getCollectionToolsRental = (querySnapshot) => {
         const tools = []
         const visibleTools = []
