@@ -15,7 +15,7 @@ export default class SettingsScreen extends React.Component {
     state = {
         Username: "",
         Email: "",
-        Paypal: "",
+        //Paypal: "",
         TextSize: "",
         ColorTheme: "",
 
@@ -52,9 +52,9 @@ export default class SettingsScreen extends React.Component {
                 <View style={styles.settingFrame}>
                     <Text style={styles.settingFont}>Email: {this.state.Email} </Text>
                 </View>
-                <View style={styles.settingFrame}>
+                {/* <View style={styles.settingFrame}>
                     <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
-                </View>
+                </View> */}
 
                 <View style={styles.choiceFrame}>
                     <TouchableOpacity onPress={this.changeSettingsPressed}>
@@ -91,9 +91,9 @@ export default class SettingsScreen extends React.Component {
                 />
             </View>
 
-            <View style={styles.settingFrame}>
+            {/* <View style={styles.settingFrame}>
                 <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
-            </View>
+            </View> */}
 
             <View style={styles.choiceFrame}>
                 <TouchableOpacity onPress={this.cancelPressed}>
