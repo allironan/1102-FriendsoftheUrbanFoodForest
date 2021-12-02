@@ -162,9 +162,9 @@ const NavBar = () => (
         tabBarInactiveTintColor: 'gray',
         headerShown: false
       })}>
-      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Programs" component={ProgramStack} />
       <Tab.Screen name="Inventory" component={InventoryStack} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Fundraising" component={FundraisingStack} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
