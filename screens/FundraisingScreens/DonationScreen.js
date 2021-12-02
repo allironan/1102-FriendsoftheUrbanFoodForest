@@ -30,11 +30,11 @@ export default class DonationScreen extends React.Component {
                 <TextInput 
                     style={styles.textFillField}
                     placeholder="Donation Amount" 
-                    value={"$" + (this.state.donation_amount).toFixed(2)}
+                    value={"$ " + (this.state.donation_amount)}
                     keyboardType = 'numeric'
                     onChangeText={
                         (value) => { 
-                            this.setState({donation_amount: (parseFloat(value.replace(/[^0-9.]/g, '')) * 10)});
+                            this.setState({donation_amount: (parseFloat(value.replace(/[^0-9]/g, '')) || 0)});
                             console.log(this.state.donation_amount)
                         }
                     }
