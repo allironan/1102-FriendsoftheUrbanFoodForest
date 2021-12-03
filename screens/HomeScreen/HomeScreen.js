@@ -1,6 +1,6 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, Button, Dialog, Alert} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Button, Dialog, Alert, Linking} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../../Components/UserDataComponents'
@@ -8,6 +8,7 @@ import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/HomeScreen.style.js'
 import { Ionicons } from '@expo/vector-icons';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 
 
 export default class HomeScreen extends React.Component {
@@ -66,8 +67,17 @@ export default class HomeScreen extends React.Component {
     (used for displaying Google Form surveys)
     */
     handleClick = () => {
-        window.open("https://forms.gle/gcmT4cyGwSarndiz9");
+        Linking.canOpenURL('https://www.google.com').then(supported => {
+          if (supported) {
+            Linking.openURL('https://www.google.com');
+          } else {
+            console.log("Don't know how to open URI: " + 'https://www.google.com');
+          }
+        });
       };
+    // handleClick = () => {
+    //     window.open("https://forms.gle/gcmT4cyGwSarndiz9");
+    //   };
 
     /*
     createTwoButtonAlert() creates an alert for when a user tries to delete a post, confirming that this is what they want
@@ -198,6 +208,10 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.titleFrame} onMouseEnter={this.mouseEnter} onMouseOut={this.mouseOut}>
                         <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
                     </View>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")} style={styles.settingsButton}> 
+                        <Ionicons name={'person-circle-outline'} size={40} color={'black'}/>
+                    </TouchableOpacity>
+                
                     {/* this button navigates the user to the survey link */}
                     <TouchableOpacity onPress={this.handleClick} style={styles.button}>
                         <Text style= {styles.buttonLabel}> Take our survey! </Text>
@@ -206,10 +220,6 @@ export default class HomeScreen extends React.Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
                         <Text style= {styles.buttonLabel}> Add Post </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")}> 
-                        <Ionicons name={'person-circle-outline'} size={25} color={'black'}/>
-                    </TouchableOpacity>
-                    
                     <View>
                         {/* this takes all of the component's posts and passes in each post's data to 
                         displayPost() to return the view for each post */}

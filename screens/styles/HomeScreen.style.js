@@ -24,7 +24,8 @@ export default StyleSheet.create({
         maxHeight: 200,
         marginHorizontal: '2%',
         marginVertical: 14,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 50,
     },
     titleFrameHover: {
         backgroundColor: 'rgba(164,116,73,1)',
@@ -70,7 +71,9 @@ export default StyleSheet.create({
     },
     buttonLabel: {
         fontSize: 16,
-        color: 'rgba(196,196,196,1)'
+        color: 'rgba(196,196,196,1)',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     },
     postFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -138,5 +141,10 @@ export default StyleSheet.create({
         marginHorizontal: '10%',
         textAlign: 'center',
         textAlignVertical: 'center'
+    },
+    settingsButton: {
+        alignSelf: 'flex-end',
+        marginRight: 20,
+        marginBottom: 20
     }
 })
