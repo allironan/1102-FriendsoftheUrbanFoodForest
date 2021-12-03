@@ -25,7 +25,6 @@ export default class InventoryHomeScreen extends React.Component {
     firestoreRef = firebase.firestore().collection('ToolsRental');
     //Creates a collection of the Checked Out Tools
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
-
     /*
         Function used to create view object that displays all information, graphics, and components of InventoryHomeScreen
         */
@@ -94,9 +93,11 @@ export default class InventoryHomeScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
+        const admin = firebase.default.auth().currentUser.permissions;
+        this.setState({admin})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
         this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
-    }
+        }
     /*
         Function called when navigating off of InventoryHomeScreen.js
         */
@@ -109,7 +110,6 @@ export default class InventoryHomeScreen extends React.Component {
     render() {
         return this.currentView()
     }
-
     /*
         Function to create new tools list for state from tools in database.
         */

@@ -77,6 +77,10 @@ function HomeStack(){
             name="EditPostScreen" 
             component={EditPostScreen}
           />
+           <HomeStackNavigator.Screen 
+            name="Settings" 
+            component={SettingsScreen}
+          />
     </HomeStackNavigator.Navigator>
   )
 }
@@ -162,11 +166,11 @@ const NavBar = () => (
         tabBarInactiveTintColor: 'gray',
         headerShown: false
       })}>
-      <Tab.Screen name="Programs" component={ProgramStack} />
-      <Tab.Screen name="Inventory" component={InventoryStack} />
       <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Programs" component={ProgramStack} />
+      <Tab.Screen name="Inventory" component={InventoryStack} />  
       <Tab.Screen name="Fundraising" component={FundraisingStack} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   </NavigationContainer>
 )

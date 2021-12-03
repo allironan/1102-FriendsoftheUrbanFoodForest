@@ -7,6 +7,7 @@ import getUserData from '../../Components/UserDataComponents'
 import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/HomeScreen.style.js'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class HomeScreen extends React.Component {
@@ -48,6 +49,7 @@ export default class HomeScreen extends React.Component {
         querySnapshot.forEach((post) => {
             posts.push(post.data())
         })
+        posts.reverse();
         this.setState({posts})
     }
 
@@ -112,6 +114,7 @@ export default class HomeScreen extends React.Component {
                 }
             })
         })
+        posts.reverse()
         this.setState({posts})
     }
 
@@ -203,6 +206,10 @@ export default class HomeScreen extends React.Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
                         <Text style= {styles.buttonLabel}> Add Post </Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")}> 
+                        <Ionicons name={'person-circle-outline'} size={25} color={'black'}/>
+                    </TouchableOpacity>
+                    
                     <View>
                         {/* this takes all of the component's posts and passes in each post's data to 
                         displayPost() to return the view for each post */}
