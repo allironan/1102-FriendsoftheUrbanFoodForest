@@ -34,7 +34,7 @@ export default class DonationScreen extends React.Component {
                     keyboardType = 'numeric'
                     onChangeText={
                         (value) => { 
-                            this.setState({donation_amount: (parseFloat(value.replace(/[^0-9]/g, '')) || 0)});
+                            this.setState({donation_amount: (parseFloat(value.replace(/[^0-9.]/g, '')) || 0)});
                             console.log(this.state.donation_amount)
                         }
                     }
