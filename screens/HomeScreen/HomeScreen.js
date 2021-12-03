@@ -1,12 +1,13 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Button, Dialog, Alert} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../../Components/UserDataComponents'
 import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/HomeScreen.style.js'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class HomeScreen extends React.Component {
@@ -19,8 +20,7 @@ export default class HomeScreen extends React.Component {
         title: "Default Title: Hi",
         contents: "Default Content: Teest!",
         survey: "Default survey",
-        posts: [],
-        isModalVisible: false
+        posts: []
     }
 
     /*
@@ -49,6 +49,7 @@ export default class HomeScreen extends React.Component {
         querySnapshot.forEach((post) => {
             posts.push(post.data())
         })
+        posts.reverse();
         this.setState({posts})
     }
 
@@ -59,13 +60,6 @@ export default class HomeScreen extends React.Component {
     componentWillUnmount() {
         this.unsubscribe
     }
-    
-    /*
-    toggleModal() sets a boolean on whether a modal should be visible or not
-    */
-    toggleModal = () => {
-        this.setState({isModalVisible: !(this.state.isModalVisible)})
-    }
 
     /*
     handleclick() opens a browser window that navigates the user to the specicified link 
@@ -75,7 +69,23 @@ export default class HomeScreen extends React.Component {
         window.open("https://forms.gle/gcmT4cyGwSarndiz9");
       };
 
-    
+    /*
+    createTwoButtonAlert() creates an alert for when a user tries to delete a post, confirming that this is what they want
+    */
+    createTwoButtonAlert = (postID) =>
+      //This works on iOS and Android simulators but not web (heads up for testing purposes)
+        Alert.alert(
+          "Delete Post",
+          "Are you sure you want to delete this post?",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => {deleteToolLocal(this.props.route.params.toolID); (this.props.navigation.goBack())}}
+          ]
+        );
     /*
     The following two functions change the styling of the title component on the home screen 
     depending on whether the user taps on the title. 
@@ -104,6 +114,7 @@ export default class HomeScreen extends React.Component {
                 }
             })
         })
+        posts.reverse()
         this.setState({posts})
     }
 
@@ -148,7 +159,7 @@ export default class HomeScreen extends React.Component {
                             })}> 
                             <Text style={styles.postFeatureLabel}>Edit Post </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => deletePost(postID)}>
+                    <TouchableOpacity onPress={this.createTwoButtonAlert(postID)}>
                             <Text style={styles.postFeatureLabel}> Delete Post </Text>
                     </TouchableOpacity>
                 </View>
@@ -168,7 +179,7 @@ export default class HomeScreen extends React.Component {
                         })}> 
                         <Text style={styles.postFeatureLabel}>Edit Post </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => deletePost(postID)}>
+                <TouchableOpacity onPress={() => this.createTwoButtonAlert(postID)}>
                         <Text style={styles.postFeatureLabel}> Delete Post </Text>
                 </TouchableOpacity>
         </View>
@@ -195,6 +206,10 @@ export default class HomeScreen extends React.Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
                         <Text style= {styles.buttonLabel}> Add Post </Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")}> 
+                        <Ionicons name={'person-circle-outline'} size={25} color={'black'}/>
+                    </TouchableOpacity>
+                    
                     <View>
                         {/* this takes all of the component's posts and passes in each post's data to 
                         displayPost() to return the view for each post */}

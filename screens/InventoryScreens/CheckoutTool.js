@@ -52,14 +52,11 @@ export default class CheckoutTool extends React.Component {
                   />
                   <TouchableHighlight style={styles.addToolFrame}
                     onPress={() => {
-                      if (this.state.selectedTool != "" || this.state.toolNumber > 0) {
-                          //send toolname (selectedTool), and number
-                          console.log("In on press, selected tool:" + this.state.selectedTool);
+                      if (this.state.selectedTool != "" && parseInt(this.state.toolNumber) > 0 && parseInt(this.state.toolNumber) < 100) {
                           checkoutTool(this.state.selectedTool, this.state.toolNumber, this.state.displayName)
-                        this.props.navigation.goBack()
-                        //might need to come back to do an if this exists 
+                          this.props.navigation.goBack();  
                       } else {
-                        alert('Fields cannot be empty.');
+                        alert('Please select tool or choose a number between 0 and 100.');
                       }
                     }}>
                     <Text>Submit</Text>

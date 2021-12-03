@@ -32,6 +32,8 @@ import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
 import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
 import EditProductScreen from "./screens/FundraisingScreens/EditProductScreen"
 import CartScreen from "./screens/FundraisingScreens/CartScreen"
+import { Ionicons } from '@expo/vector-icons';
+
 
 
 const firebaseConfig = 
@@ -74,6 +76,10 @@ function HomeStack(){
           <HomeStackNavigator.Screen 
             name="EditPostScreen" 
             component={EditPostScreen}
+          />
+           <HomeStackNavigator.Screen 
+            name="Settings" 
+            component={SettingsScreen}
           />
     </HomeStackNavigator.Navigator>
   )
@@ -128,12 +134,43 @@ function FundraisingStack() {
 
 const NavBar = () => (
   <NavigationContainer>
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName = "Home" screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color}) => {
+          var iconName;
+          
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home'
+              : 'home-outline';
+          } else if (route.name == 'Programs') {
+            iconName = focused
+              ? 'calendar'
+              : 'calendar-outline';
+          } else if (route.name == 'Inventory') {
+            iconName = focused
+              ? 'hammer'
+              : 'hammer-outline';
+          } else if (route.name == 'Fundraising') {
+            iconName = focused
+              ? 'cash'
+              : 'cash-outline';
+          } else if (route.name == 'Settings') {
+            iconName = focused
+              ? 'settings'
+              : 'settings-outline';
+          } 
+
+          return <Ionicons name={iconName} size={25} color={color} />;
+        },
+        tabBarActiveTintColor: '#5eab61',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false
+      })}>
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Programs" component={ProgramStack} />
-      <Tab.Screen name="Inventory" component={InventoryStack} />
+      <Tab.Screen name="Inventory" component={InventoryStack} />  
       <Tab.Screen name="Fundraising" component={FundraisingStack} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   </NavigationContainer>
 )

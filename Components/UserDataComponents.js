@@ -16,7 +16,7 @@ export async function makeNewUser(paypal = null, permissions = "base", colorThem
         Email: currentUser.email,
         UID: currentUID,
         TotalDonations: totalDonations,
-        Paypal: paypal,
+        //Paypal: paypal,
         Permissions: permissions,
         ColorTheme: colorTheme,
         TextSize: textSize

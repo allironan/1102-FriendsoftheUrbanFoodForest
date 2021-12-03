@@ -34,7 +34,7 @@ export async function makeNewTool(name, quantity, available) {
         CheckedOut: "0"
     };
     if (snapshot.exists) {
-        console.log("Tool already exists in firebase");
+        alert('This tool already exists in inventory.');
     } else {
         const res = await db.collection('ToolsRental').doc(toolID.toString()).set(data);
     }
@@ -108,7 +108,6 @@ export async function checkoutTool(toolName, number, userName) {
     const countRef = db.collection('CheckedOutTool').doc(toolID);
     const snapshot = await countRef.get();
 
-    console.log("in checkouttool function:" + toolName)
     const data = {
         UID: currentUID,
         Tool: toolName,
@@ -117,26 +116,26 @@ export async function checkoutTool(toolName, number, userName) {
         UserName: userName
     };
     if (snapshot.exists) {
-        console.log("Tool already exists in firebase");
+        alert('This tool has already been checked out by a user. Please try again or contact an admin.');
     } else {
         const res = await db.collection('CheckedOutTool').doc(toolID.toString()).set(data);
+        /* This aspect of the function below is to increase the amount of the 
+        tool currently checkedout in the ToolsRental collection when one gets checked out*/
+        const countRef2 = db.collection('ToolsRental').doc(toolName.toLowerCase().replace(/ /g, ''));
+        const snapshot2 = await countRef2.get();
+        const dataInitial = snapshot2.data();
+        const dataChange = {
+                Author: dataInitial.Author,
+                CheckedOut: dataInitial.CheckedOut + 1,
+                Name: dataInitial.Name,
+                Quantity: dataInitial.Quantity,
+                Available: dataInitial.Available,
+                ToolID: dataInitial.ToolID
+            };
+        const res2 = await db.collection('ToolsRental').doc(toolName.toLowerCase().replace(/ /g, '')).set(dataChange);
     }
 
-    /* This aspect of the function below is to increase the amount of the 
-    tool currently checkedout in the ToolsRental collection when one gets checked out*/
-    const countRef2 = db.collection('ToolsRental').doc(toolName.toLowerCase().replace(/ /g, ''));
-    const snapshot2 = await countRef2.get();
-    const dataInitial = snapshot2.data();
-    const dataChange = {
-            Author: dataInitial.Author,
-            CheckedOut: dataInitial.CheckedOut + 1,
-            Name: dataInitial.Name,
-            Quantity: dataInitial.Quantity,
-            Available: dataInitial.Available,
-            ToolID: dataInitial.ToolID
-        };
-    const res2 = await db.collection('ToolsRental').doc(toolName.toLowerCase().replace(/ /g, '')).set(dataChange);
-
+    
     return data;
 }
 

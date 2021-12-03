@@ -8,7 +8,7 @@ import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/InventoryScreens.styles'
 import {deleteTool, checkInTool} from '../../Components/InventoryComponents'
-
+import { SafeAreaView } from 'react-navigation';
 
 
 export default class InventoryHomeScreen extends React.Component {
@@ -25,7 +25,6 @@ export default class InventoryHomeScreen extends React.Component {
     firestoreRef = firebase.firestore().collection('ToolsRental');
     //Creates a collection of the Checked Out Tools
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
-
     /*
         Function used to create view object that displays all information, graphics, and components of InventoryHomeScreen
         */
@@ -33,7 +32,7 @@ export default class InventoryHomeScreen extends React.Component {
         // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
         if (this.state.admin) {
             return (
-                <View style={styles.container}>
+                <SafeAreaView style={styles.container}>
                     {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
                             <Text> All checked out tools </Text>
@@ -61,7 +60,7 @@ export default class InventoryHomeScreen extends React.Component {
                                 {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
                         </View>
                     </ScrollView>
-                </View>
+                </SafeAreaView>
             );
         } else {
             return (
@@ -94,9 +93,11 @@ export default class InventoryHomeScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
+        const admin = firebase.default.auth().currentUser.permissions;
+        this.setState({admin})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
         this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
-    }
+        }
     /*
         Function called when navigating off of InventoryHomeScreen.js
         */
@@ -109,7 +110,6 @@ export default class InventoryHomeScreen extends React.Component {
     render() {
         return this.currentView()
     }
-
     /*
         Function to create new tools list for state from tools in database.
         */
