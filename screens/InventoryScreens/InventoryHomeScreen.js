@@ -8,7 +8,7 @@ import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/InventoryScreens.styles'
 import {deleteTool, checkInTool} from '../../Components/InventoryComponents'
-
+import { SafeAreaView } from 'react-navigation';
 
 
 export default class InventoryHomeScreen extends React.Component {
@@ -33,7 +33,7 @@ export default class InventoryHomeScreen extends React.Component {
         // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
         if (this.state.admin) {
             return (
-                <View style={styles.container}>
+                <SafeAreaView style={styles.container}>
                     {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
                             <Text> All checked out tools </Text>
@@ -61,7 +61,7 @@ export default class InventoryHomeScreen extends React.Component {
                                 {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
                         </View>
                     </ScrollView>
-                </View>
+                </SafeAreaView>
             );
         } else {
             return (

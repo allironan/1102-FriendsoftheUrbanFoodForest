@@ -25,6 +25,7 @@ export default class AddTool extends React.Component {
                                      onChangeText={(value) => this.setState({name: value})} />
                 <Text>Quantity:</Text>
                 <TextInput 
+                        placeholder="Tool quantity"
                         keyboardType='numeric'
                         value={this.state.quantity}
                         onChangeText={(value) => this.setState({quantity: value})}
@@ -38,11 +39,11 @@ export default class AddTool extends React.Component {
                         value={this.state.available} />
                   <TouchableHighlight style={styles.addToolFrame}
                   onPress={() => {
-                    if (this.state.name != "" || this.state.quantity > 0) {
+                    if (this.state.name != "" && parseInt(this.state.quantity) > 0) {
                       makeNewTool(this.state.name, this.state.quantity, this.state.available)
                       this.props.navigation.goBack()
                     } else {
-                      alert('Text cannot be empty.');
+                      alert('Text cannot be empty and quantity must be more than 0.');
                     }
                   }}>
                   <Text>Submit</Text>
