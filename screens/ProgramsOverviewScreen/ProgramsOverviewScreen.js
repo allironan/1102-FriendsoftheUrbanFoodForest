@@ -30,7 +30,6 @@ export default class ProgramsOverviewScreen extends React.Component {
 
                     <View>
                         {this.state.programs.map((program) => (
-                            program.Title &&
                             <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("ProgramScreen", {
                                 key: program.ProgramID,
                                 title: program.Title,
@@ -38,7 +37,7 @@ export default class ProgramsOverviewScreen extends React.Component {
                                 programID: program.ProgramID
                             })}> 
                                 <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} information={program.Information}></ProgramComponent> 
-                            </TouchableOpacity>
+                            </TouchableOpacity> 
                         ))}
                     </View>
                 </ScrollView>

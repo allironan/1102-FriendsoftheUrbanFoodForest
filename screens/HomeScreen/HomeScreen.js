@@ -75,9 +75,6 @@ export default class HomeScreen extends React.Component {
           }
         });
       };
-    // handleClick = () => {
-    //     window.open("https://forms.gle/gcmT4cyGwSarndiz9");
-    //   };
 
     /*
     createTwoButtonAlert() creates an alert for when a user tries to delete a post, confirming that this is what they want

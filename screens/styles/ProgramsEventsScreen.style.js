@@ -22,14 +22,15 @@ export default StyleSheet.create({
         maxHeight: 200,
         width: 350,
         marginVertical: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 50
     },
     programTitle: {
         textAlign: "center",
         paddingVertical: 20,
         fontSize: 36,
         fontWeight: 'bold',
-        flexWrap: "wrap"
+        flexWrap: "wrap",
     },
     programFrame: {
         backgroundColor: 'rgba(255,255,255,1)',

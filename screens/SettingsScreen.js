@@ -8,17 +8,11 @@ import styles from './styles/SettingsScreen.styles'
 
 export default class SettingsScreen extends React.Component {
 
-    // const [displayName, setDisplayName] = useState("")
-
-
-
     state = {
         Username: "",
         Email: "",
-        //Paypal: "",
         TextSize: "",
         ColorTheme: "",
-
         readOnly: true
     }
 
@@ -27,43 +21,27 @@ export default class SettingsScreen extends React.Component {
         const db = firebase.firestore();
     
         const currentUser = firebase.auth().currentUser;
-        //const currentUID = currentUser.uid;
-
-        // getUserData(currentUID).then((userData) => {
-        //     // this.state.Paypal = userData.Paypal;
-        //     // this.state.TextSize = userData.TextSize;
-        //     // this.state.ColorTheme = userData.ColorTheme;
-
-        //     this.setState({Username : userData.Username})
-        //     this.setState({Email : userData.Email})
-        //     //this.setState({Paypal : userData.Permissions})
-        // });
-
-        this.setState({Username: currentUser.Username, Email: currentUser.email})
+        this.setState({Username: currentUser.displayName, Email: currentUser.email})
     }
 
     currentView() {
         if (this.state.readOnly) {
             return (
             <View style={styles.container}>
-                <View style={styles.settingFrame}>
+                <View style={styles.topSettingFrame}>
                     <Text style={styles.settingFont}>Username: {this.state.Username} </Text>
                 </View>
                 <View style={styles.settingFrame}>
                     <Text style={styles.settingFont}>Email: {this.state.Email} </Text>
                 </View>
-                {/* <View style={styles.settingFrame}>
-                    <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
-                </View> */}
-
                 <View style={styles.choiceFrame}>
                     <TouchableOpacity onPress={this.changeSettingsPressed}>
-                        <Text>Change Settings</Text>
+                        <Text style={styles.choiceText}>Change Settings</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
                 <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
-                        <Text> Sign Out </Text>
+                        <Text style={styles.choiceText}> Sign Out </Text>
                 </TouchableOpacity>
             </View>
             </View>
@@ -71,7 +49,7 @@ export default class SettingsScreen extends React.Component {
         } else {
             return <View style={styles.container}>
 
-            <View style={styles.settingFrame}>
+            <View style={styles.topSettingFrame}>
                 <Text style={styles.settingFont}>Name: </Text>
                 <TextInput
                     placeholder={this.state.Username}
@@ -91,19 +69,15 @@ export default class SettingsScreen extends React.Component {
                 />
             </View>
 
-            {/* <View style={styles.settingFrame}>
-                <Text style={styles.settingFont}>Paypal: {this.state.Paypal} </Text>
-            </View> */}
-
             <View style={styles.choiceFrame}>
                 <TouchableOpacity onPress={this.cancelPressed}>
-                    <Text>Cancel</Text>
+                    <Text  style={styles.choiceText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.choiceFrame}>
                 <TouchableOpacity onPress={this.savePressed}>
-                    <Text>Save Settings</Text>
+                    <Text style={styles.choiceText}>Save Settings</Text>
                 </TouchableOpacity>
             </View>
             </View>
@@ -126,7 +100,7 @@ export default class SettingsScreen extends React.Component {
 
     savePressed = () => {
         firebase.default.auth().currentUser.updateProfile({
-            displayName: this.state.displayName,
+            displayName: this.state.Username,
             email: this.state.email
         })
         editUserData(this.state)

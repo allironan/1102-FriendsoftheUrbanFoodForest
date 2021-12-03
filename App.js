@@ -170,7 +170,6 @@ const NavBar = () => (
       <Tab.Screen name="Programs" component={ProgramStack} />
       <Tab.Screen name="Inventory" component={InventoryStack} />  
       <Tab.Screen name="Fundraising" component={FundraisingStack} />
-      {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   </NavigationContainer>
 )
