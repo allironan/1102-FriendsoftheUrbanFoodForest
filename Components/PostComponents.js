@@ -26,7 +26,7 @@ export async function makeNewPost(title, contents, survey=null) {
     const currentUID = currentUser.uid;
 
     var curTime = Date();
-    var postID = await getNextPost()
+    var postID = await getNextPost();
 
     if(survey === "") {
         survey = null;

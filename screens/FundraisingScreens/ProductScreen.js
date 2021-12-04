@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import { addToCart } from '../../Components/CartComponents';
-import { deleteItem } from '../../Components/StoreItemComponents'
+import { addToCart, removeFromCart } from '../../Components/CartComponents';
 import styles from '../styles/FundraisingScreens.styles';
 
 export default class ProductScreen extends React.Component {
@@ -48,7 +47,7 @@ export default class ProductScreen extends React.Component {
     }
 
     deleteProductLocal() {
-        deleteItem(this.props.route.params.id)
+        removeFromCart(this.props.route.params.id)
         this.props.navigation.goBack()
     }
 

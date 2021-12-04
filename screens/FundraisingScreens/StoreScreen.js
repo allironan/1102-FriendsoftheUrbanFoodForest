@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 import firebase from 'firebase/app'
 import styles from '../styles/FundraisingScreens.styles';
 import { ScrollView } from 'react-native-gesture-handler';
+import { getUserCart } from '../../Components/CartComponents';
 
 export default class StoreScreen extends React.Component {
     state = {
@@ -53,8 +54,9 @@ export default class StoreScreen extends React.Component {
 
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
-        this.setState({email, displayName})
-        this.unsubscribe = this.firestoreRefStoreGoods.onSnapshot(this.getCollection)
+        this.setState({email, displayName});
+        var cart = getUserCart();
+        this.unsubscribe = this.firestoreRefStoreGoods.onSnapshot(this.getCollection);
     }
 
     componentWillUnmount() {
