@@ -35,15 +35,14 @@ export async function getUserCart() {
     if (!snapshot.exists) {
         console.log("Cart not found in database");
 
-        makeNewCart();
+        contentsD = await makeNewCart();
+        return contentsD;
         
-        const res = await db.collection('UserCart').doc(currentUID);
-
-        const newData = await res.get();
-        return newData;
     } else {
         
-        return snapshot.data;
+        var contentsD = snapshot.get("Contents");
+
+        return contentsD;
     }
 }
 
@@ -96,6 +95,36 @@ export async function removeFromCart(itemID) {
         } else {
             contentsD[itemID] = quantity;
         }
+        
+    } else {
+        console.log("User attempted to remove an item from their cart that should not exist")
+    }
+
+    const data = {
+        Contents: contentsD
+    };
+
+    const res2 = db.collection('UserCart').doc(currentUID).set(data);
+
+    return data;
+}
+
+//Function to delete User Cart
+export async function removeAllFromCart(itemID) {
+
+    const db = firebase.firestore();
+    
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
+
+    var res = await db.collection('UserCart').doc(currentUID);
+
+    const contents = await res.get();
+
+    var contentsD = contents.get("Contents");
+
+    if (itemID in contentsD) {
+        delete contentsD[itemID];
         
     } else {
         console.log("User attempted to remove an item from their cart that should not exist")

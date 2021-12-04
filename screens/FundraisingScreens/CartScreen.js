@@ -1,15 +1,17 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { getUserCart } from '../../Components/CartComponents';
 import styles from '../styles/FundraisingScreens.styles';
 import firebase from 'firebase/app'
+import { getProductInfo } from '../../Components/StoreItemComponents';
 
 
 export default class CartScreen extends React.Component {
     state = {
-        cartContents: []
+        cartContents: [],
     }
 
-    firestoreRef = firebase.firestore().collection('UserCart')
+    //firestoreRef = firebase.firestore().collection('UserCart')
 
     currentView() {
         return (
@@ -19,7 +21,8 @@ export default class CartScreen extends React.Component {
                 </TouchableOpacity>
                 <ScrollView>
                     <View>
-                        {this.state.cartContents.map(i => this.displayItem(i.Name, i.ItemID))}
+                        {/* {this.state.cartContents.map(i => this.displayItem(i.Name, i.ItemID))} */}
+                        
                     </View>
                 </ScrollView>
             </View>
@@ -30,8 +33,18 @@ export default class CartScreen extends React.Component {
         return this.currentView()
     }
 
-    componentDidMount() {
-        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection)
+    async componentDidMount() {
+        cartContents = await getUserCart();
+        cartItems = [];
+
+        for (const [key, value] of Object.entries(cartContents)) {
+            var itemInfo = await getProductInfo(key);
+            itemInfo.push(value);
+            cartItems.push(itemInfo);
+        }
+
+        this.setState({cartItems});
+
     }
 
     getCollection = (querySnapshot) => {

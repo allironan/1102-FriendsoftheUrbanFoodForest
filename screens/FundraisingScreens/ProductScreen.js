@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import { addToCart, removeFromCart } from '../../Components/CartComponents';
+import { addToCart} from '../../Components/CartComponents';
+import { deleteItem } from '../../Components/StoreItemComponents';
 import styles from '../styles/FundraisingScreens.styles';
 
 export default class ProductScreen extends React.Component {
@@ -15,7 +16,7 @@ export default class ProductScreen extends React.Component {
                     <View key={this.props.id}>
                         <Text style={styles.productName}>{this.props.route.params.name}</Text>
                         <Text style={styles.productDescription}>{this.props.route.params.description}</Text>
-                        <Text style={styles.productPrice}>{this.props.route.params.price}</Text>
+                        <Text style={styles.productPrice}>{"$ " + this.props.route.params.price}</Text>
                     </View>
 
                     <View style={styles.productFunctions}>
@@ -41,13 +42,13 @@ export default class ProductScreen extends React.Component {
         )
     }
 
-    addProductLocal() {
+    async addProductLocal() {
         addToCart(this.props.route.params.id)
         this.props.navigation.goBack()
     }
 
     deleteProductLocal() {
-        removeFromCart(this.props.route.params.id)
+        deleteItem(this.props.route.params.id)
         this.props.navigation.goBack()
     }
 
