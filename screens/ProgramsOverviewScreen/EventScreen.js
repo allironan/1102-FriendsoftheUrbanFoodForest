@@ -46,6 +46,7 @@ export default class EventScreen extends React.Component {
 
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
+        this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
         this.setState({email, displayName})
     }
 

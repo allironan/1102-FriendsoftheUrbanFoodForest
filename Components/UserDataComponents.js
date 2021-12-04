@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 
-//Function to make new event
+//Function to make new user
 export async function makeNewUser(paypal = null, permissions = "base", colorTheme = "Default", textSize = "Medium") {
 
     const db = firebase.firestore();
@@ -16,7 +16,6 @@ export async function makeNewUser(paypal = null, permissions = "base", colorThem
         Email: currentUser.email,
         UID: currentUID,
         TotalDonations: totalDonations,
-        //Paypal: paypal,
         Permissions: permissions,
         ColorTheme: colorTheme,
         TextSize: textSize
