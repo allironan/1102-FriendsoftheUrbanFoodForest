@@ -49,14 +49,14 @@ export default class DonationScreen extends React.Component {
                             purchase_units: [{
                                 amount: {
                                     currency_code: "USD",
-                                    value: (this.state.donation_amount / 100)
+                                    value: (this.state.donation_amount)
                                 },
                                 description: "Donation to Friends of the Urban Food Forest at Brown Mills",
                             }]
                         });
                     }}
                     onSuccess={(details, data) => {
-                        alert("Thank you for your generous donation of $" + (this.state.donation_amount / 100) + " " + details.payer.name.given_name + "!");
+                        alert("Thank you for your generous donation of $" + (this.state.donation_amount) + " " + details.payer.name.given_name + "!");
                         this.props.navigation.goBack()
                     }}
                     currency = "USD"
