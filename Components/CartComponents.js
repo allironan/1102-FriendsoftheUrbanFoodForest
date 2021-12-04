@@ -71,8 +71,7 @@ export async function addToCart(itemID) {
     
     var res = db.collection('UserCart').doc(currentUID).set(data);
 
-    const cart = await countRef.get();
-    return cart.data();
+    return data;
 
 }
 
@@ -106,8 +105,7 @@ export async function removeFromCart(itemID) {
         Contents: contentsD
     };
 
-    const res = db.collection('UserCart').doc(currentUID).set(data);
+    const res2 = db.collection('UserCart').doc(currentUID).set(data);
 
-    const cart = await countRef.get();
-    return cart.data();
+    return data;
 }

@@ -42,7 +42,6 @@ export default class ProductScreen extends React.Component {
     }
 
     addProductLocal() {
-        console.log("Item: " + this.props.route.params.id)
         addToCart(this.props.route.params.id)
         this.props.navigation.goBack()
     }
