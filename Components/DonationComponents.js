@@ -23,7 +23,7 @@ export async function makeDonation(amount, memo=null) {
         DonationID: donationID
     };
 
-    const res = await db.collection('Donations').doc(donationID.NextDonationID.toString()).set(data);
+    await db.collection('Donations').doc(donationID.NextDonationID.toString()).set(data);
 
     const updatedTotalDonationAmount = ((currentUser.totalDonations) + amount);
 

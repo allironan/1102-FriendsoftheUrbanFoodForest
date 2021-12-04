@@ -1582,7 +1582,7 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
-"@expo/config-plugins@3.1.0":
+"@expo/config-plugins@3.1.0", "@expo/config-plugins@^3.0.5":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.1.0.tgz#0752ff33c5eab21cf42034a44e79df97f0f867f8"
   integrity sha512-V5qxaxCAExBM0TXmbU1QKiZcAGP3ecu7KXede8vByT15cro5PkcWu2sSdJCYbHQ/gw6Vf/i8sr8gKlN8V8TSLg==
@@ -2545,6 +2545,13 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
+
+"@stripe/stripe-react-native@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-react-native/-/stripe-react-native-0.2.2.tgz#07ea5ca250cdf3791f2f1f8d6684df0803fed377"
+  integrity sha512-CdRCFDmHR5DH1TLlc0BE7NlV8D6U/UrHQWdXHco00iKgqqnbVel6S1hAYnM3Smd2QusXHo2EMd8wBUtHRGtP8w==
+  dependencies:
+    "@expo/config-plugins" "^3.0.5"
 
 "@tootallnate/once@2":
   version "2.0.0"
@@ -8686,6 +8693,16 @@ react-native-modal-dropdown@^1.0.2:
   integrity sha512-X13RbwoQdaOb9Ffi7fjRVwh9OXauXIJhum0uXGzYZLMyoCQ5yt5cxf27P/YZbdh80Fb7bdPx6vTA4PTpUK2WDQ==
   dependencies:
     prop-types "^15.6.0"
+
+react-native-paypal@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-paypal/-/react-native-paypal-4.1.0.tgz#ac3fb5b49f22a36419396f58f56e7e66c82c52f2"
+  integrity sha512-hcezJzbF1TBHm9ejfGkf3g8WsskqV9dy8lvyw4gtTed7MUYA1O8bkotnJgXRnp3Z7tZLYyEm+kBvBDrKpL6SEw==
+
+react-native-safe-area-context@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
+  integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
 
 react-native-safe-area-view@^0.14.9:
   version "0.14.9"

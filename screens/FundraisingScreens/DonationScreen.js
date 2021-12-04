@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { Text, TouchableOpacity, View, TextInput, BackHandler } from 'react-native';
 import styles from '../styles/FundraisingScreens.styles';
-import { PayPalButton } from 'react-paypal-button-v2';
+import { requestOneTimePayment, requestBillingAgreement } from 'react-native-paypal'; 
 
 /*
 The DonationScreen class renders the donation screen to the user.
