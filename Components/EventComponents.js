@@ -1,29 +1,36 @@
 import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
+import uuid from 'react-native-uuid';
 
 //Function to make new event
-export async function makeNewEvent(title, information, startTime, endTime, programID) {
+export async function makeNewEvent(title, information, programID) {
 
     const db = firebase.firestore();
 
-    const newParticipants = new Map();
-    
-    var eventID = await getNextEvent()
-
+    const newParticipants = [];
+    var linkedEvents = [];
+    console.log(title)
+    console.log(information)
+    console.log(programID)
+    await db.collection('Programs').doc(programID).get().then(query => 
+        {
+            console.log(query.data())
+            linkedEvents = query.data().LinkedEvents
+        })
     const data = {
         Title: title,
         Information: information,
         Participants: newParticipants,
-        StartTime: startTime,
-        EndTime: endTime,
         ProgramID: programID,
-        EventID: eventID.NextEventID
+        EventID: uuid.v4(),
     };
-
-    const res = await db.collection('Events').doc(eventID.NextEventID.toString()).set(data);
-
-    return data;
+    console.log(linkedEvents)
+    linkedEvents.push(data)
+   
+   await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
+   await db.collection('Events').doc(data.EventID).set(data);
+   return data;
 
 }
 
@@ -112,14 +119,6 @@ export async function editEvent(title, information, startTime, endTime, eventID)
 export async function deleteEvent(eventID) {
     const db = firebase.firestore();
     const res = await db.collection('Events').doc(eventID.toString()).delete();
-    // // if we want to add/subtract each time
-    // const countRef = db.collection('Events').doc('Event Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextEventID + 1;
-    // const data = {
-    //     NextEventID: value
-    // }
-    // const res2 = db.collection('Events').doc('Event Count').set(data);
 }
 
 export async function addEventParticipant(eventID, userID){

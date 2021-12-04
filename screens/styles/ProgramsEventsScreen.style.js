@@ -14,16 +14,27 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
+    programsHomeTitleFrame: {
+        backgroundColor: 'rgba(255,174,66,1)',
+        borderRadius: 25,
+        flex: 1,
+        maxHeight: 200,
+        width: 350,
+        marginHorizontal: '2%',
+        marginVertical: 14,
+        textAlign: 'center',
+        marginTop: 50,
+    },
     titleFrame: {
         backgroundColor: 'rgba(255,174,66,1)',
         borderRadius: 25,
         flex: 1,
-        paddingVertical: 10,
         maxHeight: 200,
         width: 350,
-        marginVertical: 10,
+        marginHorizontal: '2%',
+        marginVertical: 14,
         textAlign: 'center',
-        marginTop: 50
+        marginTop: 20,
     },
     programTitle: {
         textAlign: "center",
@@ -47,23 +58,26 @@ export default StyleSheet.create({
     },
     programInformation: {
         fontSize: 15,
-        textAlign: 'left',
+        textAlign: 'center',
         textAlignVertical: 'top',
         flexWrap: 'wrap',
         marginHorizontal: '8%',
+        marginBottom: 10
     },
     goBackButton: {
         backgroundColor: 'rgba(8,39,245,1)',
         borderRadius: 15,
         alignSelf: 'flex-start',
         width: 150,
-        textAlign: "center",
         paddingVertical: 8,
-        textAlignVertical: 'center',
+        marginTop: 50,
+        marginHorizontal: '2%'
     },
     goBackLabel: {
+        textAlign: "center",
         fontSize: 16,
         color: 'rgba(255,255,255,1)',
+        textAlignVertical: 'center',
     },
     leftButton: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -149,6 +163,10 @@ export default StyleSheet.create({
         width: 350,
         paddingVertical: 10,
         marginHorizontal: '10%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    buttonLabelText: {
         textAlign: 'center',
         textAlignVertical: 'center'
     }

@@ -9,8 +9,8 @@ export default StyleSheet.create({
     },
     title: {
         textAlign: "center",
+        textAlignVertical: "center",
         padding: 20,
-        marginBottom: 20,
         maxWidth: 350,
         fontSize: 34,
         fontWeight: 'bold',
