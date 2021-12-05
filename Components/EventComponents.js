@@ -15,7 +15,7 @@ export async function makeNewEvent(title, information, programID) {
     console.log(programID)
     await db.collection('Programs').doc(programID).get().then(query => 
         {
-            console.log(query.data())
+            //console.log(query.data())
             linkedEvents = query.data().LinkedEvents
         })
     const data = {
@@ -25,7 +25,7 @@ export async function makeNewEvent(title, information, programID) {
         ProgramID: programID,
         EventID: uuid.v4(),
     };
-    console.log(linkedEvents)
+    //console.log(linkedEvents)
     linkedEvents.push(data)
    
    await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
@@ -100,24 +100,42 @@ export async function getEvents() {
 }
 
 //Function to edit events
-export async function editEvent(title, information, startTime, endTime, eventID) {
-
+export async function editEvent(title, information, eventID, programID) {
     const db = firebase.firestore();
+    linkedEvents = []
+    await db.collection('Programs').doc(programID).get().then(query => 
+        {
+            linkedEvents = query.data().LinkedEvents
+        })
+
+    linkedEvents.splice(linkedEvents.findIndex(event => event["EventID"] == eventID), 1)
+
     const eventToSet = {
         Title: title,
         Information: information,
-        StartTime: startTime,
-        EndTime: endTime,
-        EventID: eventID,
+        EventID: eventID
     };
 
-    const res = await db.collection('Events').doc(eventID.toString()).set(eventToSet);
+    linkedEvents.push(eventToSet)
+   
+    await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
+    const res = await db.collection('Events').doc(eventID.toString()).update(eventToSet);
 
 }
 
 //Function to delete events
-export async function deleteEvent(eventID) {
+export async function deleteEvent(eventID, programID) {
     const db = firebase.firestore();
+
+    linkedEvents = []
+    await db.collection('Programs').doc(programID).get().then(query => 
+        {
+            linkedEvents = query.data().LinkedEvents
+        })
+
+    linkedEvents.splice(linkedEvents.findIndex(event => event["EventID"] == eventID), 1)
+   
+    await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
     const res = await db.collection('Events').doc(eventID.toString()).delete();
 }
 
@@ -167,4 +185,26 @@ export async function getIfEventParticipant(eventID){
     var contentsD = snapshot.get("Participants");
 
     return (currentUID in contentsD);
+}
+
+//Function to get Product Info
+export async function getEventInfo(eventID) {
+
+    const db = firebase.firestore();
+
+    const res = await db.collection('Events').doc(eventID.toString());
+    const snapshot = await res.get();
+
+    if (!snapshot.exists) {
+        console.log("Item not found in database");
+
+        return null;
+        
+    } else {
+
+        var contentsD = snapshot.data();
+        var toReturn = [contentsD.eventID, contentsD.Title, contentsD.Information, contentsD.StartTime, contentsD.EndTime];
+        
+        return toReturn;
+    }
 }

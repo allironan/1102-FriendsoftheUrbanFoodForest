@@ -96,15 +96,13 @@ export async function getPrograms() {
 export async function editProgram(title, information, programID) {
 
     const db = firebase.firestore();
-    const linkedEvents = {};
+    //const linkedEvents = {};
     const programToSet = {
         Title: title,
-        Information: information,
-        LinkedEvents: linkedEvents,
-        ProgramID: programID,
+        Information: information
     };
 
-    const res = await db.collection('Programs').doc(programID.toString()).set(programToSet);
+    const res = await db.collection('Programs').doc(programID.toString()).update(programToSet);
 
 }
 
