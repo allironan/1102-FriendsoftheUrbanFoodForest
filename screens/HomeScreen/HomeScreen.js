@@ -16,9 +16,8 @@ export default class HomeScreen extends React.Component {
         title: "Default Title: Hi",
         contents: "Default Content: Teest!",
         survey: "Default survey",
-        postID: 26, //for testing deleting,
         posts: [],
-        isModalVisible: false
+        admin: true
     }
 
     firestoreRef = firebase.firestore().collection('Posts')
@@ -83,6 +82,49 @@ export default class HomeScreen extends React.Component {
         this.setState({posts})
     }
 
+    /*
+    componentDidMount() executes functionality right before a component is exited. 
+    Before the HomeScreen component is exited, this unsubscribes the event listener set up on the posts collection. 
+    */
+    componentWillUnmount() {
+        this.unsubscribe
+    }
+
+    /*
+    handleclick() opens a browser window that navigates the user to the specicified link 
+    (used for displaying Google Form surveys)
+    */
+    handleClick = () => {
+        Linking.canOpenURL('https://www.google.com').then(supported => {
+          if (supported) {
+            Linking.openURL('https://www.google.com');
+          } else {
+            console.log("Don't know how to open URI: " + 'https://www.google.com');
+          }
+        });
+      };
+
+    /*
+    createTwoButtonAlert() creates an alert for when a user tries to delete a post, confirming that this is what they want
+    */
+    createTwoButtonAlert = (postID) =>
+      //This works on iOS and Android simulators but not web (heads up for testing purposes)
+        Alert.alert(
+          "Delete Post",
+          "Are you sure you want to delete this post?",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => {deleteToolLocal(this.props.route.params.toolID); (this.props.navigation.goBack())}}
+          ]
+        );
+    /*
+    The following two functions change the styling of the title component on the home screen 
+    depending on whether the user taps on the title. 
+    */
     mouseEnter = (event) => {
         console.log("over")
         event.target.style = styles.titleFrameHover
@@ -139,7 +181,7 @@ export default class HomeScreen extends React.Component {
                             })}> 
                             <Text style={styles.postFeatureLabel}>Edit Post </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => deletePostLocal(postID)}>
+                    <TouchableOpacity onPress={this.createTwoButtonAlert(postID)}>
                             <Text style={styles.postFeatureLabel}> Delete Post </Text>
                     </TouchableOpacity>
                 </View>
@@ -167,9 +209,40 @@ export default class HomeScreen extends React.Component {
     } 
 }
 
-function deletePostLocal(postID){
-    //console.log(postID)
-    deletePost(postID);
-}
+    /*
+    currentView() is called for rendering everything to display on the home screen. 
+        Returns:    
+            View: A view with the application's title, any surveys, and a list of posts.
+    */
+    currentView() {
+        return (
+            <View style={styles.container}>
+                <ScrollView>
+                    <View style={styles.titleFrame} onMouseEnter={this.mouseEnter} onMouseOut={this.mouseOut}>
+                        <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
+                    </View>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")} style={styles.settingsButton}> 
+                        <Ionicons name={'person-circle-outline'} size={40} color={'black'}/>
+                    </TouchableOpacity>
+                
+                    {/* this button navigates the user to the survey link */}
+                    <TouchableOpacity onPress={this.handleClick} style={styles.button}>
+                        <Text style= {styles.buttonLabel}> Take our survey! </Text>
+                    </TouchableOpacity>
+                    {/* this button navigates the user to the screen to add posts */}
+                    {this.state.admin && (
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
+                        <Text style= {styles.buttonLabel}> Add Post </Text>
+                    </TouchableOpacity>
+                    )}
+                    <View>
+                        {/* this takes all of the component's posts and passes in each post's data to 
+                        displayPost() to return the view for each post */}
+                        {this.state.posts.map(r => this.displayPost(r.Title, r.Date, r.Contents, r.Survey, r.PostID))}
+                    </View>
+                </ScrollView>
+            </View>
+        );
+    }
 
 <div id='test'></div>
