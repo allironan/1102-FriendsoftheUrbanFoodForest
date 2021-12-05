@@ -1,5 +1,5 @@
 import React, { Children } from 'react'
-import {View, Text, TouchableOpacity, TouchableHighlight,Switch, TextInput, Button, Dialog} from 'react-native'
+import {View, Text, TouchableOpacity, TouchableHighlight,Switch, TextInput, Button, Dialog, Alert} from 'react-native'
 import styles from '../styles/HomeScreen.style.js'
 import {deleteTool, editTool} from '../../Components/InventoryComponents'
 
@@ -8,6 +8,21 @@ export default class EditTool extends React.Component {
         quantity: "",
         available: false
       };
+    createTwoButtonAlert = () =>
+    //This works on iOS and Android simulators but not web (heads up for testing purposes)
+      Alert.alert(
+        "Delete Tool",
+        "Are you sure you want to delete this tool?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => {deleteToolLocal(this.props.route.params.toolID); (this.props.navigation.goBack())}}
+        ]
+      );
+  
     currentView() {
         return (
             <View style={styles.container}>
@@ -29,7 +44,7 @@ export default class EditTool extends React.Component {
                         value={this.state.available} />
                 <TouchableOpacity style={styles.submitButton} title="Submit" onPress={() => {
                   if (this.state.quantity != "") {
-                    editTool(this.state.quantity, this.state.available, this.props.route.params.toolID, this.props.route.params.name, this.props.route.params.AmountCheckedOut)
+                    editTool(this.state.quantity, this.state.available, this.props.route.params.toolID, this.props.route.params.name, this.props.route.params.checkedOut)
                     this.props.navigation.goBack();
                   } else {
                     alert('Quantity cannot be empty.');
@@ -37,7 +52,7 @@ export default class EditTool extends React.Component {
                   }}>
                     <Text style={{textAlign: "center"}}>Submit</Text>
                 </TouchableOpacity>
-                 <TouchableOpacity style={styles.addPostButton} onPress={() => { deleteToolLocal(this.props.route.params.toolID); this.props.navigation.goBack()}}>
+                 <TouchableOpacity style={styles.addPostButton} onPress={this.createTwoButtonAlert}>
                         <Text style={styles.addPostLabel}> Delete Tool </Text>
                 </TouchableOpacity>
               </View>

@@ -38,7 +38,7 @@ export async function makeDonation(amount, memo=null) {
         TextSize: currentUser.textSize
     };
 
-    const res = await db.collection('Users').doc(currentUID).set(updatedUserData);
+    const res2 = await db.collection('Users').doc(currentUID).set(updatedUserData);
 
     return data;
 

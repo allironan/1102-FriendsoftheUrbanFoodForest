@@ -13,7 +13,6 @@ export default class AddPostScreen extends React.Component {
       currentView() {
           return (
               <View style={styles.container}>
-                  <Button title="Back to Posts" onPress={() => this.props.navigation.goBack()} />
                   <Text style={styles.title}>
                       Create new post
                   </Text>
@@ -37,6 +36,9 @@ export default class AddPostScreen extends React.Component {
                   }}>
                   <Text>Submit</Text>
                 </TouchableHighlight>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Text style={styles.goBackLabel}> Go back </Text>
+                  </TouchableOpacity>
               </View>
           );
       }

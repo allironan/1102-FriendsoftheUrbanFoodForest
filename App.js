@@ -8,12 +8,6 @@ import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
 import SettingsScreen from "./screens/SettingsScreen"
 import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
-import { FIREBASE_APIKEY,
-        FIREBASE_AUTHDOMAIN,
-        FIREBASE_PROJECTID,
-        FIREBASE_STORAGEBUCKET,
-        FIREBASE_MESSAGINGSENDERID,
-        FIREBASE_APPID} from 'react-native-dotenv'
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -38,8 +32,10 @@ import ProductScreen from "./screens/FundraisingScreens/ProductScreen"
 import CheckoutScreen from "./screens/FundraisingScreens/CheckoutScreen"
 import EditProductScreen from "./screens/FundraisingScreens/EditProductScreen"
 import CartScreen from "./screens/FundraisingScreens/CartScreen"
+import { Ionicons } from '@expo/vector-icons';
 
-console.log(FIREBASE_APIKEY)
+
+
 const firebaseConfig = 
 {
   apiKey: 'AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM',
@@ -80,6 +76,10 @@ function HomeStack(){
           <HomeStackNavigator.Screen 
             name="EditPostScreen" 
             component={EditPostScreen}
+          />
+           <HomeStackNavigator.Screen 
+            name="Settings" 
+            component={SettingsScreen}
           />
     </HomeStackNavigator.Navigator>
   )
@@ -134,12 +134,42 @@ function FundraisingStack() {
 
 const NavBar = () => (
   <NavigationContainer>
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName = "Home" screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color}) => {
+          var iconName;
+          
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home'
+              : 'home-outline';
+          } else if (route.name == 'Programs') {
+            iconName = focused
+              ? 'calendar'
+              : 'calendar-outline';
+          } else if (route.name == 'Inventory') {
+            iconName = focused
+              ? 'hammer'
+              : 'hammer-outline';
+          } else if (route.name == 'Fundraising') {
+            iconName = focused
+              ? 'cash'
+              : 'cash-outline';
+          } else if (route.name == 'Settings') {
+            iconName = focused
+              ? 'settings'
+              : 'settings-outline';
+          } 
+
+          return <Ionicons name={iconName} size={25} color={color} />;
+        },
+        tabBarActiveTintColor: '#5eab61',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false
+      })}>
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Programs" component={ProgramStack} />
-      <Tab.Screen name="Inventory" component={InventoryStack} />
+      <Tab.Screen name="Inventory" component={InventoryStack} />  
       <Tab.Screen name="Fundraising" component={FundraisingStack} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   </NavigationContainer>
 )

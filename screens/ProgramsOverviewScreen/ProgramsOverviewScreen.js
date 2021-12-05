@@ -20,17 +20,16 @@ export default class ProgramsOverviewScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <View style={styles.titleFrame}>
+                    <View style={styles.programsHomeTitleFrame}>
                         <Text style= {styles.programTitle}> Programs </Text>
                     </View>
 
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgramScreen")} style={styles.addEventButton}>
-                        <Text> Add Program </Text>
+                        <Text style={styles.buttonLabelText}> Add Program </Text>
                     </TouchableOpacity>
 
                     <View>
                         {this.state.programs.map((program) => (
-                            program.Title &&
                             <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("ProgramScreen", {
                                 key: program.ProgramID,
                                 title: program.Title,
@@ -38,7 +37,7 @@ export default class ProgramsOverviewScreen extends React.Component {
                                 programID: program.ProgramID
                             })}> 
                                 <ProgramComponent key={program.ProgramID} id = {program.ProgramID} title={program.Title} information={program.Information}></ProgramComponent> 
-                            </TouchableOpacity>
+                            </TouchableOpacity> 
                         ))}
                     </View>
                 </ScrollView>
@@ -64,17 +63,17 @@ export default class ProgramsOverviewScreen extends React.Component {
         this.setState({programs})
     }
 
-    updatePosts(){
-        const posts = []
+    updatePrograms(){
+        const programs = []
         db.collection("Programs").onSnapshot(snapshot => {
             let changes = snapshot.docChanges();
             changes.forEach(change => {
                 if(change.type == 'added'){
-                    posts.push(change.data())
+                    programs.push(change.data())
                 }
             })
         })
-        this.setState({posts})
+        this.setState({programs})
     }
 
     render() {

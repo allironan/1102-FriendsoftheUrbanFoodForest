@@ -3,25 +3,24 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         flexWrap: 'wrap',
-        alignItems: 'center',
-        backgroundColor: 'rgba(233,243,196,1)'
+        flexDirection: "column",
+        alignContent: "center",
+        backgroundColor: 'rgba(233,243,196,1)',
+        height: 100
     },
     viewContainer: {
         flex: 1,
         flexDirection: 'column',
         width: 350,
         alignItems: 'center',
-        backgroundColor: 'rgba(233,243,196,1)'
+        backgroundColor: 'rgba(233,243,196,1)',
     },
     optionsContainer: {
-        flex: 2,
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: 350,
-        alignItems: 'flex-start',
-        backgroundColor: 'rgba(233,243,196,1)'
+        alignItems: 'center',
     },
     storeContainer: {
         flex: 2,
@@ -79,5 +78,14 @@ export default StyleSheet.create({
         marginHorizontal: 15,
         textAlign: 'center',
         justifyContent: 'center'
+    },
+    textFillField: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        alignSelf: 'center',
+        width: 350,
+        paddingVertical: 10,
+        marginHorizontal: '10%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     }
 })

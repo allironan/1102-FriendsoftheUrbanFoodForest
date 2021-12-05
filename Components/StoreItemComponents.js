@@ -3,6 +3,7 @@ import 'firebase/database';
 import 'firebase/firestore';
 import './ImageComponents'
 import { deleteImage, selectImage, uploadImage } from './ImageComponents';
+import { removeAllFromCart } from './CartComponents';
 
 //Function to make new item
 export async function makeNewItem(name, description, price) {
@@ -34,7 +35,7 @@ async function getNextItem() {
         console.log("Store Item Count not found in firebase");
 
         const data = {
-            NextPostID: 1,
+            NextItemID: 1,
         };
 
         const res = db.collection('Counters').doc('Store Item Count').set(data);
@@ -101,4 +102,28 @@ export async function editItemImage(itemName) {
 
     deleteImage(itemName);
     uploadImage(itemName, uploadUri);
+}
+
+//Function to get Product Info
+export async function getProductInfo(itemID) {
+
+    const db = firebase.firestore();
+
+    const res = await db.collection('StoreGoods').doc(itemID.toString());
+    const snapshot = await res.get();
+
+    if (!snapshot.exists) {
+        console.log("Item not found in database");
+
+        removeAllFromCart(itemID)
+
+        return null;
+        
+    } else {
+
+        var contentsD = snapshot.data();
+        var toReturn = [contentsD.Name, contentsD.Price, contentsD.Description];
+        
+        return toReturn;
+    }
 }
