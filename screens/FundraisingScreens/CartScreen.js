@@ -44,7 +44,6 @@ export default class CartScreen extends React.Component {
         }
 
         this.setState({cartItems});
-
     }
 
     getCollection = (querySnapshot) => {
