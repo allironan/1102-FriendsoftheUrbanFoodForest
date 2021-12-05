@@ -106,27 +106,29 @@ class DisplayEvent extends React.Component {
         // console.log(endDateTime);
         var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         return (
-        <View style={styles.eventFrame} key={this.props.EventID}>
-            <Text style={styles.eventTitle}>{this.props.Title}</Text>
-            <Text style={styles.eventInformation}>{this.props.Information}</Text>
-            <Text style={styles.eventStartTime}>{
-                "Start Time: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                + " on " + monthsList[startDateTime.getMonth()] 
-                + " " + startDateTime.getDate() 
-                + ", " + startDateTime.getFullYear()
-            }
-            </Text>
-            <Text style={styles.eventEndTime}>{
-                "End Time: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                + ":" + endDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                + ":" + endDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                + " on " + monthsList[endDateTime.getMonth()] 
-                + " " + endDateTime.getDate() 
-                + ", " + endDateTime.getFullYear()
-            }
-            </Text>
+        <View style={styles.container}>
+            <View style={styles.eventFrame} key={this.props.EventID}>
+                <Text style={styles.eventTitle}>{this.props.Title}</Text>
+                <Text style={styles.eventInformation}>{this.props.Information}</Text>
+                <Text style={styles.eventStartTime}>{
+                    "Start Time: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                    + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                    + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                    + " on " + monthsList[startDateTime.getMonth()] 
+                    + " " + startDateTime.getDate() 
+                    + ", " + startDateTime.getFullYear()
+                }
+                </Text>
+                <Text style={styles.eventEndTime}>{
+                    "End Time: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                    + ":" + endDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                    + ":" + endDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                    + " on " + monthsList[endDateTime.getMonth()] 
+                    + " " + endDateTime.getDate() 
+                    + ", " + endDateTime.getFullYear()
+                }
+                </Text>
+            </View>
         </View>
         );
     }

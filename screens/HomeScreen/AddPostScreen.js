@@ -22,9 +22,6 @@ export default class AddPostScreen extends React.Component {
                   <TextInput style={styles.textFillField} placeholder="Post Content" 
                                       value={this.state.information}
                                       onChangeText={(value) => this.setState({information: value})} />
-                  <TextInput style={styles.textFillField} placeholder="Post Survey Link (Optional)" 
-                                      value={this.state.surveyURL}
-                                      onChangeText={(value) => this.setState({surveyURL: value})} />
                   <TouchableHighlight
                   onPress={() => {
                     if (this.state.information != "" && this.state.title != "") {

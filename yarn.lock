@@ -1144,10 +1144,10 @@
     "getenv" "^1.0.0"
     "metro-react-native-babel-transformer" "^0.59.0"
 
-"@expo/ngrok-bin-darwin-x64@2.2.8":
-  "integrity" "sha512-hEVxBAKTT9G+jCy+2NOjgFrPrrzmdxljLhz3cQIb4izjooQXGCbTFvnEntB0odgsf6Dpa2jWNNt18H6t2nneOQ=="
-  "resolved" "https://registry.npmjs.org/@expo/ngrok-bin-darwin-x64/-/ngrok-bin-darwin-x64-2.2.8.tgz"
-  "version" "2.2.8"
+"@expo/ngrok-bin-win32-x64@2.2.8-beta.1":
+  "integrity" "sha512-tVn0jkRC7cbDL502FU7iVI4jbaEKcbTER7pYo2xdUZgM02n4u0AS+FFuzUN+irDiRYZQIFdmDIhxDGl+SHkzbA=="
+  "resolved" "https://registry.npmjs.org/@expo/ngrok-bin-win32-x64/-/ngrok-bin-win32-x64-2.2.8-beta.1.tgz"
+  "version" "2.2.8-beta.1"
 
 "@expo/ngrok-bin@2.2.8-beta.3":
   "integrity" "sha512-VzL67ybSvSYhFJxwBm19VMEHAcgg6bDhE9p8HKDOXL2tdHIzqYtqAYxOyhv2mS263WYqdomtoAChSOb449of+g=="
@@ -5045,18 +5045,13 @@
   "resolved" "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz"
   "version" "0.0.1-security"
 
-"fsevents@^1.0.0":
+"fsevents@^1.0.0", "fsevents@^2.1.2":
   "integrity" "sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw=="
   "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-1.2.13.tgz"
   "version" "1.2.13"
   dependencies:
     "bindings" "^1.5.0"
     "nan" "^2.12.1"
-
-"fsevents@^2.1.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
@@ -7888,7 +7883,7 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.8.1"
 
-"prop-types@15.6.0":
+"prop-types@^16.0.0":
   "integrity" "sha1-zq8IMCL8RrSjX2nhPvda7Q1jmFY="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.6.0.tgz"
   "version" "15.6.0"

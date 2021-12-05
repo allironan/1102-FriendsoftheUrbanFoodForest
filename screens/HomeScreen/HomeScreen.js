@@ -1,6 +1,6 @@
 import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, Button, Dialog, Alert, Linking} from 'react-native'
+import {View, Text, Image, TouchableOpacity, Alert, Linking} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../../Components/UserDataComponents'
@@ -8,7 +8,7 @@ import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/HomeScreen.style.js'
 import { Ionicons } from '@expo/vector-icons';
-import InAppBrowser from 'react-native-inappbrowser-reborn';
+import logo from '../../assets/Friends-Company-Logo.png'
 
 
 export default class HomeScreen extends React.Component {
@@ -21,7 +21,8 @@ export default class HomeScreen extends React.Component {
         title: "Default Title: Hi",
         contents: "Default Content: Teest!",
         survey: "Default survey",
-        posts: []
+        posts: [],
+        admin: true
     }
 
     /*
@@ -94,19 +95,6 @@ export default class HomeScreen extends React.Component {
           ]
         );
     }
-    /*
-    The following two functions change the styling of the title component on the home screen 
-    depending on whether the user taps on the title. 
-    */
-    mouseEnter = (event) => {
-        event.target.style = styles.titleFrameHover
-        this.setState
-    }
-
-    mouseOut = (event) => {
-        event.target.style = styles.titleFrame
-        this.setState
-    }
 
     /*
     updatePosts() is called when any posts were changed or added to the database to 
@@ -146,51 +134,28 @@ export default class HomeScreen extends React.Component {
             View: A view representing a post with it's styling and relevant info.
     */
     displayPost(title, date, contents, survey=null, postID) {
-        if (survey) {
-            return (
-
-                <View style={styles.postFrame} key={postID}>
-                    <Text style={styles.postTitle}>{title}</Text>
-                    <Text style={styles.postDate}>{date}</Text>
-
-                    <TouchableOpacity>
-                            <Text> Take our survey! </Text>
-                    </TouchableOpacity>
-
-                    <Text style={styles.postContent}>{contents} </Text>
-                    
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPostScreen", {
-                                Title: title,
-                                Information: contents,
-                                Survey: survey,
-                                PostID: postID
-                            })}> 
-                            <Text style={styles.postFeatureLabel}>Edit Post </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.createTwoButtonAlert(postID)}>
-                            <Text style={styles.postFeatureLabel}> Delete Post </Text>
-                    </TouchableOpacity>
-                </View>
-            );
-        }
         return (
             <View style={styles.postFrame} key={postID}>
-            <Text style={styles.postTitle}>{title}</Text>
-            <Text style={styles.postDate}>{date}</Text>
+                <Text style={styles.postTitle}>{title}</Text>
+                <Text style={styles.postDate}>{date}</Text>
 
-            <Text style={styles.postContent}>{contents}</Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditPostScreen", {
+                <Text style={styles.postContent}>{contents}</Text>
+                <View style={styles.postOptions}>
+                    <TouchableOpacity style={styles.deleteButton} onPress={() => this.createTwoButtonAlert(postID)}>
+                        <Ionicons name={'trash-outline'} size={16} color={'black'}/>
+                        <Text style={styles.postOptionLabel}>Delete</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.editButton} onPress={() => this.props.navigation.navigate("EditPostScreen", {
                             Title: title,
                             Information: contents,
                             Survey: survey,
                             PostID: postID
                         })}> 
-                        <Text style={styles.postFeatureLabel}>Edit Post </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.createTwoButtonAlert(postID)}>
-                        <Text style={styles.postFeatureLabel}> Delete Post </Text>
-                </TouchableOpacity>
-        </View>
+                            <Ionicons name={'create-outline'} size={16} color={'black'}/>
+                            <Text style={styles.postOptionLabel}>Edit</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         );
     } 
 
@@ -202,22 +167,27 @@ export default class HomeScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    <View style={styles.titleFrame} onMouseEnter={this.mouseEnter} onMouseOut={this.mouseOut}>
-                        <Text style= {styles.title}> Friends of the Urban Food Forest </Text>
-                    </View>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")} style={styles.settingsButton}> 
+                <View style={styles.header}>
+                    <Image source={logo} style={styles.logo}/>
+                    <Text style={styles.headerTitle}> Friends of the Urban Food Forest </Text>
+                    <TouchableOpacity style={styles.profileButton} onPress={() => this.props.navigation.navigate("Settings")} > 
                         <Ionicons name={'person-circle-outline'} size={40} color={'black'}/>
                     </TouchableOpacity>
-                
-                    {/* this button navigates the user to the survey link */}
-                    <TouchableOpacity onPress={this.handleClick} style={styles.button}>
-                        <Text style= {styles.buttonLabel}> Take our survey! </Text>
-                    </TouchableOpacity>
-                    {/* this button navigates the user to the screen to add posts */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.button}>
-                        <Text style= {styles.buttonLabel}> Add Post </Text>
-                    </TouchableOpacity>
+                </View>
+                {/* this button navigates the user to the survey link */}
+                <TouchableOpacity onPress={this.handleClick} style={styles.surveyButton}>
+                    <Text style= {styles.surveyLabel}> Take our survey! </Text>
+                </TouchableOpacity>
+                {/* this button navigates the user to the screen to add posts */}
+                {this.state.admin && (
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.addPostButton}>
+                    <View>
+                        <Ionicons name={'add-outline'} size={20} color={'rgba(196,196,196,1)'}/>
+                    </View>
+                    <Text style={styles.addPostLabel}> Add Post </Text>
+                </TouchableOpacity>
+                )}
+                <ScrollView>
                     <View>
                         {/* this takes all of the component's posts and passes in each post's data to 
                         displayPost() to return the view for each post */}

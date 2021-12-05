@@ -1,13 +1,13 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         flexWrap: 'wrap',
         flexDirection: "column",
+        marginTop: StatusBar.currentHeight,
         alignContent: "center",
-        backgroundColor: 'rgba(233,243,196,1)',
-        height: 100
+        backgroundColor: 'rgba(233,243,196,1)'
     },
     viewContainer: {
         flex: 1,

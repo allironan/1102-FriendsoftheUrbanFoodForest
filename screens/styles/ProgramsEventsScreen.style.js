@@ -1,9 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        marginTop: StatusBar.currentHeight,
         alignItems: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
@@ -18,6 +19,7 @@ export default StyleSheet.create({
         backgroundColor: 'rgba(8,39,245,1)',
         borderRadius: 15,
         alignSelf: 'flex-start',
+        marginTop: '4%',
         width: 150,
         textAlign: "center",
         paddingVertical: 8,
