@@ -187,7 +187,7 @@ export default class HomeScreen extends React.Component {
                         })}> 
                         <Text style={styles.postFeatureLabel}>Edit Post </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.createTwoButtonAlert(postID)}>
+                <TouchableOpacity onPress={() => this.createTwoButtonAlert(postID)}>
                         <Text style={styles.postFeatureLabel}> Delete Post </Text>
                 </TouchableOpacity>
         </View>
