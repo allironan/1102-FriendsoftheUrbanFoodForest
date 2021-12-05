@@ -17,9 +17,7 @@ export default class SettingsScreen extends React.Component {
     }
 
     componentDidMount() {
-
         const db = firebase.firestore();
-    
         const currentUser = firebase.auth().currentUser;
         this.setState({Username: currentUser.displayName, Email: currentUser.email})
     }

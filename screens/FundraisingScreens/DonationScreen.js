@@ -43,29 +43,6 @@ export default class DonationScreen extends React.Component {
                 to complete a transaction based on the value currently in the donation input.
                 Users can choose from paying with a Paypal account, paying later, or with a debit 
                 or credit card*/}
-                <PayPalButton
-                    createOrder={(data, actions) => {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    currency_code: "USD",
-                                    value: (this.state.donation_amount)
-                                },
-                                description: "Donation to Friends of the Urban Food Forest at Brown Mills",
-                            }]
-                        });
-                    }}
-                    onSuccess={(details, data) => {
-                        alert("Thank you for your generous donation of $" + (this.state.donation_amount) + " " + details.payer.name.given_name + "!");
-                        this.props.navigation.goBack()
-                    }}
-                    currency = "USD"
-                    options={{
-                        // Not the real client ID for security reasons
-                        clientId: "AYz9JKsZ_TEo5elY-FFAuJRZBg9Nz5cbIhDQp-kGWX_W9SOA5_mAy0TAQ8ZQ1puEWkYJ9czpV9m_2deL",
-                        currency: "USD"
-                    }}
-                />
             </View>
         )
     }
