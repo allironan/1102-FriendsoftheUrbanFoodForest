@@ -79,7 +79,7 @@ export default class HomeScreen extends React.Component {
     /*
     createTwoButtonAlert() creates an alert for when a user tries to delete a post, confirming that this is what they want
     */
-    createTwoButtonAlert = (postID) =>
+    createTwoButtonAlert = (postID) => {
       //This works on iOS and Android simulators but not web (heads up for testing purposes)
         Alert.alert(
           "Delete Post",
@@ -90,9 +90,10 @@ export default class HomeScreen extends React.Component {
               onPress: () => console.log("Cancel Pressed"),
               style: "cancel"
             },
-            { text: "OK", onPress: () => {deleteToolLocal(this.props.route.params.toolID); (this.props.navigation.goBack())}}
+            { text: "OK", onPress: () => {deletePost(postID)}}
           ]
         );
+    }
     /*
     The following two functions change the styling of the title component on the home screen 
     depending on whether the user taps on the title. 
@@ -166,7 +167,7 @@ export default class HomeScreen extends React.Component {
                             })}> 
                             <Text style={styles.postFeatureLabel}>Edit Post </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.createTwoButtonAlert(postID)}>
+                    <TouchableOpacity onPress={() => this.createTwoButtonAlert(postID)}>
                             <Text style={styles.postFeatureLabel}> Delete Post </Text>
                     </TouchableOpacity>
                 </View>

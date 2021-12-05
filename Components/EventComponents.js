@@ -127,10 +127,14 @@ export async function addEventParticipant(eventID, userID){
 
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-    const eventData = snapshot.data();
-    const participantMap = eventData.Participants();
-    participantMap.set(userID, true);
-    const res = await eventsRef.update({Participants: participantMap});
+
+    var contentsD = snapshot.get("Participants");
+
+    contentsD[userID] = true;
+
+    var res = await eventsRef.update({Participants: contentsD});
+
+    return contentsD;
 
 }
 
@@ -140,22 +144,27 @@ export async function removeEventParticipant(eventID, userID){
 
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-    const eventData = snapshot.data();
-    const participantMap = eventData.Participants();
-    participantMap.delete(userID);
-    const res = await eventsRef.update({Participants: participantMap});
+
+    var contentsD = snapshot.get("Participants");
+
+    delete contentsD[userID];
+
+    var res = await eventsRef.update({Participants: contentsD});
+
+    return contentsD;
 }
 
 // Returns if a user is already registered for an event
 export async function getIfEventParticipant(eventID){
+
     const db = firebase.firestore();
 
     const currentUser = firebase.auth().currentUser;
-
+    const currentUID = currentUser.uid;
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-    const eventData = snapshot.data();
-    const participantMap = eventData.Participants();
-    
-    return participantMap.has(currentUser.uid);
+
+    var contentsD = snapshot.get("Participants");
+
+    return (currentUID in contentsD);
 }
