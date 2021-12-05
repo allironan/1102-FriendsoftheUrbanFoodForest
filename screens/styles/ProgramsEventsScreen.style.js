@@ -14,17 +14,20 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
-    programsHomeTitleFrame: {
-        backgroundColor: 'rgba(255,174,66,1)',
-        borderRadius: 25,
-        flex: 1,
-        maxHeight: 200,
-        width: 350,
-        marginHorizontal: '2%',
-        marginVertical: 14,
-        textAlign: 'center',
-        marginTop: 50,
+    goBackButton: {
+        backgroundColor: 'rgba(8,39,245,1)',
+        borderRadius: 15,
+        alignSelf: 'flex-start',
+        width: 150,
+        textAlign: "center",
+        paddingVertical: 8,
+        textAlignVertical: 'center',
     },
+    goBackLabel: {
+        fontSize: 16,
+        color: 'rgba(255,255,255,1)',
+    },
+
     titleFrame: {
         backgroundColor: 'rgba(255,174,66,1)',
         borderRadius: 25,
@@ -36,6 +39,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         marginTop: 20,
     },
+
     programTitle: {
         textAlign: "center",
         paddingVertical: 20,
@@ -64,21 +68,6 @@ export default StyleSheet.create({
         marginHorizontal: '8%',
         marginBottom: 10
     },
-    goBackButton: {
-        backgroundColor: 'rgba(8,39,245,1)',
-        borderRadius: 15,
-        alignSelf: 'flex-start',
-        width: 150,
-        paddingVertical: 8,
-        marginTop: 50,
-        marginHorizontal: '2%'
-    },
-    goBackLabel: {
-        textAlign: "center",
-        fontSize: 16,
-        color: 'rgba(255,255,255,1)',
-        textAlignVertical: 'center',
-    },
     leftButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 15,
@@ -100,6 +89,7 @@ export default StyleSheet.create({
         textAlign: 'left',
         textAlignVertical: 'center'
     },
+
     addEventButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
@@ -115,6 +105,7 @@ export default StyleSheet.create({
         fontSize: 16,
         color: 'rgba(196,196,196,1)'
     },
+
     eventFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
@@ -157,6 +148,7 @@ export default StyleSheet.create({
         marginHorizontal: '5%',
         marginBottom: 20
     },
+    
     textFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
         alignSelf: 'center',
