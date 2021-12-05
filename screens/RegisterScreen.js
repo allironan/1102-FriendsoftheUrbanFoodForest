@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
 import * as firebase from '@firebase/app'
 import '@firebase/auth'
+import { makeNewUser } from '../Components/UserDataComponents';
 
 
 export default class RegisterScreen extends React.Component {
@@ -20,10 +21,11 @@ export default class RegisterScreen extends React.Component {
             return userCredentials.user.updateProfile({
                 displayName: this.state.name
             })
-        })
-        .catch(error => this.setState({errorMessage: error.message}))
-    }
+        }).then(() => {
+            makeNewUser()
+        }).catch(error => this.setState({errorMessage: error.message}))
 
+    }
     
     render() {
         return <View style={styles.container}> 
