@@ -56,7 +56,7 @@ export default class ProgramScreen extends React.Component {
                                 information: event.Information,
                                 EventID: event.EventID
                             })}> 
-                            <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information}/>
+                                <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} />
                             </TouchableOpacity>
                         ))}
                     </View>
