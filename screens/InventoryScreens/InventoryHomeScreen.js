@@ -93,7 +93,7 @@ export default class InventoryHomeScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
-        const admin = firebase.default.auth().currentUser.permissions;
+        const admin = true//firebase.default.auth().currentUser.permissions;
         this.setState({admin})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
         this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
