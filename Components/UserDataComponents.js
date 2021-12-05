@@ -11,13 +11,11 @@ export async function makeNewUser(paypal = null, permissions = "base", colorThem
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
     const totalDonations = 0;
-
     const data = {
         Username: currentUser.displayName,
         Email: currentUser.email,
         UID: currentUID,
         TotalDonations: totalDonations,
-        Paypal: paypal,
         Permissions: permissions,
         ColorTheme: colorTheme,
         TextSize: textSize
@@ -39,22 +37,20 @@ export async function getUserData(requestedUID = null) {
     if (!requestedUID == null) {
         currentUID = requestedUID;
     }
-    const res = await db.collection('Users').doc(currentUID).get().then((snapshot) => {
-        if (snapshot) {
-            return snapshot.data()
-        }   
-    });
-    if (res) {
-        return res
-    }
+    const res = await db.collection('Users').doc(currentUID);
+    const snapshot = await res.get();
 
-    makeNewUser();
-    const newData = await db.collection('Users').doc(currentUID).get().then((snapshot) => {
-        if (snapshot) {
+    if (!snapshot.exists) {
+        console.log("User not found in database");
+        makeNewUser();
+        const res = await db.collection('Users').doc(currentUID);
+        const newData = await res.get().then((snapshot) => {
             return snapshot.data()
-        }   
-    });
-    return newData
+        })
+        return newData;
+    } else {
+        return snapshot.data;
+    }
 }
 
 //Function to edit User Data

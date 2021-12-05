@@ -1,29 +1,36 @@
 import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
+import uuid from 'react-native-uuid';
 
 //Function to make new event
-export async function makeNewEvent(title, information, startTime, endTime, programID) {
+export async function makeNewEvent(title, information, programID) {
 
     const db = firebase.firestore();
 
-    const newParticipants = new Map();
-    
-    var eventID = await getNextEvent()
-
+    const newParticipants = [];
+    var linkedEvents = [];
+    console.log(title)
+    console.log(information)
+    console.log(programID)
+    await db.collection('Programs').doc(programID).get().then(query => 
+        {
+            console.log(query.data())
+            linkedEvents = query.data().LinkedEvents
+        })
     const data = {
         Title: title,
         Information: information,
         Participants: newParticipants,
-        StartTime: startTime,
-        EndTime: endTime,
         ProgramID: programID,
-        EventID: eventID.NextEventID
+        EventID: uuid.v4(),
     };
-
-    const res = await db.collection('Events').doc(eventID.NextEventID.toString()).set(data);
-
-    return data;
+    console.log(linkedEvents)
+    linkedEvents.push(data)
+   
+   await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
+   await db.collection('Events').doc(data.EventID).set(data);
+   return data;
 
 }
 
@@ -112,14 +119,6 @@ export async function editEvent(title, information, startTime, endTime, eventID)
 export async function deleteEvent(eventID) {
     const db = firebase.firestore();
     const res = await db.collection('Events').doc(eventID.toString()).delete();
-    // // if we want to add/subtract each time
-    // const countRef = db.collection('Events').doc('Event Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextEventID + 1;
-    // const data = {
-    //     NextEventID: value
-    // }
-    // const res2 = db.collection('Events').doc('Event Count').set(data);
 }
 
 export async function addEventParticipant(eventID, userID){
@@ -128,10 +127,14 @@ export async function addEventParticipant(eventID, userID){
 
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-    const eventData = snapshot.data();
-    const participantMap = eventData.Participants();
-    participantMap.set(userID, true);
-    const res = await eventsRef.update({Participants: participantMap});
+
+    var contentsD = snapshot.get("Participants");
+
+    contentsD[userID] = true;
+
+    var res = await eventsRef.update({Participants: contentsD});
+
+    return contentsD;
 
 }
 
@@ -141,22 +144,27 @@ export async function removeEventParticipant(eventID, userID){
 
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-    const eventData = snapshot.data();
-    const participantMap = eventData.Participants();
-    participantMap.delete(userID);
-    const res = await eventsRef.update({Participants: participantMap});
+
+    var contentsD = snapshot.get("Participants");
+
+    delete contentsD[userID];
+
+    var res = await eventsRef.update({Participants: contentsD});
+
+    return contentsD;
 }
 
 // Returns if a user is already registered for an event
 export async function getIfEventParticipant(eventID){
+
     const db = firebase.firestore();
 
     const currentUser = firebase.auth().currentUser;
-
+    const currentUID = currentUser.uid;
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-    const eventData = snapshot.data();
-    const participantMap = eventData.Participants();
-    
-    return participantMap.has(currentUser.uid);
+
+    var contentsD = snapshot.get("Participants");
+
+    return (currentUID in contentsD);
 }

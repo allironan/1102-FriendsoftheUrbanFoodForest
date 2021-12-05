@@ -1,14 +1,15 @@
 import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
+import uuid from 'react-native-uuid';
 
 //Function to make new program
 export async function makeNewProgram(title, information) {
 
     const db = firebase.firestore();
 
-    const linkedEvents = {}; //new Map();
-    const subscribers = new Map();
+    const linkedEvents = [];
+    const subscribers = [];
 
     var programID = await getNextProgram();
     const data = {
@@ -16,10 +17,10 @@ export async function makeNewProgram(title, information) {
         Information: information,
         LinkedEvents: linkedEvents,
         Subscribers: subscribers,
-        ProgramID: programID.NextProgramID,
+        ProgramID: uuid.v4(),
     };
 
-    const res = await db.collection('Programs').doc(programID.NextProgramID.toString()).set(data);
+    const res = await db.collection('Programs').doc(data.ProgramID).set(data);
 
     return data;
 }
@@ -111,15 +112,7 @@ export async function editProgram(title, information, programID) {
 export async function deleteProgram(programID) {
     const db = firebase.firestore();
     const res = await db.collection('Programs').doc(programID.toString()).delete();
-
-    // // if we want to add/subtract each time
-    // const countRef = db.collection('Programs').doc('Program Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextProgramID + 1;
-    // const data = {
-    //     NextProgramID: value
-    // }
-    // const res2 = db.collection('Programs').doc('Program Count').set(data);
+    this.props.navigation.goBack()
 }
 
 export async function linkEventToProgram(programID, eventID) {

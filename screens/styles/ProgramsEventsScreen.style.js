@@ -14,43 +14,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
-    titleFrame: {
-        backgroundColor: 'rgba(255,174,66,1)',
-        borderRadius: 25,
-        flex: 1,
-        paddingVertical: 10,
-        maxHeight: 200,
-        width: 350,
-        marginVertical: 10,
-        textAlign: 'center'
-    },
-    programTitle: {
-        textAlign: "center",
-        paddingVertical: 20,
-        fontSize: 36,
-        fontWeight: 'bold',
-        flexWrap: "wrap"
-    },
-    programFrame: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 20,
-        alignSelf: 'flex-center',
-        width: 350,
-        height: 'auto',
-        minHeight: 100,
-        paddingVertical: 10,
-        marginTop: 10,
-        marginBottom: 20,
-        textAlign: 'center',
-        textAlignVertical: 'center'
-    },
-    programInformation: {
-        fontSize: 15,
-        textAlign: 'left',
-        textAlignVertical: 'top',
-        flexWrap: 'wrap',
-        marginHorizontal: '8%',
-    },
     goBackButton: {
         backgroundColor: 'rgba(8,39,245,1)',
         borderRadius: 15,
@@ -63,6 +26,47 @@ export default StyleSheet.create({
     goBackLabel: {
         fontSize: 16,
         color: 'rgba(255,255,255,1)',
+    },
+
+    titleFrame: {
+        backgroundColor: 'rgba(255,174,66,1)',
+        borderRadius: 25,
+        flex: 1,
+        maxHeight: 200,
+        width: 350,
+        marginHorizontal: '2%',
+        marginVertical: 14,
+        textAlign: 'center',
+        marginTop: 20,
+    },
+
+    programTitle: {
+        textAlign: "center",
+        paddingVertical: 20,
+        fontSize: 36,
+        fontWeight: 'bold',
+        flexWrap: "wrap",
+    },
+    programFrame: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 20,
+        alignSelf: 'center',
+        width: 350,
+        height: 'auto',
+        minHeight: 100,
+        paddingVertical: 10,
+        marginTop: 10,
+        marginBottom: 20,
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    programInformation: {
+        fontSize: 15,
+        textAlign: 'center',
+        textAlignVertical: 'top',
+        flexWrap: 'wrap',
+        marginHorizontal: '8%',
+        marginBottom: 10
     },
     leftButton: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -77,7 +81,7 @@ export default StyleSheet.create({
     submitButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
-        alignSelf: 'flex-center',
+        alignSelf: 'center',
         width: 100,
         paddingVertical: 10,
         marginHorizontal: '2%',
@@ -85,6 +89,7 @@ export default StyleSheet.create({
         textAlign: 'left',
         textAlignVertical: 'center'
     },
+
     addEventButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
@@ -100,6 +105,7 @@ export default StyleSheet.create({
         fontSize: 16,
         color: 'rgba(196,196,196,1)'
     },
+
     eventFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
@@ -117,7 +123,7 @@ export default StyleSheet.create({
         marginHorizontal: '8%',
         marginTop: 15,
         marginVertical: '2%',
-        fontWeight: 'Bold'
+        fontWeight: 'bold'
     },
     eventInformation: {
         fontSize: 10,
@@ -142,12 +148,17 @@ export default StyleSheet.create({
         marginHorizontal: '5%',
         marginBottom: 20
     },
+    
     textFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
         alignSelf: 'center',
         width: 350,
         paddingVertical: 10,
         marginHorizontal: '10%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    buttonLabelText: {
         textAlign: 'center',
         textAlignVertical: 'center'
     }

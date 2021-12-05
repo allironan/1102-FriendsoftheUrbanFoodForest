@@ -17,7 +17,17 @@ export default StyleSheet.create({
         paddingVertical: 20,
         marginHorizontal: '2%',
         marginVertical: 10,
-        textAlign: 'left'
+        textAlign: 'left',
+    },
+    topSettingFrame: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 10,
+        width: 400,
+        paddingVertical: 20,
+        marginHorizontal: '2%',
+        marginVertical: 10,
+        textAlign: 'left',
+        marginTop: 60,
     },
     choiceFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -26,7 +36,12 @@ export default StyleSheet.create({
         paddingVertical: 20,
         marginHorizontal: '2%',
         marginVertical: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    choiceText: {
+        textAlign: 'center',
+        textAlignVertical: 'center'
     },
     settingFont: {
         marginLeft: 10

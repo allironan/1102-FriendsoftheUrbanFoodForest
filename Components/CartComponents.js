@@ -11,7 +11,7 @@ export async function makeNewCart() {
     const currentUID = currentUser.uid;
 
     const data = {
-        Contents: new Map()
+        Contents: {}
     };
 
     const res = await db.collection('UserCart').doc(currentUID).set(data);
@@ -35,15 +35,14 @@ export async function getUserCart() {
     if (!snapshot.exists) {
         console.log("Cart not found in database");
 
-        makeNewCart();
+        contentsD = await makeNewCart();
+        return contentsD;
         
-        const res = await db.collection('UserCart').doc(currentUID);
-
-        const newData = await res.get();
-        return newData;
     } else {
+        
+        var contentsD = snapshot.get("Contents");
 
-        return snapshot.data;
+        return contentsD;
     }
 }
 
@@ -54,25 +53,24 @@ export async function addToCart(itemID) {
     
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
-
-    const res = await db.collection('UserCart').doc(currentUID);
-
+    var res = await db.collection('UserCart').doc(currentUID);
     const contents = await res.get();
 
-    if (contents.has(itemID)) {
-        contents.set(itemID, contents.get(itemID) + 1)
+    var contentsD = contents.get("Contents");
+
+    if (itemID in contentsD) {
+        contentsD[itemID] += 1;
     } else {
-        contents.set(itemID, 1)
+        contentsD[itemID] = 1;
     }
 
     const data = {
-        Contents: contents
+        Contents: contentsD
     };
+    
+    var res = db.collection('UserCart').doc(currentUID).set(data);
 
-    const res = db.collection('UserCart').doc(currentUID).set(data);
-
-    const cart = await countRef.get();
-    return cart.data();
+    return data;
 
 }
 
@@ -84,16 +82,18 @@ export async function removeFromCart(itemID) {
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
-    const res = await db.collection('UserCart').doc(currentUID);
+    var res = await db.collection('UserCart').doc(currentUID);
 
     const contents = await res.get();
 
-    if (contents.has(itemID)) {
-        quantity = contents.get(itemID) - 1
+    var contentsD = contents.get("Contents");
+
+    if (itemID in contentsD) {
+        quantity = contentsD[itemID] - 1
         if (quantity = 0) {
-            contents.delete(itemID);
+            delete contentsD[itemID];
         } else {
-            contents.set(itemID, quantity)
+            contentsD[itemID] = quantity;
         }
         
     } else {
@@ -101,11 +101,40 @@ export async function removeFromCart(itemID) {
     }
 
     const data = {
-        Contents: contents
+        Contents: contentsD
     };
 
-    const res = db.collection('UserCart').doc(currentUID).set(data);
+    const res2 = db.collection('UserCart').doc(currentUID).set(data);
 
-    const cart = await countRef.get();
-    return cart.data();
+    return data;
+}
+
+//Function to delete User Cart
+export async function removeAllFromCart(itemID) {
+
+    const db = firebase.firestore();
+    
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
+
+    var res = await db.collection('UserCart').doc(currentUID);
+
+    const contents = await res.get();
+
+    var contentsD = contents.get("Contents");
+
+    if (itemID in contentsD) {
+        delete contentsD[itemID];
+        
+    } else {
+        console.log("User attempted to remove an item from their cart that should not exist")
+    }
+
+    const data = {
+        Contents: contentsD
+    };
+
+    const res2 = db.collection('UserCart').doc(currentUID).set(data);
+
+    return data;
 }

@@ -11,5 +11,9 @@ web-build/
 .env
 # macOS
 .DS_Store
+<<<<<<< HEAD
 package-lock.json
 yark.lock
+=======
+package-lock.json
+>>>>>>> S5-FrontBackMerge

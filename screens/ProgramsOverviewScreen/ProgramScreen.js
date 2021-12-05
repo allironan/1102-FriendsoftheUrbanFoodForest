@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -14,7 +14,8 @@ export default class ProgramScreen extends React.Component {
         events: []
     }
 
-    firestoreRefEvents = firebase.firestore().collection('Events')
+    firestoreRefEvents = firebase.firestore().collection('Programs').doc(this.props.route.params.programID)
+
 
     currentView() {
         return (
@@ -26,7 +27,7 @@ export default class ProgramScreen extends React.Component {
 
                     <View style={styles.titleFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                        <Text> {this.props.route.params.information} </Text>
+                        <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                     </View>
 
                     <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditProgramScreen", {
@@ -34,28 +35,28 @@ export default class ProgramScreen extends React.Component {
                             information: this.props.route.params.information,
                             programID: this.props.route.params.programID
                         })}> 
-                        <Text> Edit Program </Text>
+                        <Text style={styles.buttonLabelText}> Edit Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.leftButton} onPress={() => deleteProgramLocal(this.props.route.params.programID)}> 
-                        <Text> Delete Program </Text>
+                    <TouchableOpacity style={styles.leftButton} onPress={() => {deleteProgram(this.props.route.params.programID); this.props.navigation.goBack();}}> 
+                        <Text style={styles.buttonLabelText}> Delete Program </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.addEventButton} onPress={() => this.props.navigation.navigate("AddEventScreen", {
                             programID: this.props.route.params.programID
                         })}>
-                        <Text> Add Event </Text>
+                        <Text style={styles.buttonLabelText}> Add Event </Text>
                     </TouchableOpacity>
 
                     <View>
                         {this.state.events.map((event) => (
-                            <TouchableOpacity key={event.ProgramID} onPress={() => this.props.navigation.navigate("EventScreen", {
+                            <TouchableOpacity key={event.EventID} onPress={() => this.props.navigation.navigate("EventScreen", {
                                 key: event.EventID,
                                 title: event.Title,
                                 information: event.Information,
                                 EventID: event.EventID
                             })}> 
-                                <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} StartTime={event.StartTime.toDate().toLocaleDateString("en-US")} EndTime={event.EndTime.toDate().toLocaleDateString("en-US")} />
+                                <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} />
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -65,21 +66,25 @@ export default class ProgramScreen extends React.Component {
     }
 
     componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser;
-        this.setState({email, displayName})
         this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
     }
 
     componentWillUnmount(){
         this.unsubscribe
+       
     }
 
     getCollectionEvents = (querySnapshot) => {
+        console.log(querySnapshot.data().LinkedEvents)
         const events = []
-        querySnapshot.forEach((event) => {
-            events.push(event.data())
+        querySnapshot.data().LinkedEvents.forEach((event) => {
+            events.push(event)
         })
         this.setState({events})
+    }
+
+    deleteProgramLocal(postID){
+        deleteProgram(postID);
     }
 
     render() { 
@@ -127,6 +132,3 @@ class DisplayEvent extends React.Component {
     }
 }
 
-function deleteProgramLocal(postID){
-    deleteProgram(postID);
-}
