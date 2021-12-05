@@ -9,13 +9,12 @@ export async function makeNewEvent(title, information, programID) {
     const db = firebase.firestore();
 
     const newParticipants = [];
-    var linkedEvents = [];
-    console.log(title)
-    console.log(information)
-    console.log(programID)
+
+    var linkedEvents = []
+    console.log("Please: " + programID)
     await db.collection('Programs').doc(programID).get().then(query => 
-        {
-            //console.log(query.data())
+        {  
+
             linkedEvents = query.data().LinkedEvents
         })
     const data = {
@@ -25,7 +24,6 @@ export async function makeNewEvent(title, information, programID) {
         ProgramID: programID,
         EventID: uuid.v4(),
     };
-    //console.log(linkedEvents)
     linkedEvents.push(data)
    
    await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
@@ -57,7 +55,6 @@ async function getNextEvent() {
         return count.data();
 
     } else {
-        //console.log("Event Count found: ", snapshot.data());
 
         // Andrew: If this is done by incrementing by one on our end, it will occur atomically.
         // Multiple events, Events, etc. may end up having the same ID. Firebase has an API increment
@@ -90,7 +87,6 @@ export async function getEvents() {
             const usersRef = db.collection('Events').doc(i.toString());
             const snapshot = await usersRef.get();
             if (snapshot.exists) {
-                //console.log("Item data found: ", snapshot.data());
                 eventArray.push(snapshot.data());
             }
         }
@@ -102,7 +98,9 @@ export async function getEvents() {
 //Function to edit events
 export async function editEvent(title, information, eventID, programID) {
     const db = firebase.firestore();
-    linkedEvents = []
+    var linkedEvents = []
+    const newParticipants = [];
+
     await db.collection('Programs').doc(programID).get().then(query => 
         {
             linkedEvents = query.data().LinkedEvents
@@ -113,6 +111,8 @@ export async function editEvent(title, information, eventID, programID) {
     const eventToSet = {
         Title: title,
         Information: information,
+        Participants: newParticipants,
+        ProgramID: programID,
         EventID: eventID
     };
 
@@ -127,7 +127,7 @@ export async function editEvent(title, information, eventID, programID) {
 export async function deleteEvent(eventID, programID) {
     const db = firebase.firestore();
 
-    linkedEvents = []
+    var linkedEvents = []
     await db.collection('Programs').doc(programID).get().then(query => 
         {
             linkedEvents = query.data().LinkedEvents

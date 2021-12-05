@@ -37,8 +37,7 @@ export default class EventScreen extends React.Component {
                         <Text> Edit Event </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.leftButton} onPress={() => 
-                        this.deleteEventLocal()}> 
+                    <TouchableOpacity style={styles.leftButton} onPress={() => this.deleteEventLocal()}> 
                         <Text> Delete Event </Text>
                     </TouchableOpacity>
                 </ScrollView>
