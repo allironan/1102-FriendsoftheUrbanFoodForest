@@ -66,11 +66,6 @@ export default class EventScreen extends React.Component {
         return this.currentView()
     }
 
-    createEventPressed = () => {
-        //const newData = makeNewEvent();
-        //ReactDOM.render(<DisplayEvent PostID={newData.PostID} Title={newData.Title} Date={newData.Date} Contents={newData.Contents} />, document.getElementById('root'))
-        //code for get posts
-    }
 }
 
 class DisplayEvent extends React.Component {
@@ -88,9 +83,4 @@ class DisplayEvent extends React.Component {
         </View>
         );
     }
-}
-
-function deleteEventLocal(postID){
-    //this.props.navigation.goBack()
-    //onPress={() => deleteProgram(this.props.route.params.ProgramID)}
 }

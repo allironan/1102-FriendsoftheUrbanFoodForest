@@ -3,25 +3,25 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         flexWrap: 'wrap',
-        alignItems: 'center',
-        backgroundColor: 'rgba(233,243,196,1)'
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+        backgroundColor: 'rgba(233,243,196,1)',
+        height: 100
     },
     viewContainer: {
         flex: 1,
         flexDirection: 'column',
         width: 350,
         alignItems: 'center',
-        backgroundColor: 'rgba(233,243,196,1)'
+        backgroundColor: 'rgba(233,243,196,1)',
     },
     optionsContainer: {
-        flex: 2,
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: 350,
-        alignItems: 'flex-start',
-        backgroundColor: 'rgba(233,243,196,1)'
+        alignItems: 'center',
     },
     storeContainer: {
         flex: 2,
