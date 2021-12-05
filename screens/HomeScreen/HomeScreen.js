@@ -90,7 +90,7 @@ export default class HomeScreen extends React.Component {
               onPress: () => console.log("Cancel Pressed"),
               style: "cancel"
             },
-            { text: "OK", onPress: () => {deleteToolLocal(this.props.route.params.toolID); (this.props.navigation.goBack())}}
+            { text: "OK", onPress: () => {deletePost(postID)}}
           ]
         );
     /*
