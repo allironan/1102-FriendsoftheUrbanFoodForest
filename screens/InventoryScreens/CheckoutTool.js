@@ -2,9 +2,10 @@ import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog, Switch} from 'react-native'
 import {getToolNames, checkoutTool} from '../../Components/InventoryComponents'
-import { Picker } from "react-native";
 import firebase from 'firebase/app'
 import styles from '../styles/InventoryScreens.styles'
+import SelectDropdown from 'react-native-select-dropdown'
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 
 export default class CheckoutTool extends React.Component {
@@ -14,10 +15,11 @@ export default class CheckoutTool extends React.Component {
       displayName: "",
       selectedTool: "",
       toolNames: [],
-      toolNumber: 0
+      toolNumber: 1
     };
     firestoreRef = firebase.firestore().collection('ToolsRental');
 
+    
       currentView() {
           if (this.state.toolNames.length == 0){
             return (
@@ -37,14 +39,36 @@ export default class CheckoutTool extends React.Component {
                     <Text>
                         Checkout Tool
                     </Text>
-                  <Picker
-                      selectedValue={this.state.selectedTool}
-                      style={{ height: 50, width: 150 }}
-                      onValueChange={(itemValue) => this.setState({selectedTool: itemValue})}
-                  > 
-                      {this.state.toolNames.map(r => <Picker.Item label={r.Name} value={r.Name}/>)}
-                  </Picker>
+                  <SelectDropdown
+                    data={this.state.toolNames}
+                    onSelect={(selectedItem, index) => {
+                      console.log(selectedItem, index)
+                      this.setState({selectedTool: selectedItem})
+                    }}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                      // text represented after item is selected
+                      // if data array is an array of objects then return selectedItem.property to render after item is selected
+                      return selectedItem
+                    }}
+                    rowTextForSelection={(item, index) => {
+                      // text represented for each item in dropdown
+                      // if data array is an array of objects then return item.property to represent item in dropdown
+                      return item
+                    }}
+                    buttonStyle={styles.dropdown1BtnStyle}
+                    buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                    renderDropdownIcon={() => {
+                      return (
+                        <FontAwesome name="chevron-down" color={"#444"} size={18} />
+                      );
+                    }}
+                    dropdownIconPosition={"right"}
+                    dropdownStyle={styles.dropdown1DropdownStyle}
+                    rowStyle={styles.dropdown1RowStyle}
+                    rowTextStyle={styles.dropdown1RowTxtStyle}
+                  />
                   <TextInput 
+                          placeholder="Tool number"
                           keyboardType='numeric'
                           value={this.state.toolNumber}
                           onChangeText={(value) => this.setState({toolNumber: value})}
@@ -79,7 +103,7 @@ export default class CheckoutTool extends React.Component {
         const toolNames = []
         querySnapshot.forEach((tool) => {
             if (tool.data().Available && tool.data().CheckedOut < tool.data().Quantity) {
-              toolNames.push(tool.data())
+              toolNames.push(tool.data().Name)
             }    
         })
         if (toolNames.length != 0){
@@ -88,9 +112,5 @@ export default class CheckoutTool extends React.Component {
           this.setState({selectedTool});
         }
     }
-      createItem(name, toolID){
-          return (
-              <Picker.Item label={name} value={toolID}/>
-          )
-      }
   }
+  

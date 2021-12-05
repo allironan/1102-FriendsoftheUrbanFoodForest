@@ -2,7 +2,7 @@ import React, { Children } from 'react'
 import ReactDOM from 'react-dom'
 import {View, Text, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
 import { makeNewEvent } from '../../Components/EventComponents';
-import styles from '../styles/ProgramsEventsScreen.style.js'
+import styles from '../styles/ProgramsEventsScreen.style.js';
 
 
 export default class AddEventScreen extends React.Component {
@@ -27,7 +27,7 @@ export default class AddEventScreen extends React.Component {
                                   onChangeText={(value) => this.setState({title: value})} />
                 <TextInput style={styles.textFillField} placeholder="Event Information" 
                                     value={this.state.information}
-                                    onChangeText={(value) => this.setState({information: value})} />
+                                    onChangeText={(value) => this.setState({information: value})} />                 
                 <TouchableHighlight style={styles.submitButton} onPress={() => {
                   if (this.state.title != "" && this.state.information != "") {
                     makeNewEvent(this.state.title, this.state.information, this.props.route.params.programID)
