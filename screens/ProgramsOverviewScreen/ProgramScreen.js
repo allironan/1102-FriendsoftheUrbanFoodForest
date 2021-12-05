@@ -5,6 +5,7 @@ import 'firebase/auth'
 import { deleteProgram } from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
+import { getEventInfo } from '../../Components/EventComponents'
 
 
 export default class ProgramScreen extends React.Component {
@@ -31,9 +32,9 @@ export default class ProgramScreen extends React.Component {
                     </View>
 
                     <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditProgramScreen", {
-                            title: this.props.route.params.title,
-                            information: this.props.route.params.information,
-                            programID: this.props.route.params.programID
+                            Title: this.props.route.params.title,
+                            Information: this.props.route.params.information,
+                            ProgramID: this.props.route.params.programID
                         })}> 
                         <Text style={styles.buttonLabelText}> Edit Program </Text>
                     </TouchableOpacity>
@@ -54,7 +55,8 @@ export default class ProgramScreen extends React.Component {
                                 key: event.EventID,
                                 title: event.Title,
                                 information: event.Information,
-                                EventID: event.EventID
+                                EventID: event.EventID,
+                                programID: this.props.route.params.programID
                             })}> 
                             <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information}/>
                             </TouchableOpacity>
@@ -65,7 +67,7 @@ export default class ProgramScreen extends React.Component {
         );
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
     }
 
@@ -73,6 +75,24 @@ export default class ProgramScreen extends React.Component {
         this.unsubscribe
        
     }
+
+    // async getInfo(){
+    //     var old = this.state.events;
+    //     events = [];
+    //     console.log("I am here");
+    //     console.log(old);
+    //     old.forEach((event) => {
+    //         var data = getEventInfo(event.programID);
+    //         console.log("New");
+    //         console.log(data);
+    //         events.push(data);
+    //     })
+    //     console.log("Teehee")
+    //     console.log(events);
+    //     this.setState({events});
+    //     // var info = await getEventInfo(event.EventID);
+    //     // return info;
+    // }
 
     getCollectionEvents = (querySnapshot) => {
         console.log(querySnapshot.data().LinkedEvents)

@@ -30,7 +30,7 @@ export default class AddEventScreen extends React.Component {
                                     onChangeText={(value) => this.setState({information: value})} />
                 <TouchableHighlight style={styles.submitButton} onPress={() => {
                   if (this.state.title != "" && this.state.information != "") {
-                    makeNewEvent(this.state.title, this.state.information, this.props.route.params.programID)
+                    makeNewEvent(this.state.title, this.state.information, this.props.route.params.EventID, this.props.route.params.programID)
                     this.props.navigation.goBack()
                   } else {
                     alert('Text cannot be empty.');
