@@ -5,7 +5,6 @@ export default StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         flexDirection: "column",
-        justifyContent: "center",
         alignContent: "center",
         backgroundColor: 'rgba(233,243,196,1)',
         height: 100
