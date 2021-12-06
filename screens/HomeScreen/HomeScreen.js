@@ -140,21 +140,23 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.postDate}>{date}</Text>
 
                 <Text style={styles.postContent}>{contents}</Text>
-                <View style={styles.postOptions}>
-                    <TouchableOpacity style={styles.deleteButton} onPress={() => this.createTwoButtonAlert(postID)}>
-                        <Ionicons name={'trash-outline'} size={16} color={'black'}/>
-                        <Text style={styles.postOptionLabel}>Delete</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.editButton} onPress={() => this.props.navigation.navigate("EditPostScreen", {
-                            Title: title,
-                            Information: contents,
-                            Survey: survey,
-                            PostID: postID
-                        })}> 
-                            <Ionicons name={'create-outline'} size={16} color={'black'}/>
-                            <Text style={styles.postOptionLabel}>Edit</Text>
-                    </TouchableOpacity>
-                </View>
+                {this.state.admin && (
+                    <View style={styles.postOptions}>
+                        <TouchableOpacity style={styles.deleteButton} onPress={() => this.createTwoButtonAlert(postID)}>
+                            <Ionicons name={'trash-outline'} size={16} color={'black'}/>
+                            <Text style={styles.postOptionLabel}>Delete</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.editButton} onPress={() => this.props.navigation.navigate("EditPostScreen", {
+                                Title: title,
+                                Information: contents,
+                                Survey: survey,
+                                PostID: postID
+                            })}> 
+                                <Ionicons name={'create-outline'} size={16} color={'black'}/>
+                                <Text style={styles.postOptionLabel}>Edit</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         );
     } 
@@ -170,7 +172,7 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.header}>
                     <Image source={logo} style={styles.logo}/>
                     <Text style={styles.headerTitle}> Friends of the Urban Food Forest </Text>
-                    <TouchableOpacity style={styles.profileButton} onPress={() => this.props.navigation.navigate("Settings")} > 
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")} > 
                         <Ionicons name={'person-circle-outline'} size={40} color={'black'}/>
                     </TouchableOpacity>
                 </View>
@@ -180,12 +182,12 @@ export default class HomeScreen extends React.Component {
                 </TouchableOpacity>
                 {/* this button navigates the user to the screen to add posts */}
                 {this.state.admin && (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.addPostButton}>
-                    <View>
-                        <Ionicons name={'add-outline'} size={20} color={'rgba(196,196,196,1)'}/>
-                    </View>
-                    <Text style={styles.addPostLabel}> Add Post </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddPostScreen")} style= {styles.addPostButton}>
+                        <View>
+                            <Ionicons name={'add-outline'} size={30} color={'black'}/>
+                        </View>
+                        <Text style={styles.addPostLabel}>Add Post</Text>
+                    </TouchableOpacity>
                 )}
                 <ScrollView>
                     <View>

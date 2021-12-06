@@ -2,13 +2,13 @@ import React from 'react';
 import { Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { getUserCart } from '../../Components/CartComponents';
 import styles from '../styles/FundraisingScreens.styles';
-import firebase from 'firebase/app'
 import { getProductInfo } from '../../Components/StoreItemComponents';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class CartScreen extends React.Component {
     state = {
-        cartContents: [],
+        cartItems: []
     }
 
     //firestoreRef = firebase.firestore().collection('UserCart')
@@ -16,13 +16,12 @@ export default class CartScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
-                    <Text> Go Back </Text>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                 </TouchableOpacity>
                 <ScrollView>
                     <View>
-                        {/* {this.state.cartContents.map(i => this.displayItem(i.Name, i.ItemID))} */}
-                        
+                        {this.state.cartItems.map(i => this.displayItem(i[0], i[1], i[3]))}
                     </View>
                 </ScrollView>
             </View>
@@ -54,10 +53,15 @@ export default class CartScreen extends React.Component {
         this.setState({cartContents})
     }
 
-    displayItem(name, id) {
+    displayItem(name, price, quantity) {
         return(
-            <View key={id}>
+            <View style={styles.cartFrame} key={name}>
                 <Text>{name}</Text>
+                <Text>{price}</Text>
+                <Text>{quantity}</Text>
+                <TouchableOpacity>
+                    <Text>Remove</Text>
+                </TouchableOpacity>
             </View>
         )
     }

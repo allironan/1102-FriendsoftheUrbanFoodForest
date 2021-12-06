@@ -6,12 +6,12 @@ export default class FundraisingOptionsScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <View style={styles.optionsContainer}>
+                <View style={styles.fundraisingOptionsContainer}>
                     <TouchableOpacity style={styles.fundraisingOption} onPress={() => this.props.navigation.navigate("DonationScreen")}>
-                        <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Donations</Text>
+                        <Text style={styles.fundraisingOptionLabel}>Donations</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.fundraisingOption} onPress={() => this.props.navigation.navigate("StoreScreen")}>
-                        <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Store</Text>
+                        <Text style={styles.fundraisingOptionLabel}>Store</Text>
                     </TouchableOpacity>
                 </View>
             </View>

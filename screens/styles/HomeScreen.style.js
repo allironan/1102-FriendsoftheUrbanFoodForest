@@ -1,6 +1,7 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, Dimensions } from "react-native";
 
 export default StyleSheet.create({
+    //Containers
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -15,41 +16,45 @@ export default StyleSheet.create({
         marginVertical: '5%',
         width: '90%'
     },
-    logo: {
-        resizeMode: 'stretch',
-        height: 50,
-        width: 71.5
-    },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        height: 60,
-        width: 200
-    },
-    profileButton: {
-        height: 40,
-        width: 40
+    postOptions: {
+        flex: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        marginBottom: '5%'
     },
 
+    //Frames
+    postFrame: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 25,
+        alignSelf: 'center',
+        width: '90%',
+        height: 'auto',
+        minHeight: Dimensions.get('window').height * 0.2,
+        marginHorizontal: '2%',
+        marginBottom: '5%',
+        textAlign: 'center'
+    },
+
+    //Buttons
+    goBackButton: {
+        alignSelf: 'flex-start',
+        marginLeft: '3%',
+        marginTop: '3%'
+    },
     surveyButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 8,
         alignSelf: 'center',
-        width: 200,
-        paddingVertical: 10,
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.045,
         marginHorizontal: '2%',
         marginBottom: 15,
+        justifyContent: 'center',
         textAlign: 'center',
         textAlignVertical: 'center'
     },
-    surveyLabel: {
-        fontSize: 14,
-        textAlign: 'center',
-        textAlignVertical: 'center'
-    },
-
     addPostButton: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 15,
@@ -60,25 +65,58 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
         marginHorizontal: '8%',
-        marginBottom: 15,
+        marginBottom: '4%',
     },
-    addPostLabel: {
+    deleteButton: {
+        backgroundColor: 'rgba(234,71,71,1)',
+        borderRadius: 8,
+        width: '28%',
+        height: '110%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    editButton: {
+        backgroundColor: 'rgba(255,225,153,1)',
+        borderRadius: 8,
+        width: '28%',
+        height: '110%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    submitButton: {
+        backgroundColor: 'rgba(0,132,233,1)',
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.30,
+        paddingVertical: '3%',
+        marginVertical: '2%',
+    },
+
+    //Images
+    logo: {
+        resizeMode: 'stretch',
+        height: 50,
+        width: 71.5
+    },
+
+    //Text
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        height: 60,
+        width: 200
+    },
+    surveyLabel: {
         fontSize: 14,
-        color: 'rgba(196,196,196,1)',
         textAlign: 'center',
         textAlignVertical: 'center'
     },
-
-    postFrame: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 25,
-        alignSelf: 'center',
-        width: '90%',
-        height: 'auto',
-        minHeight: 150,
-        marginHorizontal: '2%',
-        marginBottom: 12,
-        textAlign: 'center'
+    addPostLabel: {
+        fontSize: 14,
+        color: 'black',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     },
     postTitle: {
         fontSize: 24,
@@ -105,34 +143,18 @@ export default StyleSheet.create({
         marginVertical: '3%',
         marginBottom: 45
     },
-    postOptions: {
-        flex: 2,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        marginBottom: '5%'
-    },
-    deleteButton: {
-        backgroundColor: 'rgba(234,71,71,1)',
-        borderRadius: 8,
-        width: '28%',
-        height: '110%',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    editButton: {
-        backgroundColor: 'rgba(255,225,153,1)',
-        borderRadius: 8,
-        width: '28%',
-        height: '110%',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
     postOptionLabel: {
         fontSize: 10,
         marginBottom: "4%",
     },
+    submitLabel: {
+        fontWeight: 'bold',
+        color: 'rgba(255,255,255,1)',
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
 
+    //TextInputs
     titleFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
         alignSelf: 'center',
@@ -158,24 +180,5 @@ export default StyleSheet.create({
         textAlign: 'left',
         textAlignVertical: 'top',
         flexWrap: 'wrap'
-    },
-
-    goBackButton: {
-        alignSelf: 'flex-start',
-        marginLeft: '3%',
-        marginTop: '3%'
-    },
-    submitButton: {
-        backgroundColor: 'rgba(0,132,233,1)',
-        borderRadius: 8,
-        width: 100,
-        paddingVertical: 10,
-        marginVertical: 10,
-    },
-    submitLabel: {
-        fontWeight: 'bold',
-        color: 'rgba(255,255,255,1)',
-        textAlign: 'center',
-        textAlignVertical: 'center'
     }
 })

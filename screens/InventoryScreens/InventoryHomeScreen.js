@@ -156,7 +156,7 @@ export default class InventoryHomeScreen extends React.Component {
         // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
         if (this.state.admin){
             return (
-                <View style={styles.toolFrame}>
+                <View style={styles.toolFrame} id={toolID}>
                     {/* The name of the tool type */}
                     <Text>{name}</Text>
                     {/* The total number of tools */}
@@ -178,7 +178,7 @@ export default class InventoryHomeScreen extends React.Component {
             );
         } else {
             return (
-                <View style={styles.toolFrame}>
+                <View style={styles.toolFrame} id={toolID}>
                     {/* The name of the tool type */}
                     <Text>{name}</Text>
                     {/* The total number of tools */}
@@ -201,7 +201,7 @@ export default class InventoryHomeScreen extends React.Component {
         */
     displayUserCheckedOutTools(tool, number, CheckoutID){
         return (
-            <View style={styles.toolFrame}>
+            <View style={styles.toolFrame} id={CheckoutID}>
                 {/* The name of the tool type */}
                 <Text>{tool}</Text>
                 {/* ID of the currently checked out tool */}

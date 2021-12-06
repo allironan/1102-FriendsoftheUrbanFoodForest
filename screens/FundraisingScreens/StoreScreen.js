@@ -19,24 +19,32 @@ export default class StoreScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black)'}/>
-                </TouchableOpacity>
-                <View style={styles.productFunctions}> 
-                    <TouchableOpacity style={styles.functionButton} 
-                        onPress={() => this.props.navigation.navigate("CartScreen")}>
-                            <Text>Cart</Text>
+                
+                <View style={styles.storeFunctions}> 
+                    <TouchableOpacity   style={styles.goBackButton} 
+                                        onPress={() => this.props.navigation.goBack()}>
+                        <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity   style={styles.cartButton} 
+                                        onPress={() => this.props.navigation.navigate("CartScreen")}>
+                        <View>
+                            <Ionicons name={'cart-outline'} size={35} color={'black'}/>
+                        </View>
+                        <Text> Cart</Text>
                     </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity style={styles.addItemButton} 
                     onPress={() => this.props.navigation.navigate("AddProductScreen")}>
-                    <Text style={styles.addItemLabel}>Add New Product</Text>
+                        <View>
+                            <Ionicons name={'add-outline'} size={35} color={'black'}/>
+                        </View>
+                    <Text style={styles.addItemLabel}>Add Product</Text>
                 </TouchableOpacity>
                 
 
                 <ScrollView>
-                    <View style={styles.storeContainer}>
+                    <View style={styles.storeScrollContainer}>
                         {this.state.products.map((product) => (
                             product.ItemID &&
                             <TouchableOpacity style={styles.productFrame} key={product.ItemID} onPress={() => this.props.navigation.navigate("ProductScreen", {
@@ -84,7 +92,7 @@ class ProductComponent extends React.Component {
         return (
             <View key={this.props.id}>
                 <Text style={styles.productName}>{this.props.name}</Text>
-                <Text style={styles.productPrice}>{this.props.price}</Text>
+                <Text style={styles.productPrice}>{"$" + this.props.price}</Text>
             </View>
         )
     }

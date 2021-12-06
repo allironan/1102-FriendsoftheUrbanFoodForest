@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 import { editItem } from '../../Components/StoreItemComponents'
 import styles from '../styles/FundraisingScreens.styles';
+import { Ionicons } from '@expo/vector-icons';
 
 export default class EditProductScreen extends React.Component {
     state = {
@@ -14,8 +15,8 @@ export default class EditProductScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.viewContainer}>
-                    <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
-                        <Text> Go Back </Text>
+                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                     </TouchableOpacity>
 
                     <Text style={styles.productName}>Edit Product</Text>

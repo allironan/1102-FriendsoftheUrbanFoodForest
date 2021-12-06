@@ -17,7 +17,7 @@ export default class EditPostScreen extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-          <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black)'}/>
+          <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
             Edit Post
