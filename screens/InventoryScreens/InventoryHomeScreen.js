@@ -54,7 +54,7 @@ export default class InventoryHomeScreen extends React.Component {
                         <View style={styles.toolsContainer}>
                             {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
                         </View>
-                        <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
+                        <Text style={{textAlign: 'center'}}>Tools Available:</Text>
                         {/* Creates a view object with a list of all available tools to checkout */}
                         <View style={styles.toolsContainer}>
                                 {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
