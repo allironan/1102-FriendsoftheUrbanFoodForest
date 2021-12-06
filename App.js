@@ -6,8 +6,7 @@ import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
-import SettingsScreen from "./screens/SettingsScreens/SettingsScreen"
-import UsersScreen from "./screens/SettingsScreens/UsersScreen"
+import SettingsScreen from "./screens/SettingsScreen"
 import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
@@ -53,7 +52,6 @@ const HomeStackNavigator = createStackNavigator();
 const ProgramStackNavigator = createStackNavigator();
 const InventoryStackNavigator = createStackNavigator();
 const FundraisingStackNavigator = createStackNavigator();
-const SettingsStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const authStack = () => (
@@ -100,16 +98,6 @@ function ProgramStack(){
           <ProgramStackNavigator.Screen name="EditProgramScreen" component={EditProgramScreen}/>
           <ProgramStackNavigator.Screen name="EditEventScreen" component={EditEventScreen}/>
     </ProgramStackNavigator.Navigator>
-  )
-}
-
-function SettingsStackScreens(){
-  return (
-      <SettingsStack.Navigator initialRouteName = "SettingsHome" screenOptions={{
-        headerShown: false}}>
-        <SettingsStack.Screen name="SettingsScreen" component={SettingsScreen}/>
-        <SettingsStack.Screen name="UsersScreen" component={UsersScreen}/>
-      </SettingsStack.Navigator>
   )
 }
 
@@ -182,7 +170,6 @@ const NavBar = () => (
       <Tab.Screen name="Programs" component={ProgramStack} />
       <Tab.Screen name="Inventory" component={InventoryStack} />  
       <Tab.Screen name="Fundraising" component={FundraisingStack} />
-      <Tab.Screen name="Settings" component={SettingsStackScreens} />
     </Tab.Navigator>
   </NavigationContainer>
 )
