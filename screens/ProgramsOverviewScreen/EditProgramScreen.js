@@ -5,8 +5,9 @@ import styles from '../styles/ProgramsEventsScreen.style.js'
 
 export default class EditProgramScreen extends React.Component {
   state = {
-    title: "",
-    information: "",
+    title: this.props.route.params.Title,
+    information: this.props.route.params.Information,
+    programID: ""
   };
     currentView() {
         return (
@@ -19,10 +20,12 @@ export default class EditProgramScreen extends React.Component {
                     Edit Program
                 </Text>
                 <TextInput style={styles.textFillField} placeholder="Program Title" 
-                                   value={this.props.route.params.title} 
+                                   placeholder = {'Old Title: ' + this.props.route.params.Title}
+                                   value={this.state.title} 
                                    onChangeText={(value) => this.setState({title: value})} />
                 <TextInput style={styles.textFillField} placeholder="Program Information" 
-                                    value={this.props.route.params.information}
+                                    placeholder = {'Old Information: ' + this.props.route.params.Information}
+                                    value={this.state.information}
                                     onChangeText={(value) => this.setState({information: value})} />
                 <TouchableOpacity style={styles.submitButton} title="Submit" onPress={() => {
                   if (this.state.information != "" || this.state.title != "") {

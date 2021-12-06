@@ -5,6 +5,7 @@ import 'firebase/auth'
 import { deleteProgram } from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
+import { deleteAllEvents, getEventInfo } from '../../Components/EventComponents'
 
 
 export default class ProgramScreen extends React.Component {
@@ -31,14 +32,16 @@ export default class ProgramScreen extends React.Component {
                     </View>
 
                     <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditProgramScreen", {
-                            title: this.props.route.params.title,
-                            information: this.props.route.params.information,
-                            programID: this.props.route.params.programID
+                            Title: this.props.route.params.title,
+                            Information: this.props.route.params.information,
+                            ProgramID: this.props.route.params.programID
                         })}> 
                         <Text style={styles.buttonLabelText}> Edit Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.leftButton} onPress={() => {deleteProgram(this.props.route.params.programID); this.props.navigation.goBack();}}> 
+                    <TouchableOpacity style={styles.leftButton} onPress={() => {
+                        this.deleteProgramLocal(this.props.route.params.programID);
+                        }}> 
                         <Text style={styles.buttonLabelText}> Delete Program </Text>
                     </TouchableOpacity>
 
@@ -54,7 +57,8 @@ export default class ProgramScreen extends React.Component {
                                 key: event.EventID,
                                 title: event.Title,
                                 information: event.Information,
-                                EventID: event.EventID
+                                EventID: event.EventID,
+                                programID: this.props.route.params.programID
                             })}> 
                                 <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} />
                             </TouchableOpacity>
@@ -65,7 +69,7 @@ export default class ProgramScreen extends React.Component {
         );
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
     }
 
@@ -75,16 +79,26 @@ export default class ProgramScreen extends React.Component {
     }
 
     getCollectionEvents = (querySnapshot) => {
-        console.log(querySnapshot.data().LinkedEvents)
+        
         const events = []
-        querySnapshot.data().LinkedEvents.forEach((event) => {
-            events.push(event)
-        })
-        this.setState({events})
+        if (querySnapshot.exists) {
+            querySnapshot.data().LinkedEvents.forEach((event) => {
+                events.push(event)
+            })
+            this.setState({events}) 
+            console.log(this.state)
+        }
+   
+     
     }
 
-    deleteProgramLocal(postID){
-        deleteProgram(postID);
+    async deleteProgramLocal(programID){
+        //const db = firebase.firestore();
+        
+        deleteAllEvents(programID, this.state.events)
+        deleteProgram(programID);
+        this.props.navigation.goBack();
+        
     }
 
     render() { 
@@ -100,35 +114,33 @@ export default class ProgramScreen extends React.Component {
 
 class DisplayEvent extends React.Component {
     render () {
-        var startDateTime = new Date(this.props.StartTime);
-        // console.log(startDateTime);
-        var endDateTime = new Date(this.props.EndTime);
-        // console.log(endDateTime);
-        var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        // var startDateTime = new Date(this.props.StartTime);
+        // // console.log(startDateTime);
+        // var endDateTime = new Date(this.props.EndTime);
+        // // console.log(endDateTime);
+        // var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         return (
-        <View style={styles.container}>
-            <View style={styles.eventFrame} key={this.props.EventID}>
-                <Text style={styles.eventTitle}>{this.props.Title}</Text>
-                <Text style={styles.eventInformation}>{this.props.Information}</Text>
-                <Text style={styles.eventStartTime}>{
-                    "Start Time: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                    + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                    + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                    + " on " + monthsList[startDateTime.getMonth()] 
-                    + " " + startDateTime.getDate() 
-                    + ", " + startDateTime.getFullYear()
-                }
-                </Text>
-                <Text style={styles.eventEndTime}>{
-                    "End Time: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                    + ":" + endDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                    + ":" + endDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
-                    + " on " + monthsList[endDateTime.getMonth()] 
-                    + " " + endDateTime.getDate() 
-                    + ", " + endDateTime.getFullYear()
-                }
-                </Text>
-            </View>
+        <View style={styles.eventFrame} key={this.props.EventID}>
+            <Text style={styles.eventTitle}>{this.props.Title}</Text>
+            <Text style={styles.eventInformation}>{this.props.Information}</Text>
+            {/* <Text style={styles.eventStartTime}>{
+                "Start Time: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + " on " + monthsList[startDateTime.getMonth()] 
+                + " " + startDateTime.getDate() 
+                + ", " + startDateTime.getFullYear()
+            }
+            </Text>
+            <Text style={styles.eventEndTime}>{
+                "End Time: " + endDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + endDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + ":" + endDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+                + " on " + monthsList[endDateTime.getMonth()] 
+                + " " + endDateTime.getDate() 
+                + ", " + endDateTime.getFullYear()
+            }
+            </Text> */}
         </View>
         );
     }

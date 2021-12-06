@@ -128,12 +128,18 @@ export default StyleSheet.create({
         fontWeight: 'bold'
     },
     eventInformation: {
-        fontSize: 10,
+        fontSize: 14,
         textAlign: 'left',
         flexWrap: 'wrap',
-        marginHorizontal: '8%',
-        marginBottom: 20,
-        color: 'rgba(196,196,196,1)'
+        marginHorizontal: '7%',
+        marginVertical: '5%',
+        marginBottom: 30
+        // fontSize: 10,
+        // textAlign: 'left',
+        // flexWrap: 'wrap',
+        // marginHorizontal: '8%',
+        // marginBottom: 20,
+        // color: 'rgba(196,196,196,1)'
     },
     eventStartTime: {
         fontSize: 12,

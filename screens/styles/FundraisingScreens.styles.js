@@ -17,6 +17,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly'
     },
+    buttonContainer: {
+        marginTop: 100,
+        flexWrap: 'wrap',
+        flexDirection: "column",
+        alignContent: "center",
+    },
     viewContainer: {
         flex: 1,
         flexDirection: 'column',

@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 import uuid from 'react-native-uuid';
+import { deleteAllEvents, deleteEvent } from './EventComponents';
 
 //Function to make new program
 export async function makeNewProgram(title, information) {
@@ -96,24 +97,18 @@ export async function getPrograms() {
 export async function editProgram(title, information, programID) {
 
     const db = firebase.firestore();
-    const linkedEvents = {};
+    //const linkedEvents = {};
     const programToSet = {
         Title: title,
-        Information: information,
-        LinkedEvents: linkedEvents,
-        ProgramID: programID,
+        Information: information
     };
 
-    const res = await db.collection('Programs').doc(programID.toString()).set(programToSet);
+    const res = await db.collection('Programs').doc(programID.toString()).update(programToSet);
 
 }
 
-//Function to delete events
-export async function deleteProgram(programID) {
-    const db = firebase.firestore();
-    const res = await db.collection('Programs').doc(programID.toString()).delete();
-    this.props.navigation.goBack()
-}
+//Function to delete programs
+
 
 export async function linkEventToProgram(programID, eventID) {
     const db = firebase.firestore();
@@ -185,4 +180,10 @@ export async function getIfProgramSubscriber(programID){
     const subscriberMap = programData.Subscribers();
     
     return subscriberMap.has(currentUser.uid);
+}
+
+export async function deleteProgram(programID) {
+    const db = firebase.firestore();
+    try {await db.collection('Programs').doc(programID).delete()}
+    catch (error) {console.log(error);}
 }

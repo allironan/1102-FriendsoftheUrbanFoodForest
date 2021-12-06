@@ -25,18 +25,19 @@ export default class EventScreen extends React.Component {
 
                     <View style={styles.programFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                        <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                        <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                     </View>
 
                     <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditEventScreen", {
-                            title: this.props.route.params.title,
-                            description: this.props.route.params.description,
-                            EventID: this.props.route.params.EventID
+                            Title: this.props.route.params.title,
+                            Information: this.props.route.params.information,
+                            EventID: this.props.route.params.EventID,
+                            programID: this.props.route.params.programID
                         })}> 
                         <Text> Edit Event </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.leftButton} onPress={() => deleteEventLocal(this.props.route.params.EventID)}> 
+                    <TouchableOpacity style={styles.leftButton} onPress={() => this.deleteEventLocal()}> 
                         <Text> Delete Event </Text>
                     </TouchableOpacity>
                 </ScrollView>
@@ -44,10 +45,15 @@ export default class EventScreen extends React.Component {
         );
     }
 
+    deleteEventLocal() {
+        deleteEvent(this.props.route.params.EventID, this.props.route.params.programID);
+        this.props.navigation.goBack();
+    }
+
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
-        this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
         this.setState({email, displayName})
+        this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
     }
 
     componentWillUnmount(){
