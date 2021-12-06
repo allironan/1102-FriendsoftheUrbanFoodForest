@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {View, Text, Image, TouchableOpacity, Alert, Linking} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../../Components/UserDataComponents'
+import { getUserData } from '../../Components/UserDataComponents'
 import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/HomeScreen.style.js'
@@ -18,9 +18,6 @@ export default class HomeScreen extends React.Component {
     The component uses this local data for rendering purposes or to execute other logic. 
      */
     state = {
-        title: "Default Title: Hi",
-        contents: "Default Content: Teest!",
-        survey: "Default survey",
         posts: [],
         admin: true
     }
@@ -171,7 +168,7 @@ export default class HomeScreen extends React.Component {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Image source={logo} style={styles.logo}/>
-                    <Text style={styles.headerTitle}> Friends of the Urban Food Forest </Text>
+                    <Text style={styles.headerTitle}>Friends of the Urban Food Forest</Text>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")} > 
                         <Ionicons name={'person-circle-outline'} size={40} color={'black'}/>
                     </TouchableOpacity>

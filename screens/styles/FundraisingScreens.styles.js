@@ -17,7 +17,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly'
     },
-    productContainer: {
+    viewContainer: {
         flex: 1,
         flexDirection: 'column',
         width: '80%',
@@ -96,6 +96,7 @@ export default StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 15,
         textAlign: 'center',
+        alignItems: 'center',
         justifyContent: 'center'
     },
     cartButton: {

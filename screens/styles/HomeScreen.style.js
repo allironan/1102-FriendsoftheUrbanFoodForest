@@ -94,8 +94,8 @@ export default StyleSheet.create({
     //Images
     logo: {
         resizeMode: 'stretch',
-        height: 50,
-        width: 71.5
+        height: 200 * 0.16,
+        width: 286 * 0.16
     },
 
     //Text

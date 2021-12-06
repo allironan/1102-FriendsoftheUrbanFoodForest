@@ -12,7 +12,7 @@ export default class ProductScreen extends React.Component {
                 <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
                     <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                 </TouchableOpacity>
-                <View style={styles.productContainer}>
+                <View style={styles.viewContainer}>
                     <View key={this.props.id}>
                         <Text style={styles.productName}>{this.props.route.params.name}</Text>
                         <Text style={styles.productDescription}>{this.props.route.params.description}</Text>
@@ -21,7 +21,7 @@ export default class ProductScreen extends React.Component {
 
                     <View style={styles.productFunctions}>
                         <TouchableOpacity style={styles.functionButton} onPress={() => this.addProductLocal()}>
-                            <Text> Add Product to Cart </Text>
+                            <Text> Add to Cart </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.navigate("EditProductScreen", {

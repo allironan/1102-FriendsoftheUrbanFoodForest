@@ -59,7 +59,7 @@ export default class CartScreen extends React.Component {
                 <Text>{name}</Text>
                 <Text>{price}</Text>
                 <Text>{quantity}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.removeProductLocal()}>
                     <Text>Remove</Text>
                 </TouchableOpacity>
             </View>

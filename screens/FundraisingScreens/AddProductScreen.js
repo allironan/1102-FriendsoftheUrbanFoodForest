@@ -14,23 +14,30 @@ export default class AddProductScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+                </TouchableOpacity>
                 <View style={styles.viewContainer}>
-                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                        <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
-                    </TouchableOpacity>
-                    
                     <Text style={styles.headerTitle}>Create New Product</Text>
 
                     <TextInput  style={styles.titleFillField}
                                 placeholder="Product Name" 
-                                value={this.state.name} 
+                                value={this.state.name}
+                                maxLength={50}
+                                multiline={true}
                                 onChangeText={(value) => this.setState({name: value})} />
-                    <TextInput  placeholder="Product Description" 
+                    <TextInput  style={styles.titleFillField}
+                                placeholder="Product Price" 
+                                value={this.state.price}
+                                maxLength={50}
+                                multiline={true}
+                                onChangeText={(value) => this.setState({price: value})} />
+                    <TextInput  style={styles.contentFillField}
+                                placeholder="Product Description" 
                                 value={this.state.description}
+                                maxLength={600}
+                                multiline={true}
                                 onChangeText={(value) => this.setState({description: value})} />
-                    <TextInput placeholder="Product Price" 
-                                        value={this.state.price}
-                                        onChangeText={(value) => this.setState({price: value})} />
                     <TouchableOpacity style={styles.functionButton} onPress={() => {
                         makeNewItem(this.state.name, this.state.description, this.state.price)
                         this.props.navigation.goBack()

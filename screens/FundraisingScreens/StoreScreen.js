@@ -19,7 +19,6 @@ export default class StoreScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                
                 <View style={styles.storeFunctions}> 
                     <TouchableOpacity   style={styles.goBackButton} 
                                         onPress={() => this.props.navigation.goBack()}>
