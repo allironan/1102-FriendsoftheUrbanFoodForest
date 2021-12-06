@@ -4,6 +4,7 @@ import firebase from 'firebase/app'
 import styles from '../styles/FundraisingScreens.styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getUserCart } from '../../Components/CartComponents';
+import { Ionicons } from '@expo/vector-icons';
 
 export default class StoreScreen extends React.Component {
     state = {
@@ -18,17 +19,19 @@ export default class StoreScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black)'}/>
+                </TouchableOpacity>
                 <View style={styles.productFunctions}> 
-                    <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
-                        <Text>Go Back</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.navigate("CartScreen")}>
-                        <Text>Cart</Text>
+                    <TouchableOpacity style={styles.functionButton} 
+                        onPress={() => this.props.navigation.navigate("CartScreen")}>
+                            <Text>Cart</Text>
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.navigate("AddProductScreen")}>
-                    <Text> Add Product </Text>
+                <TouchableOpacity style={styles.addItemButton} 
+                    onPress={() => this.props.navigation.navigate("AddProductScreen")}>
+                    <Text style={styles.addItemLabel}>Add New Product</Text>
                 </TouchableOpacity>
                 
 

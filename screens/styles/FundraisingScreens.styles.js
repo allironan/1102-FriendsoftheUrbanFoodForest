@@ -6,7 +6,7 @@ export default StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: "column",
         marginTop: StatusBar.currentHeight,
-        alignContent: "center",
+        alignItems: "center",
         backgroundColor: 'rgba(233,243,196,1)'
     },
     viewContainer: {
@@ -20,14 +20,15 @@ export default StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: 350,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     storeContainer: {
         flex: 2,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        width: 350,
+        width: '100%',
         alignItems: 'flex-start',
+        justifyContent: 'space-evenly',
         backgroundColor: 'rgba(233,243,196,1)'
     },
     fundraisingOption: {
@@ -66,7 +67,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: 350,
-        alignItems: 'flex-start',
+        justifyContent: 'space-evenly',
         backgroundColor: 'rgba(233,243,196,1)'
     },
     functionButton: {
@@ -79,6 +80,25 @@ export default StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center'
     },
+
+    addItemButton: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+        width: '30%',
+        height: '5%',
+        alignItems: 'center',
+        marginHorizontal: '8%',
+        marginBottom: 15,
+    },
+    addItemLabel: {
+        fontSize: 12,
+        color: 'black',
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+
     textFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
         alignSelf: 'center',
@@ -87,5 +107,10 @@ export default StyleSheet.create({
         marginHorizontal: '10%',
         textAlign: 'center',
         textAlignVertical: 'center'
+    },
+    goBackButton: {
+        alignSelf: 'flex-start',
+        marginLeft: '3%',
+        marginTop: '3%'
     }
 })

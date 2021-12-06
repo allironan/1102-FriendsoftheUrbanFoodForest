@@ -61,12 +61,12 @@ export default StyleSheet.create({
         justifyContent: 'space-evenly',
         marginHorizontal: '8%',
         marginBottom: 15,
-        textAlign: 'center',
-        textAlignVertical: 'center'
     },
     addPostLabel: {
         fontSize: 14,
         color: 'rgba(196,196,196,1)',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     },
 
     postFrame: {
@@ -132,13 +132,50 @@ export default StyleSheet.create({
         fontSize: 10,
         marginBottom: "4%",
     },
-    textFillField: {
+
+    titleFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
         alignSelf: 'center',
         width: 350,
         paddingVertical: 10,
         marginHorizontal: '10%',
+        marginVertical: '2%',
+        borderRadius: 20,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        flexWrap: 'wrap'
+    },
+    contentFillField: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        alignSelf: 'center',
+        width: 350,
+        minHeight: 300,
+        padding: 10,
+        paddingVertical: 15,
+        marginHorizontal: '10%',
+        marginVertical: '2%',
+        borderRadius: 20,
+        textAlign: 'left',
+        textAlignVertical: 'top',
+        flexWrap: 'wrap'
+    },
+
+    goBackButton: {
+        alignSelf: 'flex-start',
+        marginLeft: '3%',
+        marginTop: '3%'
+    },
+    submitButton: {
+        backgroundColor: 'rgba(0,132,233,1)',
+        borderRadius: 8,
+        width: 100,
+        paddingVertical: 10,
+        marginVertical: 10,
+    },
+    submitLabel: {
+        fontWeight: 'bold',
+        color: 'rgba(255,255,255,1)',
         textAlign: 'center',
         textAlignVertical: 'center'
-    },
+    }
 })
