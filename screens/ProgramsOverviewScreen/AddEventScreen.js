@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TouchableOpacity, TextInput} from 'react-native'
+import {View, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native'
 import { makeNewEvent } from '../../Components/EventComponents';
 import styles from '../styles/ProgramsEventsScreen.style.js';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,6 +14,7 @@ export default class AddEventScreen extends React.Component {
   };
     currentView() {
         return (
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
               <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
                 <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
@@ -47,6 +48,7 @@ export default class AddEventScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
+            </TouchableWithoutFeedback>
         );
     }
     render() {
