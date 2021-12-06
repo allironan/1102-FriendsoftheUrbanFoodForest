@@ -32,7 +32,11 @@ export default class HomeScreen extends React.Component {
     Here it sets up an event listener for the posts collection (any time the posts collection in the database changes, the UI changes as well).
     Once the database call to get the posts collection returns, it calls the getCollection method. 
     */
-    componentDidMount() {
+    async componentDidMount() {
+        var isAdmin = await getUserData();
+        var admin = (isAdmin["Permissions"] == "admin")
+        this.setState({admin});
+
         this.unsubscribe = this.postsRef.onSnapshot(this.getCollection)
     }
 
