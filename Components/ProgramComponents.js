@@ -1,25 +1,29 @@
 import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
+import uuid from 'react-native-uuid';
+import { deleteAllEvents, deleteEvent } from './EventComponents';
 
 //Function to make new program
 export async function makeNewProgram(title, information) {
 
     const db = firebase.firestore();
 
-    const linkedEvents = {};//new Map();
+    const linkedEvents = [];
+    const subscribers = [];
+
     var programID = await getNextProgram();
     const data = {
         Title: title,
         Information: information,
         LinkedEvents: linkedEvents,
-        ProgramID: programID.NextProgramID,
+        Subscribers: subscribers,
+        ProgramID: uuid.v4(),
     };
 
-    const res = await db.collection('Programs').doc(programID.NextProgramID.toString()).set(data);
+    const res = await db.collection('Programs').doc(data.ProgramID).set(data);
 
     return data;
-
 }
 
 //Function to get next program in database
@@ -85,18 +89,6 @@ export async function getPrograms() {
         // console.log("The array of programs is below: ");
         console.log(programArray);
 
-        // // Attempt 2
-        // const usersRef = await db.collection('Programs').get();
-        // const programArray = [];
-        // if (usersRef.exists) {
-        //     //console.log("Item data found: ", snapshot.data());
-        //     usersRef.forEach((program) => {
-        //         programArray.push(program);
-        //     })
-        // }
-        // console.log("The array of programs is below: ");
-        // console.log(programArray);
-
         return programArray;
     }
 }
@@ -105,31 +97,18 @@ export async function getPrograms() {
 export async function editProgram(title, information, programID) {
 
     const db = firebase.firestore();
-    const linkedEvents = {};
+    //const linkedEvents = {};
     const programToSet = {
         Title: title,
-        Information: information,
-        LinkedEvents: linkedEvents,
-        ProgramID: programID,
+        Information: information
     };
 
-    const res = await db.collection('Programs').doc(programID.toString()).set(programToSet);
+    const res = await db.collection('Programs').doc(programID.toString()).update(programToSet);
 
 }
 
-//Function to delete events
-export async function deleteProgram(programID) {
-    const db = firebase.firestore();
-    const res = await db.collection('Programs').doc(programID.toString()).delete();
-    //if we want to add/subtract each time
-    // const countRef = db.collection('Programs').doc('Program Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextProgramID + 1;
-    // const data = {
-    //     NextProgramID: value
-    // }
-    // const res2 = db.collection('Programs').doc('Program Count').set(data);
-}
+//Function to delete programs
+
 
 export async function linkEventToProgram(programID, eventID) {
     const db = firebase.firestore();
@@ -163,4 +142,48 @@ export async function unLinkEventFromProgram(programID, eventID) {
         eventArray.splice(indexToBeRemoved, 1);
     }
     linkedEventsMap.set(programID, eventArray);
+}
+
+export async function addProgramSubscriber(programID, userID){
+
+    const db = firebase.firestore();
+
+    const programsRef = db.collection('Programs').doc(programID);
+    const snapshot = await programsRef.get();
+    const programData = snapshot.data();
+    const subscriberMap = programData.Subscribers();
+    subscriberMap.set(userID, true);
+    const res = await programsRef.update({Subscribers: subscriberMap});
+}
+
+export async function removeProgramSubscriber(programID, userID){
+
+    const db = firebase.firestore();
+
+    const programsRef = db.collection('Programs').doc(programID);
+    const snapshot = await programsRef.get();
+    const programData = snapshot.data();
+    const subscriberMap = programData.Subscribers();
+    subscriberMap.delete(userID);
+    const res = await programsRef.update({Subscribers: subscriberMap});
+}
+
+// Returns if a user is already registered for an event
+export async function getIfProgramSubscriber(programID){
+    const db = firebase.firestore();
+
+    const currentUser = firebase.auth().currentUser;
+
+    const programsRef = db.collection('Programs').doc(programID);
+    const snapshot = await programsRef.get();
+    const programData = snapshot.data();
+    const subscriberMap = programData.Subscribers();
+    
+    return subscriberMap.has(currentUser.uid);
+}
+
+export async function deleteProgram(programID) {
+    const db = firebase.firestore();
+    try {await db.collection('Programs').doc(programID).delete()}
+    catch (error) {console.log(error);}
 }

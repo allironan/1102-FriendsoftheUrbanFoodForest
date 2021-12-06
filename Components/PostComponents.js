@@ -2,39 +2,61 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 
-//Function to make new posts
-export async function makeNewPost(title, contents) {
+/*
+The PostComponents class consists of many functions for manipulating instances 
+of a Post object using Firebase.
+*/ 
+
+/*
+ Function that creates a new post and adds the post to Firebase
+
+    Args:
+        title (string): The desired title of the new post
+        contents (string): The desired contents of the new post
+        survey (string): The url to a survey to be included in the post.
+            If none is provided, defaults to no survey.
+
+    Returns:
+        map: A map of properties that describe the newly created post
+*/
+export async function makeNewPost(title, contents, survey=null) {
 
     const db = firebase.firestore();
-    
     const currentUser = firebase.auth().currentUser;
     const currentUID = currentUser.uid;
 
     var curTime = Date();
+    var postID = await getNextPost();
 
-    var postID = await getNextPost()
+    if(survey === "") {
+        survey = null;
+    }
 
     const data = {
         Author: currentUID,
         Title: title,
         Contents: contents,
         PostID: postID.NextPostID,
-        Date: curTime
+        Date: curTime,
+        Survey: survey
     };
 
     const res = await db.collection('Posts').doc(postID.NextPostID.toString()).set(data);
-
     return data;
-
 }
 
-//Function to get next post in database
+/*
+ Function that increments the id to be used in the next post
+
+    Returns:
+        integer: An integer value that represents a unique id
+        to identify the next post to be made
+*/
 async function getNextPost() {
 
     const db = firebase.firestore();
 
     const currentUser = firebase.auth().currentUser;
-
     const countRef = db.collection('Counters').doc('Post Count');
     const snapshot = await countRef.get();
 
@@ -46,33 +68,24 @@ async function getNextPost() {
         };
 
         const res = db.collection('Counters').doc('Post Count').set(data);
-
         const count = await countRef.get();
         return count.data();
 
     } else {
-        //console.log("Post Count found: ", snapshot.data());
-
-        // const value = snapshot.data().NextPostID + 1;
-        // const data = {
-        //     NextPostID: value
-        // }
-        // const res = db.collection('Posts').doc('Post Count').set(data);
-
-        // const count = await countRef.get();
-        
-        // return count.data();
-
         const res = db.collection('Counters').doc('Post Count');
         const increment = firebase.firestore.FieldValue.increment(1);
-        //const count = res.update("NextPostID", admin.firestore.FieldValue.increment(1));
         await res.update({NextPostID: increment})
         const count = await countRef.get();
         return count.data();
     }
 }
 
-//Function to get all posts in database
+/*
+ Function that retrieves all Posts that are located in Firebase
+
+    Returns:
+        array: an Array of all post details that were found in Firebase
+*/
 export async function getPosts() {
     const db = firebase.firestore();
 
@@ -82,44 +95,6 @@ export async function getPosts() {
         console.log("No posts in firebase");
         return null;
     } else {
-        // // Attempt 2
-        // console.log("There are posts in firebase");
-        // const postArray = [];
-        // const usersRef = db.collection('Posts').get();
-        // if (usersRef.exists) {
-        //     console.log("Users Ref DOES exist");
-        //     // console.log("Item data found: ", snapshot.data());
-        //     usersRef.forEach((post) => {
-        //         postArray.push(post);
-        //     })
-        // }
-        // console.log("The array of posts is below: ");
-        // console.log(postArray);
-
-        // // Attempt 1
-        // const postArray = [];
-        // for (let i = 0; i <= snapshot.data().NextPostID; i++) {
-        //     const usersRef = db.collection('Posts').doc(i.toString());
-        //     const snapshot = await usersRef.get();
-        //     if (snapshot.exists) {
-        //         //console.log("Item data found: ", snapshot.data());
-        //         postArray.push(snapshot.data());
-        //     }
-        // }
-        // // console.log("The array of posts is below: ");
-        // // console.log(postArray);
-
-        // // Attempt 3
-        // const postArray = [];
-        // db.collection('Posts').get().then(function(querySnapshot) {
-        //     querySnapshot.forEach(function(doc) {
-        //         postArray.push(doc.data());
-        //     })
-        // });
-        // console.log("The array of posts is below: ");
-        // console.log(postArray);
-
-        // Attempt 4
         const postArray = [];
         console.log("The array of posts is below: ");
         console.log(postArray);
@@ -128,25 +103,43 @@ export async function getPosts() {
     }
 }
 
-//Function to edit posts
-export async function editPost(postToSet, postID) {
+/*
+ Function that edits a post in Firebase
 
+    Args:
+        title (string): The desired title of the post
+        contents (string): The desired contents of the post
+        survey (string): The url to a survey to be included in the post
+        postID (string): The id of the post that is to be edited
+*/
+export async function editPost(title, contents, survey, postID) {
+
+    const currentUser = firebase.auth().currentUser;
+    const currentUID = currentUser.uid;
+
+    var curTime = Date();
     const db = firebase.firestore();
+    const postToSet = {
+        Author: currentUID,
+        Title: title,
+        Contents: contents,
+        PostID: postID,
+        Date: curTime,
+        Survey: survey
+    };
 
     const res = await db.collection('Posts').doc(postID.toString()).set(postToSet);
-
 }
 
 //Function to delete posts
+/*
+ Function that deletes a post from Firebase
+
+    Args:
+        postID (string): The id of the post that is to be deleted
+*/
 export async function deletePost(postID) {
     const db = firebase.firestore();
     const res = await db.collection('Posts').doc(postID.toString()).delete();
-    //if we want to add/subtract each time
-    // const countRef = db.collection('Posts').doc('Post Count');
-    // const snapshot = await countRef.get();
-    // const value = snapshot.data().NextPostID + 1;
-    // const data = {
-    //     NextPostID: value
-    // }
-    // const res2 = db.collection('Posts').doc('Post Count').set(data);
+
 }

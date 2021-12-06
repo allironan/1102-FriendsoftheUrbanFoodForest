@@ -3,8 +3,8 @@ import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { TextInput } from 'react-native'
-import {getUserData, editUserData} from '../Components/UserDataComponents'
-import styles from './styles/SettingsScreen.styles'
+import {getUserData, editUserData} from '../../Components/UserDataComponents'
+import styles from '../styles/SettingsScreen.styles'
 
 export default class SettingsScreen extends React.Component {
 
@@ -13,13 +13,18 @@ export default class SettingsScreen extends React.Component {
         Email: "",
         TextSize: "",
         ColorTheme: "",
-        readOnly: true
+        readOnly: true,
+        Permissions: "",
     }
 
     componentDidMount() {
         const db = firebase.firestore();
-        const currentUser = firebase.auth().currentUser;
-        this.setState({Username: currentUser.displayName, Email: currentUser.email})
+        getUserData().then((userData) => {
+            console.log(userData)
+            this.setState({Username : userData.Username})
+            this.setState({Email : userData.Email})
+            this.setState({Permissions: userData.Permissions})
+        });
     }
 
     currentView() {
@@ -37,11 +42,17 @@ export default class SettingsScreen extends React.Component {
                         <Text style={styles.choiceText}>Change Settings</Text>
                     </TouchableOpacity>
                 </View>
+                {this.state.Permissions == "admin" && 
+                <View> 
+                    <TouchableOpacity style={styles.choiceFrame} onPress={() => this.props.navigation.navigate("UsersScreen")}>
+                        <Text style={{textAlign: 'center'}}>View Users</Text>
+                    </TouchableOpacity>
+                </View>}
                 <View>
                 <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
                         <Text style={styles.choiceText}> Sign Out </Text>
                 </TouchableOpacity>
-            </View>
+                </View>
             </View>
             )
         } else {
