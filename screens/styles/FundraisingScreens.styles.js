@@ -9,6 +9,12 @@ export default StyleSheet.create({
         backgroundColor: 'rgba(233,243,196,1)',
         height: 100
     },
+    buttonContainer: {
+        marginTop: 100,
+        flexWrap: 'wrap',
+        flexDirection: "column",
+        alignContent: "center",
+    },
     viewContainer: {
         flex: 1,
         flexDirection: 'column',
@@ -78,6 +84,9 @@ export default StyleSheet.create({
         marginHorizontal: 15,
         textAlign: 'center',
         justifyContent: 'center'
+    },
+    buttonText: {
+        textAlign: 'center'
     },
     textFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
