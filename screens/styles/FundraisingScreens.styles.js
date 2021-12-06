@@ -29,7 +29,8 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'rgba(233,243,196,1)',
-        marginBottom: '5%'
+        marginBottom: '5%',
+        marginTop: '10%'
     },
     productFunctions: {
         flex: 2,

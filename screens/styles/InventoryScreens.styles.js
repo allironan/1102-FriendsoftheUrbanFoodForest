@@ -22,7 +22,7 @@ export default StyleSheet.create({
         justifyContent: 'space-evenly',
         backgroundColor: 'rgba(233,243,196,1)',
         marginBottom: '2%',
-        marginTop: '5%'
+        marginTop: '10%'
     },
     toolsContainer: {
         flex: 2,

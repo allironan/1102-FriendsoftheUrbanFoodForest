@@ -141,7 +141,8 @@ export default StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         height: 60,
-        width: 200
+        width: 200,
+        marginTop: 50
     },
     programTitle: {
         textAlign: "center",
