@@ -81,7 +81,7 @@ export default StyleSheet.create({
     },
     
 
-    //Button
+    //Buttons
     goBackButton: {
         alignSelf: 'flex-start',
         marginLeft: '3%',

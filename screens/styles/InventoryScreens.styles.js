@@ -1,6 +1,7 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, Dimensions } from "react-native";
 
 export default StyleSheet.create({
+    //Containers
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -19,11 +20,14 @@ export default StyleSheet.create({
         flex: 2,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        width: 350,
-        alignItems: 'flex-start',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
+
+    //Frames
     addToolFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 10,
@@ -39,13 +43,16 @@ export default StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 20,
         alignSelf: 'center',
-        height: 120,
-        width: 140,
+        height: Dimensions.get('window').height * 0.18,
+        width:  Dimensions.get('window').width * 0.3,
         marginVertical: 10,
         marginHorizontal: 15,
         textAlign: 'center',
+        alignItems: 'center',
         justifyContent: 'center'
     },
+    
+    //Buttons
     dropdown1BtnStyle: {
         width: "50%",
         height: 50,
@@ -60,5 +67,11 @@ export default StyleSheet.create({
         backgroundColor: "#EFEFEF",
         borderBottomColor: "#C5C5C5",
       },
-      dropdown1RowTxtStyle: { color: "#444", textAlign: "left" },
+      dropdown1RowTxtStyle: { color: "#444", textAlign: "left"
+    }
+    //Text
+    //TextInputs
+    
+    
+    
 })

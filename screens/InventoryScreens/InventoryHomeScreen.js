@@ -29,116 +29,44 @@ export default class InventoryHomeScreen extends React.Component {
         Function used to create view object that displays all information, graphics, and components of InventoryHomeScreen
         */
     currentView() {
-        // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
-        if (this.state.admin) {
-            return (
-                <SafeAreaView style={styles.container}>
-                    {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
-                            <Text> All checked out tools </Text>
-                    </TouchableOpacity>
+        return (
+            <View style={styles.container}>
+                {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
+                {this.state.admin && (
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
+                        <Text> All checked out tools </Text>
+                </TouchableOpacity>
+                )}
 
-                    {/* Creates a Button that navigates the user to AddTool, a screen to add a new tool */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
-                            <Text> Add Tool </Text>
-                    </TouchableOpacity>
+                {/* Creates a Button that navigates the user to AddTool, a screen to add a new tool */}
+                {this.state.admin && (
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
+                        <Text> Add Tool </Text>
+                </TouchableOpacity>
+                )}
 
-                    {/* Creates a Button that navigates the user to CheckoutTool, a screen to checkout an available tool */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
-                            <Text> Check Out Tool </Text>
-                    </TouchableOpacity>
+                {/* Creates a Button that navigates the user to CheckoutTool, a screen to checkout an available tool */}
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
+                        <Text> Check Out Tool </Text>
+                </TouchableOpacity>
 
-                    <ScrollView>
-                        <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
-                        {/* Creates a view object with a list of all checked out tools of the current user */}
-                        <View style={styles.toolsContainer}>
-                            {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
-                        </View>
-                        <Text style={{textAlign: 'center'}}>Tools Available:</Text>
-                        {/* Creates a view object with a list of all available tools to checkout */}
-                        <View style={styles.toolsContainer}>
-                                {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
-            );
-        } else {
-            return (
-                <View style={styles.container}>
-                    {/* Creates a Button that navigates the user to CheckoutTool, a screen to checkout an available tool */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
-                            <Text> Checkout Tool </Text>
-                    </TouchableOpacity>
+                <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
+                <ScrollView>
+                    {/* Creates a view object with a list of all checked out tools of the current user */}
+                    <View style={styles.toolsContainer}>
+                        {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
+                    </View>
+                </ScrollView>
 
-                    <ScrollView>
-                        <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
-                        {/* Creates a view object with a list of all checked out tools of the current user */}
-                        <View style={styles.toolsContainer}>
-                            {this.state.userCheckedOutTools.map(r => this.displayUserCheckedOutTools(r.Tool, r.Number, r.CheckoutID))}
-                        </View>
-                        <Text style={{textAlign: 'center'}}>Tools Avaliable:</Text>
-                        {/* Creates a view object with a list of all available tools to checkout */}
-                        <View style={styles.toolsContainer}>
-                                {this.state.visibleTools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
-                        </View>
-                    </ScrollView>
-                </View>
-            );
-        }
-    }
-
-    /*
-        Function called when navigating into InventoryHomeScreen.js
-        */
-    componentDidMount() {
-        const {email, displayName} = firebase.default.auth().currentUser;
-        this.setState({email, displayName})
-        const admin = true//firebase.default.auth().currentUser.permissions;
-        this.setState({admin})
-        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
-        this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
-        }
-    /*
-        Function called when navigating off of InventoryHomeScreen.js
-        */
-    componentWillUnmount() {
-        this.unsubscribe
-    }
-    /*
-        Function to render the screen at start-up
-        */
-    render() {
-        return this.currentView()
-    }
-    /*
-        Function to create new tools list for state from tools in database.
-        */
-    getCollectionToolsRental = (querySnapshot) => {
-        const tools = []
-        const visibleTools = []
-        querySnapshot.forEach((tool) => {
-            tools.push(tool.data())
-            if (tool.data().Available){
-                visibleTools.push(tool.data())
-            }
-        })
-        this.setState({tools})
-        this.setState({visibleTools})
-    }
-    /*
-        Function to create new checked out tools list for state from checked out tools in database.
-        */
-    getCollectionCheckedOut = (querySnapshot) => {
-        const checkedOutTools = []
-        const userCheckedOutTools = [];
-        querySnapshot.forEach((tool) => {
-            checkedOutTools.push(tool.data())
-            if (tool.UID == firebase.default.auth().currentUser.UID){
-                userCheckedOutTools.push(tool.data());
-            }
-        })
-        this.setState({checkedOutTools})
-        this.setState({userCheckedOutTools})
+                <Text style={{textAlign: 'center'}}>Tools Available:</Text>
+                <ScrollView>
+                    {/* Creates a view object with a list of all available tools to checkout */}
+                    <View style={styles.toolsContainer}>
+                            {this.state.tools.map(r => this.displayTools(r.Name, r.Quantity, r.ToolID, r.Available, r.CheckedOut))}
+                    </View>
+                </ScrollView>
+            </View>
+        );
     }
 
     /*
@@ -212,6 +140,60 @@ export default class InventoryHomeScreen extends React.Component {
                 </TouchableOpacity>
             </View>
         );
+    }
+
+    /*
+        Function called when navigating into InventoryHomeScreen.js
+        */
+    componentDidMount() {
+        const {email, displayName} = firebase.default.auth().currentUser;
+        this.setState({email, displayName})
+        const admin = true//firebase.default.auth().currentUser.permissions;
+        this.setState({admin})
+        this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
+        this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
+        }
+    /*
+        Function called when navigating off of InventoryHomeScreen.js
+        */
+    componentWillUnmount() {
+        this.unsubscribe
+    }
+    /*
+        Function to render the screen at start-up
+        */
+    render() {
+        return this.currentView()
+    }
+    /*
+        Function to create new tools list for state from tools in database.
+        */
+    getCollectionToolsRental = (querySnapshot) => {
+        const tools = []
+        const visibleTools = []
+        querySnapshot.forEach((tool) => {
+            tools.push(tool.data())
+            if (tool.data().Available){
+                visibleTools.push(tool.data())
+            }
+        })
+        this.setState({tools})
+        this.setState({visibleTools})
+    }
+    /*
+        Function to create new checked out tools list for state from checked out tools in database.
+        */
+    getCollectionCheckedOut = (querySnapshot) => {
+        const checkedOutTools = []
+        const userCheckedOutTools = [];
+        querySnapshot.forEach((tool) => {
+            checkedOutTools.push(tool.data())
+            if (tool.UID == firebase.default.auth().currentUser.UID){
+                userCheckedOutTools.push(tool.data());
+            }
+        })
+        this.setState({checkedOutTools})
+        this.setState({userCheckedOutTools})
     }
 }
 
