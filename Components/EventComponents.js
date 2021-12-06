@@ -201,3 +201,20 @@ export async function removeEventParticipant(eventID, userID){
     };
     const res = await db.collection('Events').doc(eventID).set(data);
 }
+
+//Function to delete events
+export async function deleteAllEvents(programID, stateEvents) {
+
+    var linkedEvents = stateEvents
+    linkedEvents.forEach((event) => {
+                deleteEvent(event["EventID"], programID, deleteAll= true)
+    })
+    const data = {
+        Title: dataInitial.Title,
+        Information: dataInitial.Information,
+        Participants: newParticipants,
+        ProgramID: dataInitial.ProgramID,
+        EventID: eventID,
+    };
+    const res = await db.collection('Events').doc(eventID).set(data);
+}
