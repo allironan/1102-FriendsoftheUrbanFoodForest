@@ -122,7 +122,7 @@ export async function getProductInfo(itemID) {
     } else {
 
         var contentsD = snapshot.data();
-        var toReturn = [contentsD.Name, contentsD.Price, contentsD.Description];
+        var toReturn = [contentsD.Name, contentsD.Price, contentsD.Description, itemID];
         
         return toReturn;
     }
