@@ -15,20 +15,22 @@ export default StyleSheet.create({
         backgroundColor: 'rgba(233,243,196,1)'
     },
     goBackButton: {
-        backgroundColor: 'rgba(8,39,245,1)',
+        backgroundColor: 'rgba(52, 84, 20,1)',
         borderRadius: 15,
         alignSelf: 'flex-start',
         width: 150,
         textAlign: "center",
         paddingVertical: 8,
         textAlignVertical: 'center',
+        marginTop: 50
     },
     goBackLabel: {
         fontSize: 16,
         color: 'rgba(255,255,255,1)',
+        textAlign: 'center'
     },
 
-    titleFrame: {
+    programsHomeTitleFrame: {
         backgroundColor: 'rgba(255,174,66,1)',
         borderRadius: 25,
         flex: 1,
@@ -37,7 +39,7 @@ export default StyleSheet.create({
         marginHorizontal: '2%',
         marginVertical: 14,
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 50,
     },
 
     programTitle: {
@@ -46,6 +48,7 @@ export default StyleSheet.create({
         fontSize: 36,
         fontWeight: 'bold',
         flexWrap: "wrap",
+        marginTop: 20
     },
     programFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
