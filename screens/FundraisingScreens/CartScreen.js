@@ -21,7 +21,7 @@ export default class CartScreen extends React.Component {
                 </TouchableOpacity>
                 <ScrollView>
                     <View>
-                        {this.state.cartItems.map(i => this.displayItem(i[0], i[1], i[3]))}
+                        {this.state.cartItems.map(i => this.displayItem(i[0], i[1], i[3], i[4]))}
                     </View>
                 </ScrollView>
             </View>
@@ -45,25 +45,13 @@ export default class CartScreen extends React.Component {
         this.setState({cartItems});
     }
 
-    getCollection = (querySnapshot) => {
-        const cartContents = []
-        querySnapshot.forEach((product) => {
-            cartContents.push(product.data())
-        })
-        this.setState({cartContents})
-    }
-
-    removeProductLocal = (name) => {
-        
-    }
-
-    displayItem(name, price, quantity) {
+    displayItem(name, price, id, quantity) {
         return(
             <View style={styles.cartFrame} key={name}>
                 <Text>{name}</Text>
                 <Text>{'$' + price}</Text>
                 <Text>{'Quantity: ' + quantity}</Text>
-                <TouchableOpacity onPress={() => removeFromCart(name)}>
+                <TouchableOpacity onPress={() => removeFromCart(id)}>
                     <Text>Remove</Text>
                 </TouchableOpacity>
             </View>
