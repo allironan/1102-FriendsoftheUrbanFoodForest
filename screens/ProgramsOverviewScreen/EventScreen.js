@@ -116,7 +116,7 @@ export default class EventScreen extends React.Component {
     getAttendance = (querySnapshot) => {
         const attendees = []
         var attending = false;
-        querySnapshot.data().Participants.forEach((person) => {
+        querySnapshot.data().ParticipantNames.forEach((person) => {
             attendees.push(person)
         })
         if (querySnapshot.data().Participants.includes(firebase.default.auth().currentUser.uid)){

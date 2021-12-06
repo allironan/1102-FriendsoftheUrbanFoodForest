@@ -9,6 +9,7 @@ export async function makeNewEvent(title, information, programID) {
     const db = firebase.firestore();
 
     const newParticipants = [];
+    const ParticipantNames = [];
     var linkedEvents = [];
     console.log(title)
     console.log(information)
@@ -22,6 +23,7 @@ export async function makeNewEvent(title, information, programID) {
         Title: title,
         Information: information,
         Participants: newParticipants,
+        ParticipantNames: ParticipantNames,
         ProgramID: programID,
         EventID: uuid.v4(),
     };
@@ -123,21 +125,29 @@ export async function deleteEvent(eventID) {
 
 export async function addEventParticipant(eventID){
 
+    const {email, displayName} = firebase.default.auth().currentUser;
     const currentUser = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
     const dataInitial = snapshot.data();
-    const newParticipants = []
+    console.log(snapshot.data())
+    var newParticipants = []
+    var ParticipantNames = []
     if (dataInitial.Participants.length == 0){
         newParticipants.push(currentUser)
+        ParticipantNames.push(displayName)
     } else {
-        newParticipants = dataInitial.Participants.push(currentUser)
+        newParticipants = dataInitial.Participants
+        newParticipants.push(currentUser)
+        ParticipantNames = dataInitial.ParticipantNames
+        ParticipantNames.push(displayName)
     }
     const data = {
         Title: dataInitial.Title,
         Information: dataInitial.Information,
         Participants: newParticipants,
+        ParticipantNames: ParticipantNames,
         ProgramID: dataInitial.ProgramID,
         EventID: eventID,
     };
@@ -146,20 +156,27 @@ export async function addEventParticipant(eventID){
 
 export async function removeEventParticipant(eventID, userID){
 
+    const {email, displayName} = firebase.default.auth().currentUser;
     const currentUser = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
     const dataInitial = snapshot.data();
     var newParticipants = dataInitial.Participants
-    const index = newParticipants.indexOf(currentUser);
+    var ParticipantNames = dataInitial.ParticipantNames
+    var index = newParticipants.indexOf(currentUser);
     if (index > -1) {
         newParticipants.splice(index, 1);
+    }
+    index = ParticipantNames.indexOf(displayName);
+    if (index > -1) {
+        ParticipantNames.splice(index, 1);
     }
     const data = {
         Title: dataInitial.Title,
         Information: dataInitial.Information,
         Participants: newParticipants,
+        ParticipantNames: ParticipantNames,
         ProgramID: dataInitial.ProgramID,
         EventID: eventID,
     };
