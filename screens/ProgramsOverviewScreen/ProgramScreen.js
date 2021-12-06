@@ -79,22 +79,26 @@ export default class ProgramScreen extends React.Component {
     }
 
     getCollectionEvents = (querySnapshot) => {
-
+        
         const events = []
-        querySnapshot.data().LinkedEvents.forEach((event) => {
-            events.push(event)
-        })
-        this.setState({events})
+        if (querySnapshot.exists) {
+            querySnapshot.data().LinkedEvents.forEach((event) => {
+                events.push(event)
+            })
+            this.setState({events}) 
+            console.log(this.state)
+        }
+   
+     
     }
 
     async deleteProgramLocal(programID){
         //const db = firebase.firestore();
         
-        await deleteAllEvents(programID);
-        //await deleteProgram(programID);
-        this.props.navigation.navigate.goBack();
-        //await db.collection('Programs').doc(programID).update({LinkedEvents: []})
-        //await deleteProgram(programID);
+        deleteAllEvents(programID, this.state.events)
+        deleteProgram(programID);
+        this.props.navigation.goBack();
+        
     }
 
     render() { 

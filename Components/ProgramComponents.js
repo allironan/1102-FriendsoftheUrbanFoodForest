@@ -108,11 +108,7 @@ export async function editProgram(title, information, programID) {
 }
 
 //Function to delete programs
-// export async function deleteProgram(programID) {
-//     const db = firebase.firestore();
-//     try {await db.collection('Programs').doc(programID).delete();}
-//     catch (error) {console.log(error);}
-// }
+
 
 export async function linkEventToProgram(programID, eventID) {
     const db = firebase.firestore();
@@ -184,4 +180,10 @@ export async function getIfProgramSubscriber(programID){
     const subscriberMap = programData.Subscribers();
     
     return subscriberMap.has(currentUser.uid);
+}
+
+export async function deleteProgram(programID) {
+    const db = firebase.firestore();
+    try {await db.collection('Programs').doc(programID).delete()}
+    catch (error) {console.log(error);}
 }

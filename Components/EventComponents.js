@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 import uuid from 'react-native-uuid';
+import { deleteProgram } from './ProgramComponents';
 
 //Function to make new event
 export async function makeNewEvent(title, information, programID) {
@@ -13,7 +14,6 @@ export async function makeNewEvent(title, information, programID) {
     var linkedEvents = []
     await db.collection('Programs').doc(programID).get().then(query => 
         {  
-
             linkedEvents = query.data().LinkedEvents
         })
     const data = {
@@ -121,18 +121,20 @@ export async function editEvent(title, information, eventID, programID) {
 }
 
 //Function to delete events
-export async function deleteEvent(eventID, programID) {
+export async function deleteEvent(eventID, programID, deleteAll = false) {
     const db = firebase.firestore();
+    if (!deleteAll) {
+        var linkedEvents = []
+        await db.collection('Programs').doc(programID).get().then(query => 
+            {
+                linkedEvents = query.data().LinkedEvents
+            })
 
-    var linkedEvents = []
-    await db.collection('Programs').doc(programID).get().then(query => 
-        {
-            linkedEvents = query.data().LinkedEvents
-        })
-
-    linkedEvents.splice(linkedEvents.findIndex(event => event["EventID"] == eventID), 1)
-   
-    await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
+        linkedEvents.splice(linkedEvents.findIndex(event => event["EventID"] == eventID), 1)
+    
+        await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
+    }
+    
     await db.collection('Events').doc(eventID.toString()).delete();
 }
 
@@ -207,16 +209,10 @@ export async function getEventInfo(eventID) {
 }
 
 //Function to delete events
-export async function deleteAllEvents(programID) {
-    const db = firebase.firestore();
+export async function deleteAllEvents(programID, stateEvents) {
 
-    var linkedEvents = []
-    await db.collection('Programs').doc(programID).get().then(query => 
-        {
-            linkedEvents = query.data().LinkedEvents;
-        })
-
+    var linkedEvents = stateEvents
     linkedEvents.forEach((event) => {
-        deleteEvent(event["EventID"], programID);
+                deleteEvent(event["EventID"], programID, deleteAll= true)
     })
 }
