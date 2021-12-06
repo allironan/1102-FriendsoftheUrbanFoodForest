@@ -121,50 +121,47 @@ export async function deleteEvent(eventID) {
     const res = await db.collection('Events').doc(eventID.toString()).delete();
 }
 
-export async function addEventParticipant(eventID, userID){
+export async function addEventParticipant(eventID){
 
+    const currentUser = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
-
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-
-    var contentsD = snapshot.get("Participants");
-
-    contentsD[userID] = true;
-
-    var res = await eventsRef.update({Participants: contentsD});
-
-    return contentsD;
-
+    const dataInitial = snapshot.data();
+    const newParticipants = []
+    if (dataInitial.Participants.length == 0){
+        newParticipants.push(currentUser)
+    } else {
+        newParticipants = dataInitial.Participants.push(currentUser)
+    }
+    const data = {
+        Title: dataInitial.Title,
+        Information: dataInitial.Information,
+        Participants: newParticipants,
+        ProgramID: dataInitial.ProgramID,
+        EventID: eventID,
+    };
+    const res = await db.collection('Events').doc(eventID).set(data);
 }
 
 export async function removeEventParticipant(eventID, userID){
 
+    const currentUser = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
-
     const eventsRef = db.collection('Events').doc(eventID);
     const snapshot = await eventsRef.get();
-
-    var contentsD = snapshot.get("Participants");
-
-    delete contentsD[userID];
-
-    var res = await eventsRef.update({Participants: contentsD});
-
-    return contentsD;
-}
-
-// Returns if a user is already registered for an event
-export async function getIfEventParticipant(eventID){
-
-    const db = firebase.firestore();
-
-    const currentUser = firebase.auth().currentUser;
-    const currentUID = currentUser.uid;
-    const eventsRef = db.collection('Events').doc(eventID);
-    const snapshot = await eventsRef.get();
-
-    var contentsD = snapshot.get("Participants");
-
-    return (currentUID in contentsD);
+    const dataInitial = snapshot.data();
+    var newParticipants = dataInitial.Participants
+    const index = newParticipants.indexOf(currentUser);
+    if (index > -1) {
+        newParticipants.splice(index, 1);
+    }
+    const data = {
+        Title: dataInitial.Title,
+        Information: dataInitial.Information,
+        Participants: newParticipants,
+        ProgramID: dataInitial.ProgramID,
+        EventID: eventID,
+    };
+    const res = await db.collection('Events').doc(eventID).set(data);
 }
