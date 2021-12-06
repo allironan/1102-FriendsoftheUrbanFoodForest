@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { editPost } from '../../Components/PostComponents'
 import styles from '../styles/HomeScreen.style'
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +15,7 @@ export default class EditPostScreen extends Component {
 
   render() {
     return (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
           <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
@@ -44,6 +45,7 @@ export default class EditPostScreen extends Component {
             <Text style={styles.submitLabel}>Submit</Text>
         </TouchableOpacity>
       </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

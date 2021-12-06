@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { getUserData } from '../../Components/UserDataComponents'
