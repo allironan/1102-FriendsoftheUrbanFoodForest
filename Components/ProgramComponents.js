@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/database';
 import 'firebase/firestore';
 import uuid from 'react-native-uuid';
+import { deleteAllEvents, deleteEvent } from './EventComponents';
 
 //Function to make new program
 export async function makeNewProgram(title, information) {
@@ -106,12 +107,12 @@ export async function editProgram(title, information, programID) {
 
 }
 
-//Function to delete events
-export async function deleteProgram(programID) {
-    const db = firebase.firestore();
-    const res = await db.collection('Programs').doc(programID.toString()).delete();
-    this.props.navigation.goBack()
-}
+//Function to delete programs
+// export async function deleteProgram(programID) {
+//     const db = firebase.firestore();
+//     try {await db.collection('Programs').doc(programID).delete();}
+//     catch (error) {console.log(error);}
+// }
 
 export async function linkEventToProgram(programID, eventID) {
     const db = firebase.firestore();

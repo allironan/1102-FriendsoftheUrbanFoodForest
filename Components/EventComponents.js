@@ -11,7 +11,6 @@ export async function makeNewEvent(title, information, programID) {
     const newParticipants = [];
 
     var linkedEvents = []
-    console.log("Please: " + programID)
     await db.collection('Programs').doc(programID).get().then(query => 
         {  
 
@@ -36,8 +35,6 @@ export async function makeNewEvent(title, information, programID) {
 async function getNextEvent() {
 
     const db = firebase.firestore();
-    
-    const currentUser = firebase.auth().currentUser;
 
     const countRef = db.collection('Counters').doc('Event Count');
     const snapshot = await countRef.get();
@@ -136,7 +133,7 @@ export async function deleteEvent(eventID, programID) {
     linkedEvents.splice(linkedEvents.findIndex(event => event["EventID"] == eventID), 1)
    
     await db.collection('Programs').doc(programID).update({LinkedEvents: linkedEvents})
-    const res = await db.collection('Events').doc(eventID.toString()).delete();
+    await db.collection('Events').doc(eventID.toString()).delete();
 }
 
 export async function addEventParticipant(eventID, userID){
@@ -207,4 +204,19 @@ export async function getEventInfo(eventID) {
         
         return toReturn;
     }
+}
+
+//Function to delete events
+export async function deleteAllEvents(programID) {
+    const db = firebase.firestore();
+
+    var linkedEvents = []
+    await db.collection('Programs').doc(programID).get().then(query => 
+        {
+            linkedEvents = query.data().LinkedEvents;
+        })
+
+    linkedEvents.forEach((event) => {
+        deleteEvent(event["EventID"], programID);
+    })
 }
