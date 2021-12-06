@@ -7,7 +7,6 @@ export default StyleSheet.create({
         flexDirection: 'column',
         marginTop: StatusBar.currentHeight,
         alignItems: "center",
-        justifyContent: 'space-evenly',
         backgroundColor: 'rgba(233,243,196,1)'
     },
     fundraisingOptionsContainer: {
@@ -16,12 +15,6 @@ export default StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'space-evenly'
-    },
-    buttonContainer: {
-        marginTop: 100,
-        flexWrap: 'wrap',
-        flexDirection: "column",
-        alignContent: "center",
     },
     viewContainer: {
         flex: 1,
