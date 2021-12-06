@@ -31,7 +31,7 @@ export default class SettingsScreen extends React.Component {
         if (this.state.readOnly) {
             return (
             <View style={styles.container}>
-                <View style={styles.topSettingFrame}>
+                <View style={styles.settingFrame}>
                     <Text style={styles.settingFont}>Username: {this.state.Username} </Text>
                 </View>
                 <View style={styles.settingFrame}>
@@ -42,12 +42,12 @@ export default class SettingsScreen extends React.Component {
                         <Text style={styles.choiceText}>Change Settings</Text>
                     </TouchableOpacity>
                 </View>
-                {this.state.Permissions == "admin" && 
+                {this.state.Permissions == "admin" &&  (
                 <View> 
                     <TouchableOpacity style={styles.choiceFrame} onPress={() => this.props.navigation.navigate("UsersScreen")}>
                         <Text style={{textAlign: 'center'}}>View Users</Text>
                     </TouchableOpacity>
-                </View>}
+                </View>)}
                 <View>
                 <TouchableOpacity onPress={this.signOutUser} style={styles.choiceFrame}>
                         <Text style={styles.choiceText}> Sign Out </Text>
@@ -58,7 +58,7 @@ export default class SettingsScreen extends React.Component {
         } else {
             return <View style={styles.container}>
 
-            <View style={styles.topSettingFrame}>
+            <View style={styles.settingFrame}>
                 <Text style={styles.settingFont}>Name: </Text>
                 <TextInput
                     placeholder={this.state.Username}

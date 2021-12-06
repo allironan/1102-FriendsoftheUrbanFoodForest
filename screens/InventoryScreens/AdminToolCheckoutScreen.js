@@ -1,13 +1,12 @@
-import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
+import React from 'react'
+import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import getUserData from '../../Components/UserDataComponents'
-import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/InventoryScreens.styles'
-import {deleteTool, checkInTool} from '../../Components/InventoryComponents'
+import {checkInTool} from '../../Components/InventoryComponents'
+import { Ionicons } from '@expo/vector-icons';
 
 export default class AdminToolCheckoutScreen extends React.Component {
     state = {
@@ -18,11 +17,11 @@ export default class AdminToolCheckoutScreen extends React.Component {
     firestoreRefCheckedOut = firebase.firestore().collection('CheckedOutTool');
 
     currentView() {
-        if (this.state.checkedOutTools.length != 0) {
+        if (this.state.checkedOutTools.length > 0) {
             return (
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
-                        <Text>Go back</Text>
+                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                     </TouchableOpacity>
                     {/* here add an admin only view to a page that has all the tools currently checked out */}
                     <ScrollView>
@@ -36,8 +35,8 @@ export default class AdminToolCheckoutScreen extends React.Component {
         } else {
             return (
                 <View style={styles.container}>
-                        <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
-                            <Text>Go back</Text>
+                        <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                            <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                         </TouchableOpacity>
                         <Text>There are no tools currenly checked out.</Text>
                 </View>
@@ -81,11 +80,12 @@ export default class AdminToolCheckoutScreen extends React.Component {
     displayCheckedOutTools(tool, number, username, CheckoutID) {
         return (
         <View style={styles.toolFrame}>
-            <Text>{tool}</Text>
-            <Text>{number}</Text>
-            <Text>{username}</Text>
-            <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID, tool)}>
-                        <Text> Check In Tool </Text>
+            <Text style={styles.toolName}>{tool}</Text>
+            <Text style={styles.toolInfo}>ID: {number}</Text>
+            <Text style={styles.toolInfo}>User: {username}</Text>
+            <TouchableOpacity style={styles.functionButton}
+                onPress={() => checkInToolLocal(CheckoutID, tool)}>
+                <Text style={styles.toolInfo}> Check In </Text>
             </TouchableOpacity>
         </View>
         );

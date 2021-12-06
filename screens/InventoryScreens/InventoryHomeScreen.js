@@ -31,26 +31,30 @@ export default class InventoryHomeScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
                 {this.state.admin && (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} style= {styles.addToolFrame}>
-                        <Text> All checked out tools </Text>
-                </TouchableOpacity>
-                )}
+                    <View style={styles.invFunctionsContainer}>
+                        {/* Creates a Button that navigates the user to AdminToolCheckoutScreen, a list of all checked out tools */}
+                        <TouchableOpacity   onPress={() => this.props.navigation.navigate("AdminToolCheckoutScreen")} 
+                                            style={styles.invFunctionFrame}>
+                                <Text style={styles.invFunctionLabel}> All Checked Out Tools </Text>
+                        </TouchableOpacity>
 
-                {/* Creates a Button that navigates the user to AddTool, a screen to add a new tool */}
-                {this.state.admin && (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddTool")} style={styles.addToolFrame}>
-                        <Text> Add Tool </Text>
-                </TouchableOpacity>
+                        {/* Creates a Button that navigates the user to AddTool, a screen to add a new tool */}
+                        <TouchableOpacity   onPress={() => this.props.navigation.navigate("AddTool")} 
+                                            style={styles.invFunctionFrame}>
+                                <Text style={styles.invFunctionLabel}> Add Tool </Text>
+                        </TouchableOpacity>
+                    </View>
                 )}
+                
 
                 {/* Creates a Button that navigates the user to CheckoutTool, a screen to checkout an available tool */}
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("CheckoutTool")} style={styles.addToolFrame}>
-                        <Text> Check Out Tool </Text>
+                <TouchableOpacity   onPress={() => this.props.navigation.navigate("CheckoutTool")} 
+                                    style={styles.invFunctionFrame}>
+                        <Text style={styles.invFunctionLabel}> Check Out Tool </Text>
                 </TouchableOpacity>
 
-                <Text style={{textAlign: 'center'}}>Your checked out tools:</Text>
+                <Text style={{textAlign: 'center'}}>Your Checked Out Tools:</Text>
                 <ScrollView>
                     {/* Creates a view object with a list of all checked out tools of the current user */}
                     <View style={styles.toolsContainer}>
@@ -82,40 +86,32 @@ export default class InventoryHomeScreen extends React.Component {
         */
     displayTools(name, quantity, toolID, Available, checkedOut) {
         // A conditional that checks if the current user is an administrator or not in order to render which Inventory Screen
-        if (this.state.admin){
-            return (
-                <View style={styles.toolFrame} id={toolID}>
-                    {/* The name of the tool type */}
-                    <Text>{name}</Text>
-                    {/* The total number of tools */}
-                    <Text>Quantity: {quantity}</Text>
-                    {/* The number of currently available tools */}
-                    <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
-                    <Text>Visible: {String(Available)}</Text>
-                    {/* Creates a Button that navigates the user to EditTool to edit the selected tool */}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("EditTool", {
+        return (
+            <View style={styles.toolFrame} id={toolID}>
+                {/* The name of the tool type */}
+                <Text style={styles.toolName}>{name}</Text>
+                {/* The total number of tools */}
+                <Text style={styles.toolInfo}>Total Number: {quantity}</Text>
+                {/* The number of currently available tools */}
+                <Text style={styles.toolInfo}>Amount Available: {parseInt(quantity) - checkedOut}</Text>
+                {this.state.admin && (
+                    <Text style={styles.toolInfo}>Visible: {String(Available)}</Text>
+                )}
+                {/* Creates a Button that navigates the user to EditTool to edit the selected tool */}
+                {this.state.admin && (
+                    <TouchableOpacity style={styles.functionButton}
+                    onPress={() => this.props.navigation.navigate("EditTool", {
                                     name: name,
                                     quantity: quantity,
                                     toolID: toolID,
                                     Available: Available,
                                     checkedOut: checkedOut
                                 })}> 
-                            <Text> Edit Tool </Text>
+                            <Text style={styles.toolInfo}> Edit Tool </Text>
                     </TouchableOpacity>
-                </View>
-            );
-        } else {
-            return (
-                <View style={styles.toolFrame} id={toolID}>
-                    {/* The name of the tool type */}
-                    <Text>{name}</Text>
-                    {/* The total number of tools */}
-                    <Text>Quantity: {quantity}</Text>
-                    {/* The number of currently available tools */}
-                    <Text>Amount Available: {parseInt(quantity) - checkedOut}</Text>
-                </View>
-            );
-        }
+                )}
+            </View>
+        );
     }
 
     /*
@@ -131,12 +127,13 @@ export default class InventoryHomeScreen extends React.Component {
         return (
             <View style={styles.toolFrame} id={CheckoutID}>
                 {/* The name of the tool type */}
-                <Text>{tool}</Text>
+                <Text style={styles.toolName}>{tool}</Text>
                 {/* ID of the currently checked out tool */}
-                <Text>{"ID: " + number}</Text>
+                <Text style={styles.toolInfo}>{"ID: " + number}</Text>
                 {/* Button to check in tool */}
-                <TouchableOpacity onPress={() => checkInToolLocal(CheckoutID, tool)}>
-                        <Text> Check In Tool </Text>
+                <TouchableOpacity   style={styles.functionButton}
+                                    onPress={() => checkInToolLocal(CheckoutID, tool)}>
+                        <Text style={styles.toolInfo}> Check In </Text>
                 </TouchableOpacity>
             </View>
         );
@@ -148,8 +145,6 @@ export default class InventoryHomeScreen extends React.Component {
     componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
-        const admin = true//firebase.default.auth().currentUser.permissions;
-        this.setState({admin})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)
         this.unsubscribe = this.firestoreRefCheckedOut.onSnapshot(this.getCollectionCheckedOut)
         }

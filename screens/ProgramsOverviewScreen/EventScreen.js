@@ -1,10 +1,11 @@
-import React, { Children } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
+import React from 'react'
+import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import {makeNewEvent, getEvents, deleteEvent, addEventParticipant, removeEventParticipant, getIfEventParticipant} from '../../Components/EventComponents'
+import {deleteEvent, addEventParticipant, removeEventParticipant} from '../../Components/EventComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class EventScreen extends React.Component {
@@ -24,31 +25,32 @@ export default class EventScreen extends React.Component {
         if (this.state.admin) {
             return (
                 <View style={styles.container}>
+                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                        <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+                    </TouchableOpacity>
                     <ScrollView>
-                        <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                            <Text style={styles.goBackLabel}> Back to Program </Text>
-                        </TouchableOpacity>
-    
-                        <View style={styles.programFrame}>
-                            <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                            <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
-                        </View>
-                        <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditEventScreen", {
-                                title: this.props.route.params.title,
-                                description: this.props.route.params.description,
-                                EventID: this.props.route.params.EventID
-                            })}> 
-                            <Text> Edit Event </Text>
-                        </TouchableOpacity>
-    
-                        <TouchableOpacity style={styles.leftButton} onPress={() => deleteEventLocal(this.props.route.params.EventID)}> 
-                            <Text> Delete Event </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.programTitle}>
-                            Attending Users
-                        </Text>
-                        <View style={styles.toolsContainer}>
-                                {this.state.attendees.map(r => this.displayAttendees(r))}
+                        <View style={styles.viewContainer}>
+                            <View style={styles.programFrame}>
+                                <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
+                                <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                            </View>
+                            <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditEventScreen", {
+                                    title: this.props.route.params.title,
+                                    description: this.props.route.params.description,
+                                    EventID: this.props.route.params.EventID
+                                })}> 
+                                <Text> Edit Event </Text>
+                            </TouchableOpacity>
+        
+                            <TouchableOpacity style={styles.leftButton} onPress={() => deleteEventLocal(this.props.route.params.EventID)}> 
+                                <Text> Delete Event </Text>
+                            </TouchableOpacity>
+                            <Text style={styles.programTitle}>
+                                Attending Users
+                            </Text>
+                            <View style={styles.toolsContainer}>
+                                    {this.state.attendees.map(r => this.displayAttendees(r))}
+                            </View>
                         </View>
                     </ScrollView>
                 </View>

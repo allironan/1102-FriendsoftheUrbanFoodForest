@@ -1,9 +1,10 @@
-import React, { Children } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
+import React from 'react'
+import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class ProgramsOverviewScreen extends React.Component {
@@ -19,15 +20,14 @@ export default class ProgramsOverviewScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    <View style={styles.programsHomeTitleFrame}>
-                        <Text style= {styles.programTitle}> Programs </Text>
+                <Text style= {styles.headerTitle}> Programs </Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgramScreen")} style={styles.rightButton}>
+                    <View>
+                        <Ionicons name={'add-outline'} size={30} color={'black'}/>
                     </View>
-
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("AddProgramScreen")} style={styles.addEventButton}>
-                        <Text style={styles.buttonLabelText}> Add Program </Text>
-                    </TouchableOpacity>
-
+                    <Text style={styles.buttonLabelText}>Add Program </Text>
+                </TouchableOpacity>
+                <ScrollView>
                     <View>
                         {this.state.programs.map((program) => (
                             <TouchableOpacity key={program.ProgramID} onPress={() => this.props.navigation.navigate("ProgramScreen", {

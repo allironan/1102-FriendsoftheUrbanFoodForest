@@ -102,6 +102,7 @@ export default StyleSheet.create({
     headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
+        marginTop: '1%',
         textAlign: 'center',
         textAlignVertical: 'center',
         height: 60,

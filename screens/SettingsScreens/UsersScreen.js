@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {
     View,
     Text,
@@ -14,7 +14,6 @@ import 'firebase/firestore';
 import firebase from 'firebase/app';
 import _ from "lodash";
 import styles from '../styles/SettingsScreen.styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const style = StyleSheet.create({
   container: {

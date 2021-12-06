@@ -38,11 +38,11 @@ export default class AddProductScreen extends React.Component {
                                 maxLength={600}
                                 multiline={true}
                                 onChangeText={(value) => this.setState({description: value})} />
-                    <TouchableOpacity style={styles.functionButton} onPress={() => {
+                    <TouchableOpacity style={styles.submitButton} onPress={() => {
                         makeNewItem(this.state.name, this.state.description, this.state.price)
                         this.props.navigation.goBack()
                     }}>
-                        <Text> Submit </Text>
+                        <Text style={styles.submitLabel}> Submit </Text>
                     </TouchableOpacity>
                 </View>
             </View>

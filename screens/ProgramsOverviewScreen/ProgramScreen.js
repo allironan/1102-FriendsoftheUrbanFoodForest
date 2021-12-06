@@ -6,6 +6,7 @@ import { deleteProgram } from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
 import { deleteAllEvents, getEventInfo } from '../../Components/EventComponents'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class ProgramScreen extends React.Component {
@@ -21,11 +22,10 @@ export default class ProgramScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                        <Text style={styles.goBackLabel}> Back to Programs </Text>
-                    </TouchableOpacity>
-
+                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+                </TouchableOpacity>
+                <View style={styles.viewContainer}>
                     <View style={styles.titleFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
                         <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
@@ -45,26 +45,30 @@ export default class ProgramScreen extends React.Component {
                         <Text style={styles.buttonLabelText}> Delete Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.addEventButton} onPress={() => this.props.navigation.navigate("AddEventScreen", {
+                    <TouchableOpacity style={styles.rightButton} onPress={() => this.props.navigation.navigate("AddEventScreen", {
                             programID: this.props.route.params.programID
                         })}>
+                            <View>
+                                <Ionicons name={'add-outline'} size={30} color={'black'}/>
+                            </View>
                         <Text style={styles.buttonLabelText}> Add Event </Text>
                     </TouchableOpacity>
-
-                    <View>
-                        {this.state.events.map((event) => (
-                            <TouchableOpacity key={event.EventID} onPress={() => this.props.navigation.navigate("EventScreen", {
-                                key: event.EventID,
-                                title: event.Title,
-                                information: event.Information,
-                                EventID: event.EventID,
-                                programID: this.props.route.params.programID
-                            })}> 
-                                <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} />
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </ScrollView>
+                    <ScrollView>
+                        <View>
+                            {this.state.events.map((event) => (
+                                <TouchableOpacity key={event.EventID} onPress={() => this.props.navigation.navigate("EventScreen", {
+                                    key: event.EventID,
+                                    title: event.Title,
+                                    information: event.Information,
+                                    EventID: event.EventID,
+                                    programID: this.props.route.params.programID
+                                })}> 
+                                    <DisplayEvent key={event.EventID} EventID={event.EventID} Title={event.Title} Information={event.Information} />
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </ScrollView>
+                </View>
             </View>
         );
     }

@@ -1,7 +1,8 @@
-import React, { Children } from 'react'
-import {View, Text, TouchableOpacity, TouchableHighlight,Switch, TextInput, Button, Dialog, Alert} from 'react-native'
-import styles from '../styles/HomeScreen.style.js'
+import React from 'react'
+import {View, Text, TouchableOpacity, Switch, TextInput, Alert} from 'react-native'
+import styles from '../styles/InventoryScreens.styles'
 import {deleteTool, editTool} from '../../Components/InventoryComponents'
+import { Ionicons } from '@expo/vector-icons';
 
 export default class EditTool extends React.Component {
     state = {
@@ -26,17 +27,23 @@ export default class EditTool extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
+              <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+              </TouchableOpacity>
               <View style={styles.viewContainer}>
-                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                        <Text style={styles.goBackLabel}> Back to Tools </Text>
-                </TouchableOpacity>
-                <Text style={styles.programTitle}>
+                <Text style={styles.headerTitle}>
                     Edit Tool
                 </Text>
-                <Text>{this.props.route.params.name}</Text>
-                <TextInput style={styles.textFillField} placeholder="Quantity" 
-                                   value={this.state.quantity} 
-                                   onChangeText={(value) => this.setState({quantity: value})} />
+                <Text style={styles.toolName}>{this.props.route.params.name}</Text>
+                <TextInput 
+                        style={styles.contentFillField} 
+                        placeholder="Quantity" 
+                        value={this.state.quantity} 
+                        onChangeText={(value) => this.setState({quantity: value})}
+                        keyboardType='decimal-pad'
+                        maxLength={3}
+                        />
+                <Text>Visible:</Text>
                 <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
                         thumbColor={this.state.available ? "#f5dd4b" : "#f4f3f4"}
                         ios_backgroundColor="#3e3e3e"
@@ -50,10 +57,10 @@ export default class EditTool extends React.Component {
                     alert('Quantity cannot be empty.');
                   }
                   }}>
-                    <Text style={{textAlign: "center"}}>Submit</Text>
+                    <Text style={styles.submitLabel}>Submit</Text>
                 </TouchableOpacity>
-                 <TouchableOpacity style={styles.addPostButton} onPress={this.createTwoButtonAlert}>
-                        <Text style={styles.addPostLabel}> Delete Tool </Text>
+                 <TouchableOpacity style={styles.deleteButton} onPress={this.createTwoButtonAlert}>
+                        <Text style={styles.submitLabel}> Delete Tool </Text>
                 </TouchableOpacity>
               </View>
             </View>
