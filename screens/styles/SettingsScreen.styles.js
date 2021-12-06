@@ -1,6 +1,7 @@
 import { StyleSheet, StatusBar } from "react-native";
 
 export default StyleSheet.create({
+    //Containers
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -11,14 +12,16 @@ export default StyleSheet.create({
     flexbox_container: {
         flexDirection: "row",
     },
+
+    //Frames
     settingFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 10,
-        width: 400,
+        width: '90%',
         paddingVertical: 20,
         marginHorizontal: '2%',
-        marginVertical: 10,
-        textAlign: 'left',
+        marginTop: '8%',
+        textAlign: 'left'
     },
     topSettingFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -40,6 +43,15 @@ export default StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
     },
+
+    //Buttons
+    goBackButton: {
+        alignSelf: 'flex-start',
+        marginLeft: '3%',
+        marginTop: '3%'
+    },
+
+    //Text
     choiceText: {
         textAlign: 'center',
         textAlignVertical: 'center'
@@ -47,4 +59,9 @@ export default StyleSheet.create({
     settingFont: {
         marginLeft: 10
     },
+
+    //TextInputs
+    
+    
+    
 })

@@ -1,7 +1,8 @@
-import React, { Children } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
+import React from 'react'
+import {View, Text, TouchableOpacity, TextInput} from 'react-native'
 import { makeNewProgram } from '../../Components/ProgramComponents'
 import styles from '../styles/ProgramsEventsScreen.style.js'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class AddProgramScreen extends React.Component {
@@ -12,20 +13,27 @@ export default class AddProgramScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
+              <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                  <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+              </TouchableOpacity>
               <View style={styles.viewContainer}>
-                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                        <Text style={styles.goBackLabel}> Back to Programs </Text>
-                </TouchableOpacity>
                 <Text style={styles.programTitle}>
-                    Create new Program
+                    Create New Program
                 </Text>
-                <TextInput style={styles.textFillField} placeholder="Program Title" 
-                                   value={this.state.title} 
-                                   onChangeText={(value) => this.setState({title: value})} />
-                <TextInput style={styles.textFillField} placeholder="Program Information" 
-                                    value={this.state.information}
-                                    onChangeText={(value) => this.setState({information: value})} />
-                <TouchableHighlight style={styles.submitButton} onPress={() => {
+                <TextInput 
+                          style={styles.titleFillField} 
+                          placeholder="Program Title" 
+                          value={this.state.title} 
+                          maxLength={50}
+                          onChangeText={(value) => this.setState({title: value})} />
+                <TextInput 
+                          style={styles.contentFillField}
+                          placeholder="Program Information" 
+                          value={this.state.information}
+                          maxLength={600}
+                          multiline={true}
+                          onChangeText={(value) => this.setState({information: value})} />
+                <TouchableOpacity style={styles.submitButton} onPress={() => {
                   if (this.state.information != "" && this.state.title != "") {
                     makeNewProgram(this.state.title, this.state.information)
                     this.props.navigation.goBack()
@@ -33,8 +41,8 @@ export default class AddProgramScreen extends React.Component {
                     alert('Text cannot be empty.');
                   }
                 }}>
-                  <Text style={{textAlign: "center"}}> Submit </Text>
-                </TouchableHighlight>
+                  <Text style={styles.submitLabel}> Submit </Text>
+                </TouchableOpacity>
               </View>
             </View>
         );

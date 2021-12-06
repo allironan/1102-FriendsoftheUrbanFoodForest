@@ -1,7 +1,8 @@
-import React, { Children } from 'react'
-import {View, Text, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog} from 'react-native'
+import React from 'react'
+import {View, Text, TouchableOpacity, TextInput} from 'react-native'
 import {editProgram} from '../../Components/ProgramComponents'
 import styles from '../styles/ProgramsEventsScreen.style.js'
+import { Ionicons } from '@expo/vector-icons';
 
 export default class EditProgramScreen extends React.Component {
   state = {
@@ -12,21 +13,28 @@ export default class EditProgramScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
+              <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                  <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+              </TouchableOpacity>
               <View style={styles.viewContainer}>
-                <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                        <Text style={styles.goBackLabel}> Back to Program </Text>
-                </TouchableOpacity>
                 <Text style={styles.programTitle}>
                     Edit Program
                 </Text>
-                <TextInput style={styles.textFillField} placeholder="Program Title" 
-                                   placeholder = {'Old Title: ' + this.props.route.params.Title}
-                                   value={this.state.title} 
-                                   onChangeText={(value) => this.setState({title: value})} />
-                <TextInput style={styles.textFillField} placeholder="Program Information" 
-                                    placeholder = {'Old Information: ' + this.props.route.params.Information}
-                                    value={this.state.information}
-                                    onChangeText={(value) => this.setState({information: value})} />
+                <TextInput 
+                          style={styles.titleFillField} 
+                          placeholder="Program Title" 
+                          placeholder = {'Old Title: ' + this.props.route.params.Title}
+                          value={this.state.title} 
+                          maxLength={50}
+                          onChangeText={(value) => this.setState({title: value})} />
+                <TextInput 
+                          style={styles.contentFillField} 
+                          placeholder="Program Information" 
+                          placeholder = {'Old Information: ' + this.props.route.params.Information}
+                          value={this.state.information}
+                          maxLength={600}
+                          multiline={true}
+                          onChangeText={(value) => this.setState({information: value})} />
                 <TouchableOpacity style={styles.submitButton} title="Submit" onPress={() => {
                   if (this.state.information != "" || this.state.title != "") {
                     editProgram(this.state.title, this.state.information, this.props.route.params.ProgramID)
@@ -35,7 +43,7 @@ export default class EditProgramScreen extends React.Component {
                     alert('Text cannot be empty.');
                   }
                   }}>
-                    <Text style={{textAlign: "center"}}>Submit</Text>
+                    <Text style={styles.submitLabel}>Submit</Text>
                 </TouchableOpacity>
               </View>
             </View>

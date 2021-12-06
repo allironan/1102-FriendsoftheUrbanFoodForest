@@ -1,6 +1,7 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, Dimensions } from "react-native";
 
 export default StyleSheet.create({
+    //Containers
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -11,43 +12,21 @@ export default StyleSheet.create({
     viewContainer: {
         flex: 1,
         flexDirection: 'column',
-        width: 350,
+        width: '100%',
         alignItems: 'center',
         backgroundColor: 'rgba(233,243,196,1)'
     },
-    goBackButton: {
-        backgroundColor: 'rgba(8,39,245,1)',
-        borderRadius: 15,
-        alignSelf: 'flex-start',
-        marginTop: '4%',
-        width: 150,
-        textAlign: "center",
-        paddingVertical: 8,
-        textAlignVertical: 'center',
-    },
-    goBackLabel: {
-        fontSize: 16,
-        color: 'rgba(255,255,255,1)',
-    },
 
+    //Frames
     titleFrame: {
         backgroundColor: 'rgba(255,174,66,1)',
         borderRadius: 25,
-        flex: 1,
-        maxHeight: 200,
         width: 350,
+        minHeight: '20%',
         marginHorizontal: '2%',
         marginVertical: 14,
         textAlign: 'center',
         marginTop: 20,
-    },
-
-    programTitle: {
-        textAlign: "center",
-        paddingVertical: 20,
-        fontSize: 36,
-        fontWeight: 'bold',
-        flexWrap: "wrap",
     },
     programFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
@@ -62,61 +41,53 @@ export default StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center'
     },
-    programInformation: {
-        fontSize: 15,
-        textAlign: 'center',
-        textAlignVertical: 'top',
-        flexWrap: 'wrap',
-        marginHorizontal: '8%',
-        marginBottom: 10
-    },
-    leftButton: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 15,
-        alignSelf: 'flex-start',
-        width: 150,
-        textAlign: "center",
-        paddingVertical: 8,
-        textAlignVertical: 'center',
-        marginVertical: 5
-    },
-    submitButton: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 8,
-        alignSelf: 'center',
-        width: 100,
-        paddingVertical: 10,
-        marginHorizontal: '2%',
-        marginVertical: 10,
-        textAlign: 'left',
-        textAlignVertical: 'center'
-    },
-
-    addEventButton: {
-        backgroundColor: 'rgba(255,255,255,1)',
-        borderRadius: 8,
-        alignSelf: 'flex-end',
-        width: 100,
-        paddingVertical: 10,
-        marginHorizontal: '2%',
-        marginBottom: 20,
-        textAlign: 'center',
-        textAlignVertical: 'center'
-    },
-    addEventLabel: {
-        fontSize: 16,
-        color: 'rgba(196,196,196,1)'
-    },
-
     eventFrame: {
         backgroundColor: 'rgba(255,255,255,1)',
         borderRadius: 25,
-        width: 325,
+        width: 350,
         height: 'auto',
         minHeight: 150,
         marginHorizontal: '2%',
         marginBottom: 12,
         textAlign: 'center'
+    },
+
+    //Buttons
+    goBackButton: {
+        alignSelf: 'flex-start',
+        marginLeft: '3%',
+        marginTop: '3%'
+    },
+    leftButton: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        width: '30%',
+        height: '5%',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        marginHorizontal: '8%',
+        marginBottom: '4%',
+    },
+    rightButton: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+        width: '30%',
+        height: '5%',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        marginHorizontal: '8%',
+        marginBottom: '4%',
+    },
+    submitButton: {
+        backgroundColor: 'rgba(0,132,233,1)',
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.30,
+        paddingVertical: '3%',
+        marginVertical: '2%',
     },
     eventTitle: {
         fontSize: 24,
@@ -134,12 +105,6 @@ export default StyleSheet.create({
         marginHorizontal: '7%',
         marginVertical: '5%',
         marginBottom: 30
-        // fontSize: 10,
-        // textAlign: 'left',
-        // flexWrap: 'wrap',
-        // marginHorizontal: '8%',
-        // marginBottom: 20,
-        // color: 'rgba(196,196,196,1)'
     },
     eventStartTime: {
         fontSize: 12,
@@ -156,18 +121,74 @@ export default StyleSheet.create({
         marginHorizontal: '5%',
         marginBottom: 20
     },
+    buttonLabelText: {
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    submitLabel: {
+        fontWeight: 'bold',
+        color: 'rgba(255,255,255,1)',
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
     
-    textFillField: {
+
+    //Text
+    headerTitle: {
+        fontSize: 24,
+        marginTop: '2%',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        height: 60,
+        width: 200
+    },
+    programTitle: {
+        textAlign: "center",
+        paddingVertical: 20,
+        fontSize: 36,
+        fontWeight: 'bold',
+        flexWrap: "wrap",
+    },
+    programInformation: {
+        fontSize: 15,
+        textAlign: 'center',
+        textAlignVertical: 'top',
+        flexWrap: 'wrap',
+        marginHorizontal: '8%',
+        marginBottom: 10
+    },
+    addEventLabel: {
+        fontSize: 16,
+        color: 'rgba(196,196,196,1)'
+    },
+
+
+    //TextInputs
+    titleFillField: {
         backgroundColor: 'rgba(255,255,255,1)',
         alignSelf: 'center',
         width: 350,
         paddingVertical: 10,
         marginHorizontal: '10%',
+        marginVertical: '2%',
+        borderRadius: 20,
         textAlign: 'center',
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        flexWrap: 'wrap'
     },
-    buttonLabelText: {
-        textAlign: 'center',
-        textAlignVertical: 'center'
+    contentFillField: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        alignSelf: 'center',
+        width: 350,
+        minHeight: 300,
+        padding: 10,
+        paddingVertical: 15,
+        marginHorizontal: '10%',
+        marginVertical: '2%',
+        borderRadius: 20,
+        textAlign: 'left',
+        textAlignVertical: 'top',
+        flexWrap: 'wrap'
     }
 })

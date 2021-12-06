@@ -18,8 +18,6 @@ export default class EditProductScreen extends React.Component {
                     <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                 </TouchableOpacity>
                 <View style={styles.viewContainer}>
-                    
-
                     <Text style={styles.productName}>Edit Product</Text>
                     
                     <TextInput  style={styles.titleFillField}
@@ -40,11 +38,11 @@ export default class EditProductScreen extends React.Component {
                                 maxLength={600}
                                 multiline={true}
                                 onChangeText={(value) => this.setState({price: value})} />
-                    <TouchableOpacity style={styles.functionButton} onPress={() => {
+                    <TouchableOpacity style={styles.submitButton} onPress={() => {
                         editItem(this.state.name, this.state.description, this.state.price, this.props.route.params.id)
                         this.props.navigation.goBack()
                     }}>
-                        <Text style={{textAlign: "center"}}> Submit </Text>
+                        <Text style={styles.submitLabel}> Submit </Text>
                     </TouchableOpacity>
                 </View>
             </View>

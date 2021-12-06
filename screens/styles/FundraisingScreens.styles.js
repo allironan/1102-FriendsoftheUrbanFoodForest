@@ -123,6 +123,13 @@ export default StyleSheet.create({
         marginHorizontal: '3%',
         marginBottom: 15,
     },
+    submitButton: {
+        backgroundColor: 'rgba(0,132,233,1)',
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.30,
+        paddingVertical: '3%',
+        marginVertical: '2%',
+    },
 
     //Text
     headerTitle: {
@@ -154,6 +161,12 @@ export default StyleSheet.create({
     },
     productPrice: {
         alignSelf: 'center',
+    },
+    submitLabel: {
+        fontWeight: 'bold',
+        color: 'rgba(255,255,255,1)',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     },
 
     //TextInputs
