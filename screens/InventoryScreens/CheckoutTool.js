@@ -1,11 +1,12 @@
-import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog, Switch} from 'react-native'
-import {getToolNames, checkoutTool} from '../../Components/InventoryComponents'
+import React from 'react'
+import {View, Text, TouchableOpacity, TextInput} from 'react-native'
+import {checkoutTool} from '../../Components/InventoryComponents'
 import firebase from 'firebase/app'
 import styles from '../styles/InventoryScreens.styles'
 import SelectDropdown from 'react-native-select-dropdown'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { Ionicons } from '@expo/vector-icons';
+
 
 
 export default class CheckoutTool extends React.Component {
@@ -24,8 +25,8 @@ export default class CheckoutTool extends React.Component {
           if (this.state.toolNames.length == 0){
             return (
               <View style={styles.container}>
-                  <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
-                  <Text>Go back</Text>
+                  <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                   </TouchableOpacity>
                   <Text> There are no tools available at this time.</Text>
               </View>
@@ -33,10 +34,10 @@ export default class CheckoutTool extends React.Component {
           } else {
             return (
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
-                    <Text>Go back</Text>
-                  </TouchableOpacity>
-                    <Text>
+                    <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                      <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>
                         Checkout Tool
                     </Text>
                   <SelectDropdown
@@ -68,13 +69,14 @@ export default class CheckoutTool extends React.Component {
                     rowTextStyle={styles.dropdown1RowTxtStyle}
                   />
                   <TextInput 
+                          style={styles.contentFillField}
                           placeholder="Tool number"
-                          keyboardType='numeric'
+                          keyboardType='decimal-pad'
                           value={this.state.toolNumber}
                           onChangeText={(value) => this.setState({toolNumber: value})}
                           maxLength={3}  //setting limit of input
                   />
-                  <TouchableHighlight style={styles.addToolFrame}
+                  <TouchableOpacity style={styles.submitButton}
                     onPress={() => {
                       if (this.state.selectedTool != "" && parseInt(this.state.toolNumber) > 0 && parseInt(this.state.toolNumber) < 100) {
                           checkoutTool(this.state.selectedTool, this.state.toolNumber, this.state.displayName)
@@ -83,8 +85,8 @@ export default class CheckoutTool extends React.Component {
                         alert('Please select tool or choose a number between 0 and 100.');
                       }
                     }}>
-                    <Text>Submit</Text>
-                  </TouchableHighlight>
+                    <Text style={styles.submitLabel}>Submit</Text>
+                  </TouchableOpacity>
                 </View>
             );
           }

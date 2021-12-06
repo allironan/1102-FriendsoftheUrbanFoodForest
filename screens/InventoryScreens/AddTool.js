@@ -1,9 +1,9 @@
-import React, { Children } from 'react'
-import ReactDOM from 'react-dom'
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Button, Dialog, Switch} from 'react-native'
+import React from 'react'
+import {View, Text, TouchableOpacity, TextInput, Switch} from 'react-native'
 import {makeNewTool} from '../../Components/InventoryComponents'
 import styles from '../styles/InventoryScreens.styles'
-//import * as NumericInput from "react-numeric-input"
+import { Ionicons } from '@expo/vector-icons'
+
 
 export default class AddTool extends React.Component {
     state = {
@@ -14,17 +14,21 @@ export default class AddTool extends React.Component {
       currentView() {
           return (
               <View style={styles.container}>
-                  <TouchableOpacity style={styles.addToolFrame} onPress={() => this.props.navigation.goBack()}>
-                    <Text>Go back</Text>
+                  <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                   </TouchableOpacity>
-                  <Text>
+                  <Text style={styles.headerTitle}>
                       Create new tool
                   </Text>
-                  <TextInput placeholder="Tool Name" 
-                                     value={this.state.name} 
-                                     onChangeText={(value) => this.setState({name: value})} />
-                <Text>Quantity:</Text>
+                  <TextInput  
+                        style={styles.titleFillField} 
+                        placeholder="Tool Name" 
+                        value={this.state.name} 
+                        onChangeText={(value) => this.setState({name: value})}
+                        maxLength={25}
+                        />
                 <TextInput 
+                        style={styles.contentFillField} 
                         placeholder="Tool quantity"
                         keyboardType='numeric'
                         value={this.state.quantity}
@@ -37,7 +41,7 @@ export default class AddTool extends React.Component {
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={this.toggleSwitch}
                         value={this.state.available} />
-                  <TouchableHighlight style={styles.addToolFrame}
+                  <TouchableOpacity style={styles.submitButton}
                   onPress={() => {
                     if (this.state.name != "" && parseInt(this.state.quantity) > 0) {
                       makeNewTool(this.state.name, this.state.quantity, this.state.available)
@@ -46,8 +50,8 @@ export default class AddTool extends React.Component {
                       alert('Text cannot be empty and quantity must be more than 0.');
                     }
                   }}>
-                  <Text>Submit</Text>
-                </TouchableHighlight>
+                  <Text style={styles.submitLabel}>Submit</Text>
+                </TouchableOpacity>
               </View>
           );
       }

@@ -129,9 +129,7 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
-        textAlignVertical: 'center',
-        height: 60,
-        width: 200
+        textAlignVertical: 'center'
     },
     fundraisingOptionLabel: {
         fontSize: 20, 
