@@ -56,7 +56,7 @@ export default StyleSheet.create({
     goBackButton: {
         alignSelf: 'flex-start',
         marginLeft: '3%',
-        marginTop: '3%'
+        marginTop: '15%'
     },
     leftButton: {
         backgroundColor: 'rgba(255,255,255,1)',
