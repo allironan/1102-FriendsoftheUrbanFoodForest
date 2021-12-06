@@ -65,7 +65,7 @@ export default class EventScreen extends React.Component {
     
                         <View style={styles.programFrame}>
                             <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                            <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                            <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                         </View>
                         <TouchableOpacity style={styles.goBackButton} onPress={() => {addEventParticipant(String(this.props.route.params.EventID)); this.setState({message: "You've registered for the event!"})}}>
                             <Text style={styles.goBackLabel}> Register For Event </Text>
