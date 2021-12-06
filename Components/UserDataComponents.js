@@ -48,7 +48,7 @@ export async function getUserData(requestedUID = null) {
         })
         return newData;
     } else {
-        return snapshot.data();
+        return snapshot.data;
     }
 }
 

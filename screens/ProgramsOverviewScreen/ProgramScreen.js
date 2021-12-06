@@ -5,7 +5,7 @@ import 'firebase/auth'
 import { deleteProgram } from '../../Components/ProgramComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
-import { getEventInfo } from '../../Components/EventComponents'
+import { deleteAllEvents, getEventInfo } from '../../Components/EventComponents'
 
 
 export default class ProgramScreen extends React.Component {
@@ -39,7 +39,9 @@ export default class ProgramScreen extends React.Component {
                         <Text style={styles.buttonLabelText}> Edit Program </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.leftButton} onPress={() => {deleteProgram(this.props.route.params.programID); this.props.navigation.goBack();}}> 
+                    <TouchableOpacity style={styles.leftButton} onPress={() => {
+                        this.deleteProgramLocal(this.props.route.params.programID);
+                        }}> 
                         <Text style={styles.buttonLabelText}> Delete Program </Text>
                     </TouchableOpacity>
 
@@ -76,35 +78,27 @@ export default class ProgramScreen extends React.Component {
        
     }
 
-    // async getInfo(){
-    //     var old = this.state.events;
-    //     events = [];
-    //     console.log("I am here");
-    //     console.log(old);
-    //     old.forEach((event) => {
-    //         var data = getEventInfo(event.programID);
-    //         console.log("New");
-    //         console.log(data);
-    //         events.push(data);
-    //     })
-    //     console.log("Teehee")
-    //     console.log(events);
-    //     this.setState({events});
-    //     // var info = await getEventInfo(event.EventID);
-    //     // return info;
-    // }
-
     getCollectionEvents = (querySnapshot) => {
-        console.log(querySnapshot.data().LinkedEvents)
+        
         const events = []
-        querySnapshot.data().LinkedEvents.forEach((event) => {
-            events.push(event)
-        })
-        this.setState({events})
+        if (querySnapshot.exists) {
+            querySnapshot.data().LinkedEvents.forEach((event) => {
+                events.push(event)
+            })
+            this.setState({events}) 
+            console.log(this.state)
+        }
+   
+     
     }
 
-    deleteProgramLocal(postID){
-        deleteProgram(postID);
+    async deleteProgramLocal(programID){
+        //const db = firebase.firestore();
+        
+        deleteAllEvents(programID, this.state.events)
+        deleteProgram(programID);
+        this.props.navigation.goBack();
+        
     }
 
     render() { 
