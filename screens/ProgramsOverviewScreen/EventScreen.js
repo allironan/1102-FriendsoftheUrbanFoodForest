@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import { getUserData } from '../../Components/UserDataComponents'
 import {deleteEvent, addEventParticipant, removeEventParticipant} from '../../Components/EventComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
@@ -32,7 +33,7 @@ export default class EventScreen extends React.Component {
                         <View style={styles.viewContainer}>
                             <View style={styles.programFrame}>
                                 <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                                <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                                <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                             </View>
                             <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditEventScreen", {
                                     title: this.props.route.params.title,
@@ -60,7 +61,7 @@ export default class EventScreen extends React.Component {
                 <View style={styles.container}>
                     <ScrollView>
                         <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                            <Text style={styles.goBackLabel}> Back to Program </Text>
+                            <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                         </TouchableOpacity>
     
                         <View style={styles.programFrame}>
@@ -79,12 +80,12 @@ export default class EventScreen extends React.Component {
                 <View style={styles.container}>
                     <ScrollView>
                         <TouchableOpacity style={styles.goBackButton} onPress={() => this.props.navigation.goBack()}>
-                            <Text style={styles.goBackLabel}> Back to Program </Text>
+                            <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                         </TouchableOpacity>
     
                         <View style={styles.programFrame}>
                             <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                            <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                            <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                         </View>
                         <TouchableOpacity style={styles.goBackButton} onPress={() => {removeEventParticipant(String(this.props.route.params.EventID), firebase.default.auth().currentUser.uid); this.setState({message: "You've unregistered for the event."})}}>
                             <Text style={styles.goBackLabel}> Unregister For Event </Text>
@@ -102,8 +103,11 @@ export default class EventScreen extends React.Component {
         this.props.navigation.goBack();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const {email, displayName} = firebase.default.auth().currentUser;
+        var isAdmin = await getUserData();
+        var admin = (isAdmin["Permissions"] == "admin")
+        this.setState({admin});
         this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
         this.unsubscribe = this.firestoreRefAttending.onSnapshot(this.getAttendance)
         this.setState({email, displayName})
