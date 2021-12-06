@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, TextInput, BackHandler, Linking} from 're
 import styles from '../styles/FundraisingScreens.styles';
 import { PayPalButton } from 'react-paypal-button-v2';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
+import { Ionicons } from '@expo/vector-icons';
 
 /*
 The DonationScreen class renders the donation screen to the user.
@@ -15,13 +16,13 @@ export default class DonationScreen extends React.Component {
 
     handleClick = () => {
         Linking.canOpenURL('https://friendsofbrownsmillfoodforestpark.org/give-today/').then(supported => {
-          if (supported) {
-            Linking.openURL('https://friendsofbrownsmillfoodforestpark.org/give-today/');
-          } else {
-            console.log("Don't know how to open URI: " + 'https://friendsofbrownsmillfoodforestpark.org/give-today/');
-          }
+            if (supported) {
+                Linking.openURL('https://friendsofbrownsmillfoodforestpark.org/give-today/');
+            } else {
+                console.log("Don't know how to open URI: " + 'https://friendsofbrownsmillfoodforestpark.org/give-today/');
+            }
         });
-      };
+    };
 
     /*
         currentView() is called for rendering everything to display on the display screen. 
@@ -32,17 +33,25 @@ export default class DonationScreen extends React.Component {
     currentView() {
         return (
             <View style={styles.container}>
-                <View style={styles.buttonContainer}>
                 {/* Creates a Button that allows a user to return back to the Fundraising page*/}
-                <TouchableOpacity style={styles.functionButton} onPress={() => this.props.navigation.goBack()}>
-                    <Text style={styles.buttonText}> Go back </Text>
+                <TouchableOpacity   style={styles.goBackButton} 
+                                        onPress={() => this.props.navigation.goBack()}>
+                    <Ionicons name={'chevron-back-circle-outline'} size={35} color={'black'}/>
                 </TouchableOpacity>
+                {/*
+                <TextInput  style={styles.titleFillField}
+                                placeholder="Donation Amount" 
+                                value={this.state.donation_amount}
+                                maxLength={50}
+                                multiline={true}
+                                keyboardType='decimal-pad'
+                onChangeText={(value) => this.setState({name: value})} />
+                */}
                 {/* Creates a Text Input Field that allows the user to set the value of donation.
                 This value entered by the user will be positive and numerical*/}
                 <TouchableOpacity style={styles.functionButton} onPress={this.handleClick}>
-                    <Text style={styles.buttonText}> Donate </Text>
+                    <Text> Donate </Text>
                 </TouchableOpacity>
-                </View> 
             </View>
         )
     }

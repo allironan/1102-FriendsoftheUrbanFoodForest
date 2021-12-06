@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
-import { getUserCart } from '../../Components/CartComponents';
+import { getUserCart, removeFromCart } from '../../Components/CartComponents';
 import styles from '../styles/FundraisingScreens.styles';
 import { getProductInfo } from '../../Components/StoreItemComponents';
 import { Ionicons } from '@expo/vector-icons';
@@ -53,13 +53,17 @@ export default class CartScreen extends React.Component {
         this.setState({cartContents})
     }
 
+    removeProductLocal = (name) => {
+        
+    }
+
     displayItem(name, price, quantity) {
         return(
             <View style={styles.cartFrame} key={name}>
                 <Text>{name}</Text>
-                <Text>{price}</Text>
-                <Text>{quantity}</Text>
-                <TouchableOpacity onPress={() => this.removeProductLocal()}>
+                <Text>{'$' + price}</Text>
+                <Text>{'Quantity: ' + quantity}</Text>
+                <TouchableOpacity onPress={() => removeFromCart(name)}>
                     <Text>Remove</Text>
                 </TouchableOpacity>
             </View>
