@@ -25,7 +25,7 @@ export default class EventScreen extends React.Component {
 
                     <View style={styles.programFrame}>
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
-                        <Text style={styles.programInformation}> {this.props.route.params.description} </Text>
+                        <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                     </View>
 
                     <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditEventScreen", {

@@ -114,16 +114,16 @@ export default class ProgramScreen extends React.Component {
 
 class DisplayEvent extends React.Component {
     render () {
-        var startDateTime = new Date(this.props.StartTime);
-        // console.log(startDateTime);
-        var endDateTime = new Date(this.props.EndTime);
-        // console.log(endDateTime);
-        var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        // var startDateTime = new Date(this.props.StartTime);
+        // // console.log(startDateTime);
+        // var endDateTime = new Date(this.props.EndTime);
+        // // console.log(endDateTime);
+        // var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         return (
         <View style={styles.eventFrame} key={this.props.EventID}>
             <Text style={styles.eventTitle}>{this.props.Title}</Text>
             <Text style={styles.eventInformation}>{this.props.Information}</Text>
-            <Text style={styles.eventStartTime}>{
+            {/* <Text style={styles.eventStartTime}>{
                 "Start Time: " + startDateTime.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + ":" + startDateTime.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
                 + ":" + startDateTime.getSeconds().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
@@ -140,7 +140,7 @@ class DisplayEvent extends React.Component {
                 + " " + endDateTime.getDate() 
                 + ", " + endDateTime.getFullYear()
             }
-            </Text>
+            </Text> */}
         </View>
         );
     }
