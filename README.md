@@ -76,7 +76,7 @@ Although most functionality works as intended and many bugs have been fixed, the
 
     * Inventory page contains one column only when displaying tools instead of two columns on larger devices
 
-
+____
 
 # Install Guide Friends of the Urban Food Forest Mobile App - Version 1.0
 
