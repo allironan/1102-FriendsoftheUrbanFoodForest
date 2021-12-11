@@ -5,6 +5,8 @@ import 'firebase/auth'
 import { TextInput } from 'react-native'
 import {getUserData, editUserData} from '../../Components/UserDataComponents'
 import styles from '../styles/SettingsScreen.styles'
+import { createStackNavigator } from '@react-navigation/stack'
+
 
 export default class SettingsScreen extends React.Component {
 
@@ -16,6 +18,8 @@ export default class SettingsScreen extends React.Component {
         readOnly: true,
         Permissions: "",
     }
+ 
+
 
     componentDidMount() {
         const db = firebase.firestore();
@@ -26,6 +30,7 @@ export default class SettingsScreen extends React.Component {
             this.setState({Permissions: userData.Permissions})
         });
     }
+
 
     currentView() {
         if (this.state.readOnly) {
