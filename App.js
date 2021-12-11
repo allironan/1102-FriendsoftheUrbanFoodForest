@@ -6,7 +6,8 @@ import LoadingScreen from './screens/LoadingScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import HomeScreen from './screens/HomeScreen/HomeScreen'
-import SettingsScreen from "./screens/SettingsScreen"
+import SettingsScreen from "./screens/SettingsScreens/SettingsScreen"
+import UsersScreen from "./screens/SettingsScreens/UsersScreen"
 import InventoryScreen from "./screens/InventoryScreens/InventoryHomeScreen"
 import firebase from 'firebase/app'
 import { NavigationContainer } from '@react-navigation/native'
@@ -35,7 +36,6 @@ import CartScreen from "./screens/FundraisingScreens/CartScreen"
 import { Ionicons } from '@expo/vector-icons';
 
 
-
 const firebaseConfig = 
 {
   apiKey: 'AIzaSyDA2SXeoLpH1bUlYdDpJzMo-6WPN2sPMKM',
@@ -45,8 +45,11 @@ const firebaseConfig =
   messagingSenderId: '1014426608257',
   appId: '1:1014426608257:web:8ff56858313883ad05a380'
 }
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-firebase.initializeApp(firebaseConfig);
+
 const AuthStack = createStackNavigator();
 const HomeStackNavigator = createStackNavigator();
 const ProgramStackNavigator = createStackNavigator();
@@ -81,6 +84,10 @@ function HomeStack(){
             name="Settings" 
             component={SettingsScreen}
           />
+          <HomeStackNavigator.Screen 
+            name="UsersScreen" 
+            component={UsersScreen}
+          />
     </HomeStackNavigator.Navigator>
   )
 }
@@ -114,6 +121,7 @@ function InventoryStack(){
     </InventoryStackNavigator.Navigator>
   )
 }
+
 
 function FundraisingStack() {
   return (
@@ -154,7 +162,7 @@ const NavBar = () => (
             iconName = focused
               ? 'cash'
               : 'cash-outline';
-          } else if (route.name == 'Settings') {
+          } else if (route.name == 'SettingsHome') {
             iconName = focused
               ? 'settings'
               : 'settings-outline';
