@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Button, Dialog} from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import getUserData from '../../Components/UserDataComponents'
+import {getUserData} from '../../Components/UserDataComponents'
 import {makeNewPost, getPosts, deletePost} from '../../Components/PostComponents'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/InventoryScreens.styles'
@@ -142,7 +142,11 @@ export default class InventoryHomeScreen extends React.Component {
     /*
         Function called when navigating into InventoryHomeScreen.js
         */
-    componentDidMount() {
+    async componentDidMount() {
+        var isAdmin = await getUserData();
+        console.log(isAdmin)
+        var admin = (isAdmin["Permissions"] == "admin")
+        this.setState({admin});
         const {email, displayName} = firebase.default.auth().currentUser;
         this.setState({email, displayName})
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollectionToolsRental)

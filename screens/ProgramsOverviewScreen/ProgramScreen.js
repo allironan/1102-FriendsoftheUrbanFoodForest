@@ -7,13 +7,14 @@ import { ScrollView } from 'react-native-gesture-handler'
 import styles from '../styles/ProgramsEventsScreen.style.js'
 import { deleteAllEvents, getEventInfo } from '../../Components/EventComponents'
 import { Ionicons } from '@expo/vector-icons';
-
+import { getUserData } from '../../Components/UserDataComponents'
 
 export default class ProgramScreen extends React.Component {
     state = {
         email: "",
         displayName: "",
-        events: []
+        events: [],
+        admin: false
     }
 
     firestoreRefEvents = firebase.firestore().collection('Programs').doc(this.props.route.params.programID)
@@ -30,7 +31,7 @@ export default class ProgramScreen extends React.Component {
                         <Text style={styles.programTitle}> {this.props.route.params.title} </Text>
                         <Text style={styles.programInformation}> {this.props.route.params.information} </Text>
                     </View>
-
+                    {this.state.admin &&
                     <TouchableOpacity style={styles.leftButton} onPress={() => this.props.navigation.navigate("EditProgramScreen", {
                             Title: this.props.route.params.title,
                             Information: this.props.route.params.information,
@@ -38,21 +39,22 @@ export default class ProgramScreen extends React.Component {
                         })}> 
                         <Text style={styles.buttonLabelText}> Edit Program </Text>
                     </TouchableOpacity>
-
+                    }
+                    {this.state.admin &&
                     <TouchableOpacity style={styles.leftButton} onPress={() => {
                         this.deleteProgramLocal(this.props.route.params.programID);
                         }}> 
                         <Text style={styles.buttonLabelText}> Delete Program </Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.rightButton} onPress={() => this.props.navigation.navigate("AddEventScreen", {
+                    }
+                        {this.state.admin &&   <TouchableOpacity style={styles.rightButton} onPress={() => this.props.navigation.navigate("AddEventScreen", {
                             programID: this.props.route.params.programID
                         })}>
                             <View>
                                 <Ionicons name={'add-outline'} size={30} color={'black'}/>
                             </View>
                         <Text style={styles.buttonLabelText}> Add Event </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                     <ScrollView>
                         <View>
                             {this.state.events.map((event) => (
@@ -74,6 +76,9 @@ export default class ProgramScreen extends React.Component {
     }
 
     async componentDidMount() {
+        var isAdmin = await getUserData();
+        var admin = (isAdmin["Permissions"] == "admin")
+        this.setState({admin});
         this.unsubscribe = this.firestoreRefEvents.onSnapshot(this.getCollectionEvents)
     }
 
